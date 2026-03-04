@@ -648,7 +648,7 @@
     </svg></button>
     <span style="font-family: Arial, sans-serif; font-size: 11px; color: #000; white-space: nowrap; padding: 0 4px 0 6px;">Address:</span>
     <div class="xp-url-wrap">
-      <input class="xp-url" id="url-bar" type="text" readonly value="http://localhost:8080/profile.html" />
+      <input class="xp-url" id="url-bar" type="text" readonly />
     </div>
   </div>
 
@@ -767,6 +767,9 @@
 </div><!-- /.page -->
 
 <script>
+  // ── DYNAMIC ADDRESS BAR ──
+  document.getElementById('url-bar').value = window.location.href;
+
   // ── NAV BUTTONS ──
   document.getElementById('btn-back').onclick = () => history.back();
   document.getElementById('btn-fwd').onclick = () => history.forward();
