@@ -481,8 +481,8 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // ── ADMIN FLAG ──
-  const IS_ADMIN = localStorage.getItem('anish_admin') === '1';
+  // ── DELETE KEY ──
+  const DELETE_KEY = 'anish2007';
 
   // ── LOAD ALL POSTS (user-authored first, then seeds; filter deleted seeds) ──
   let _posts = [];
@@ -509,8 +509,13 @@
     } catch { return 0; }
   }
 
-  // ── DELETE POST (admin only) ──
+  // ── DELETE POST ──
   function deletePost(postId) {
+    const key = prompt('🔒 Enter key to delete this post:');
+    if (key === null || key.trim() !== DELETE_KEY) {
+      if (key !== null) alert('Incorrect key.');
+      return false;
+    }
     if (postId.startsWith('seed-')) {
       const deleted = JSON.parse(localStorage.getItem('anish_deleted_seeds') || '[]');
       if (!deleted.includes(postId)) {
@@ -522,6 +527,7 @@
       localStorage.setItem('anish_forum_posts', JSON.stringify(saved.filter(p => p.id !== postId)));
     }
     renderList();
+    return true;
   }
 
   // ── RENDER THREAD LIST ──
@@ -538,9 +544,7 @@
       const msgBg     = isEven ? '#f2f2f2' : '#ffffff';
       const joined    = p.joined    || '3/2/2026';
       const postCount = p.posts !== undefined ? p.posts : 1;
-      const deleteBtn = IS_ADMIN
-        ? `<span class="post-delete" onclick="event.stopPropagation();deletePost('${esc(p.id)}')">[ x ]</span>`
-        : '';
+      const deleteBtn = `<span class="post-delete" onclick="event.stopPropagation();deletePost('${esc(p.id)}')">[ x ]</span>`;
       return `
         <div class="post-row" onclick="openPost(${i})">
           <div class="post-author-col" style="background:${authorBg}">
@@ -582,9 +586,7 @@
     const p         = _posts[idx];
     const joined    = p.joined    || '3/2/2026';
     const postCount = p.posts !== undefined ? p.posts : 1;
-    const deleteBtn = IS_ADMIN
-      ? `<span class="post-delete" onclick="deletePost('${esc(p.id)}');document.getElementById('view-post').style.display='none';document.getElementById('view-list').style.display='';">[ x ]</span>`
-      : '';
+    const deleteBtn = `<span class="post-delete" onclick="if(deletePost('${esc(p.id)}')){document.getElementById('view-post').style.display='none';document.getElementById('view-list').style.display='';}">[ x ]</span>`;
     document.getElementById('view-list').style.display = 'none';
     document.getElementById('view-post').style.display = '';
     document.getElementById('fp-title').textContent = p.title;
