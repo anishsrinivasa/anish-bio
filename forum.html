@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anish Srinivasan — Forum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { cursor: url('assets/mousecursor.png'), default; }
+    a, button, [role="button"],
+    .taskbar-tab, .xp-btn, .xp-nav-btn, .xp-start,
+    .thread-card, .back-link, .admin-link {
+      cursor: url('assets/cursorselect.png'), pointer;
+    }
+
+    html, body {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* CRT scanline */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .page { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── XP TITLE BAR ── */
+    .xp-titlebar {
+      flex-shrink: 0;
+      background: linear-gradient(to right, #0058e6, #3a93ff);
+      border-bottom: 1px solid #000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6px; height: 30px;
+    }
+    .xp-title { font-family: Arial, sans-serif; font-size: 20px; font-weight: 700; color: #fff; white-space: nowrap; }
+    .xp-controls { display: flex; gap: 2px; }
+    .xp-btn { width: 21px; height: 18px; border: none; display: block; padding: 0; flex-shrink: 0; background-repeat: no-repeat, no-repeat; background-position: center, 0 0; background-size: 10px 10px, 100% 100%; }
+    .xp-btn.xp-min, .xp-btn.xp-max { border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #00277a; border-right: 1px solid #00277a; }
+    .xp-btn.xp-min { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Crect x='1' y='7' width='8' height='1.5' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(to bottom, #4fa0ff 0%, #0055d4 50%, #0047b8 100%); }
+    .xp-btn.xp-max { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Crect x='0.5' y='0.5' width='9' height='9' fill='none' stroke='%23fff' stroke-width='1'/%3E%3Crect x='0.5' y='0.5' width='9' height='2' fill='%23fff'/%3E%3C/svg%3E"), linear-gradient(to bottom, #4fa0ff 0%, #0055d4 50%, #0047b8 100%); }
+    .xp-btn.xp-close { border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #5a0000; border-right: 1px solid #5a0000; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5 L8.5 8.5 M8.5 1.5 L1.5 8.5' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"), linear-gradient(to bottom, #e05555 0%, #c01010 50%, #9a0000 100%); }
+
+    /* ── XP ADDRESS BAR ── */
+    .xp-addressbar { flex-shrink: 0; background: #ece9d8; border-bottom: 1px solid #000; display: flex; align-items: center; gap: 3px; padding: 4px 6px; height: 34px; }
+    .xp-nav-btn {
+      width: 24px; height: 24px; padding: 0;
+      border: 1px solid rgba(0,0,0,0.35); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.55);
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 48%, rgba(0,0,0,0) 49%),
+        linear-gradient(to bottom, #c8c8c8 0%, #909090 100%);
+    }
+    .xp-nav-btn:hover {
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.7);
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.15) 48%, rgba(0,0,0,0) 49%),
+        linear-gradient(to bottom, #dedede 0%, #aaaaaa 100%);
+    }
+    .xp-nav-btn:active {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 1px 3px rgba(0,0,0,0.2);
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(255,255,255,0.2) 100%),
+        linear-gradient(to bottom, #909090 0%, #c0c0c0 100%);
+    }
+    #btn-back {
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.1) 48%, rgba(0,0,0,0) 49%),
+        linear-gradient(to bottom, #90d040 0%, #3a8010 100%);
+      border-color: rgba(0,70,0,0.4);
+    }
+    #btn-back:hover {
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.15) 48%, rgba(0,0,0,0) 49%),
+        linear-gradient(to bottom, #aaee50 0%, #4a9820 100%);
+    }
+    #btn-back:active {
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(255,255,255,0.2) 100%),
+        linear-gradient(to bottom, #3a8010 0%, #80c030 100%);
+    }
+    #btn-home { background: none; border: none; box-shadow: none; width: auto; height: auto; border-radius: 0; }
+    #btn-home:hover  { filter: brightness(1.2);  background: none; box-shadow: none; }
+    #btn-home:active { filter: brightness(0.85); background: none; box-shadow: none; }
+    .xp-url-wrap { flex: 1; background: #fff; border-top: 2px solid #888; border-left: 2px solid #888; border-bottom: 2px solid #fff; border-right: 2px solid #fff; outline: 1px solid #000; height: 22px; display: flex; align-items: center; padding: 0 6px; margin-left: 4px; }
+    .xp-url { font-family: Arial, sans-serif; font-size: 11px; border: none; outline: none; background: transparent; color: #000; width: 100%; }
+
+    /* ── RETRO SCROLLBAR (right edge of screen) ── */
+    .sky-area::-webkit-scrollbar { width: 16px; }
+    .sky-area::-webkit-scrollbar-track { background: #d0d8e4; border-left: 1px solid #8898aa; }
+    .sky-area::-webkit-scrollbar-thumb {
+      background: #b8c4d0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 14'%3E%3Cline x1='3' y1='3' x2='13' y2='3' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='4' x2='13' y2='4' stroke='%23667788' stroke-width='1'/%3E%3Cline x1='3' y1='7' x2='13' y2='7' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='8' x2='13' y2='8' stroke='%23667788' stroke-width='1'/%3E%3Cline x1='3' y1='11' x2='13' y2='11' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='12' x2='13' y2='12' stroke='%23667788' stroke-width='1'/%3E%3C/svg%3E") no-repeat center;
+      border-top: 2px solid #ddeeff; border-left: 2px solid #ddeeff;
+      border-bottom: 2px solid #445566; border-right: 2px solid #445566;
+    }
+    .sky-area::-webkit-scrollbar-button:vertical:decrement { display: block; height: 16px; background: #c8d0dc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolygon points='8,4 12,12 4,12' fill='%23223344'/%3E%3C/svg%3E") no-repeat center / 8px 8px; border-top: 2px solid #ddeeff; border-left: 2px solid #ddeeff; border-bottom: 2px solid #445566; border-right: 2px solid #445566; }
+    .sky-area::-webkit-scrollbar-button:vertical:increment { display: block; height: 16px; background: #c8d0dc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolygon points='8,12 12,4 4,4' fill='%23223344'/%3E%3C/svg%3E") no-repeat center / 8px 8px; border-top: 2px solid #ddeeff; border-left: 2px solid #ddeeff; border-bottom: 2px solid #445566; border-right: 2px solid #445566; }
+
+    /* ── SKY AREA ── */
+    .sky-area {
+      flex: 1; min-height: 0;
+      overflow-y: scroll; overflow-x: hidden;
+      background-image: url('assets/sky.png');
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding: 20px;
+    }
+
+    /* ── MAIN CONTAINER ── */
+    .main-container {
+      width: 100%; max-width: 950px;
+      margin: 0 auto; flex-shrink: 0;
+      display: flex; flex-direction: column;
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      font-size: 11px; color: #333;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #000;
+      box-shadow: 0 0 0 0.5px #000;
+      overflow: hidden;
+    }
+
+    /* ── NAV BAR ── */
+    .navbar { flex-shrink: 0; background: rgba(77,116,155,0.85); display: flex; align-items: center; justify-content: center; padding: 6px 16px; border-bottom: 1px solid #333; }
+    .nav-item { font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 17px; font-weight: normal; color: #fff; white-space: nowrap; }
+    .nav-sep { font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 17px; color: rgba(255,255,255,0.6); padding: 0 16px; }
+    .navbar .nav-item, .navbar .nav-sep { color: #fff !important; text-shadow: none !important; }
+    a.nav-item { text-decoration: none; }
+    a.nav-item:hover { text-decoration: underline; }
+    .nav-item.is-active { text-decoration: underline; font-weight: bold; }
+
+    /* ── BANNER ── */
+    .banner { flex-shrink: 0; line-height: 0; border-bottom: 1px solid #000; }
+    .banner img { width: 100%; height: auto; display: block; }
+
+    /* ── XP TASKBAR ── */
+    .xp-taskbar { flex-shrink: 0; background: #245edb; border-top: 1px solid #000; padding: 4px 10px; display: flex; align-items: center; height: 40px; overflow: visible; }
+    .taskbar-tabs { display: flex; gap: 4px; }
+    .taskbar-tab { width: 165px; flex-shrink: 0; height: 30px; font-family: Arial, sans-serif; font-size: 12px; color: #fff; background: #3c81f3; border: 1px solid #1a3b82; border-top: 1px solid #8caeff; border-left: 1px solid #8caeff; border-radius: 3px 3px 0 0; padding: 0 8px; display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; cursor: pointer; }
+    .taskbar-tab.active { background: #1a52c4; border-top-color: #0d35a0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.35); }
+    .taskbar-tab.active:hover { background: #1a52c4; }
+    .tab-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .taskbar-sep { width: 1px; background: #1a4ab8; height: 28px; margin: 0 4px; flex-shrink: 0; }
+    .xp-start { height: 44px; width: auto; flex-shrink: 0; display: block; border: none; padding: 0; border-radius: 0 3px 3px 0; }
+    .xp-start:hover { filter: brightness(1.18); }
+    .start-menu { position: fixed; bottom: 44px; left: 0; background: #ffffff; border: 1px solid #000; box-shadow: 2px 2px 6px rgba(0,0,0,0.45); padding: 8px 12px; font-family: Arial, sans-serif; font-size: 12px; z-index: 9999; white-space: nowrap; line-height: 2.1; }
+    .start-menu a { color: #0000cc; font-weight: bold; text-decoration: none; }
+    .start-menu a:hover { text-decoration: underline; }
+    .xp-systray { margin-left: auto; background: linear-gradient(to bottom, #1290e9 0%, #0b59b9 100%); border-left: 1px solid #094999; box-shadow: inset 1px 0 0 #3eb1ff; padding: 0 12px; display: flex; align-items: center; gap: 5px; height: 30px; flex-shrink: 0; }
+    .xp-clock { font-family: Arial, sans-serif; font-size: 13px; color: #fff; white-space: nowrap; }
+
+    /* ============================================================
+       FORUM-SPECIFIC CSS
+    ============================================================ */
+
+    .forum-body { display: flex; flex-direction: column; margin-top: 15px; }
+
+    /* Shared nav text inside col-header */
+    .forum-thread-nav {
+      font-family: Arial, sans-serif;
+      font-size: 10px; color: rgba(255,255,255,0.9);
+      white-space: nowrap;
+    }
+    .admin-link {
+      font-family: Arial, sans-serif;
+      font-size: 10px; color: rgba(255,255,255,0.8);
+      text-decoration: none; white-space: nowrap;
+    }
+    .admin-link:hover { color: #fff; text-decoration: underline; }
+
+    /* Single flat slate-blue column header — replaces both old headers */
+    .forum-col-header {
+      background: #6E8CB2;
+      display: flex;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      flex-shrink: 0;
+    }
+    .col-header-author {
+      width: 140px; flex-shrink: 0;
+      font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; color: #fff;
+      padding: 5px 8px;
+      border-right: 1px solid #000;
+      box-shadow: 0.5px 0 0 0 #000;
+    }
+    .col-header-msg {
+      flex: 1;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; color: #fff;
+      padding: 5px 10px;
+      gap: 8px;
+    }
+    .col-header-msg-nav { display: flex; align-items: center; gap: 10px; font-weight: normal; }
+
+    /* Post rows */
+    .post-row {
+      display: flex;
+      border-bottom: 1px solid #000;
+      box-shadow: 0 0.5px 0 0 #000;
+      cursor: pointer;
+    }
+    .post-row:last-child { border-bottom: none; box-shadow: none; }
+    .post-row:hover .post-author-col { filter: brightness(0.95); }
+    .post-row:hover .post-msg-col    { filter: brightness(0.97); }
+    .post-row.is-full-post { cursor: default; }
+    .post-row.is-full-post:hover .post-author-col,
+    .post-row.is-full-post:hover .post-msg-col { filter: none; }
+
+    /* Author column — flat sky blue, weighted right border */
+    .post-author-col {
+      width: 140px; flex-shrink: 0;
+      padding: 8px;
+      background: #E1E9F5;
+      border-right: 1px solid #000;
+      box-shadow: 0.5px 0 0 0 #000;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+
+    /* Profile picture placeholder */
+    .author-avatar {
+      width: 42px; height: 42px;
+      border: 1px solid #000;
+      background: #c8c8c8;
+      flex-shrink: 0; margin-bottom: 2px;
+    }
+
+    /* Username + red online dot */
+    .author-name-row { display: flex; align-items: center; gap: 4px; }
+    .author-dot {
+      width: 6px; height: 6px;
+      background: #cc0000; border-radius: 50%; flex-shrink: 0;
+    }
+    .author-name {
+      font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; color: #0033BB;
+    }
+    .author-meta {
+      font-family: Arial, sans-serif; font-size: 10px; font-weight: bold; color: #000;
+    }
+
+    /* Message column — pure white */
+    .post-msg-col {
+      flex: 1; padding: 8px 10px;
+      background: #fff;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+
+    /* Thread list content */
+    .thread-subject {
+      font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; color: #000;
+    }
+    .thread-posted { font-family: Arial, sans-serif; font-size: 10px; color: #555; }
+    .thread-preview-text {
+      font-family: Arial, sans-serif; font-size: 11px; color: #333;
+      overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      line-height: 1.5; flex: 1;
+    }
+    .thread-actions {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 5px;
+    }
+    .thread-reply-btn {
+      font-family: Arial, sans-serif; font-size: 10px; color: #0033BB;
+      border: 1px solid #0033BB; padding: 1px 6px;
+      background: #EEF2FF; cursor: default;
+    }
+    .thread-report {
+      font-family: Arial, sans-serif; font-size: 10px; color: #888; cursor: default;
+    }
+
+    /* Full post content */
+    .post-body {
+      font-family: Arial, sans-serif; font-size: 12px; color: #222;
+      line-height: 1.75; white-space: pre-wrap; word-break: break-word;
+      flex: 1; margin-top: 4px;
+    }
+    .post-actions {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 6px;
+    }
+    .post-reply-btn {
+      font-family: Arial, sans-serif; font-size: 10px; color: #0033BB;
+      border: 1px solid #0033BB; padding: 1px 6px;
+      background: #EEF2FF; cursor: default;
+    }
+    .post-report {
+      font-family: Arial, sans-serif; font-size: 10px; color: #888; cursor: default;
+    }
+
+    /* Full post Back-link bar — same flat slate blue */
+    .full-post-header {
+      background: #6E8CB2;
+      display: flex; align-items: center;
+      padding: 5px 10px; gap: 12px;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      flex-shrink: 0;
+    }
+    .back-link {
+      font-family: Arial, sans-serif;
+      font-size: 11px; color: #fff;
+      text-decoration: none; flex-shrink: 0; white-space: nowrap;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .full-post-title-text {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      font-size: 14px; font-weight: bold; color: #fff;
+      flex: 1; text-align: center;
+    }
+    .full-post-thread-nav {
+      font-family: Arial, sans-serif;
+      font-size: 10px; color: rgba(255,255,255,0.9);
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* Message-column top row (subject + optional delete) */
+    .post-msg-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 6px;
+    }
+    .post-delete {
+      font-family: Arial, sans-serif; font-size: 10px; font-weight: bold;
+      color: #cc0000; cursor: pointer; flex-shrink: 0; user-select: none;
+    }
+    .post-delete:hover { text-decoration: underline; }
+
+    /* Visits counter */
+    .thread-visits-count, .post-visits-count {
+      font-family: Arial, sans-serif; font-size: 10px; color: #666;
+    }
+
+    /* Forum footer */
+    .forum-footer {
+      padding: 5px 12px;
+      font-family: Arial, sans-serif; font-size: 10px; color: #555;
+      border-top: 1px solid rgba(0,0,0,0.15); flex-shrink: 0;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- ══ XP TITLE BAR ══ -->
+  <div class="xp-titlebar">
+    <span class="xp-title">ANISH SRINIVASAN - Browser</span>
+    <div class="xp-controls">
+      <button class="xp-btn xp-min" aria-label="Minimize"></button>
+      <button class="xp-btn xp-max" aria-label="Maximize"></button>
+      <button class="xp-btn xp-close" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <!-- ══ XP ADDRESS BAR ══ -->
+  <div class="xp-addressbar">
+    <button class="xp-nav-btn" id="btn-back" title="Back"><svg width="11" height="11" viewBox="0 0 16 16"><polygon points="8,1 1,8 8,15 8,11 15,11 15,5 8,5" fill="white"/></svg></button>
+    <button class="xp-nav-btn" id="btn-fwd" title="Forward"><svg width="11" height="11" viewBox="0 0 16 16"><polygon points="8,1 15,8 8,15 8,11 1,11 1,5 8,5" fill="white"/></svg></button>
+    <button class="xp-nav-btn" id="btn-refresh" title="Refresh"><svg width="11" height="11" viewBox="0 0 16 16"><path d="M2 2L14 14M14 2L2 14" stroke="white" stroke-width="2.8" stroke-linecap="round"/></svg></button>
+    <button class="xp-nav-btn" id="btn-home" title="Home"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="14" y="3" width="2" height="5" fill="#777"/><polygon points="11,1 1,10 21,10" fill="#4478c8"/><polygon points="11,1 16,5.5 21,10 11,10" fill="#2255a0"/><rect x="3" y="10" width="16" height="11" fill="#e8a820"/><rect x="4.5" y="11.5" width="4" height="3.5" fill="#90c8e8"/><line x1="6.5" y1="11.5" x2="6.5" y2="15" stroke="white" stroke-width="0.6"/><line x1="4.5" y1="13.2" x2="8.5" y2="13.2" stroke="white" stroke-width="0.6"/><rect x="13.5" y="11.5" width="4" height="3.5" fill="#90c8e8"/><line x1="15.5" y1="11.5" x2="15.5" y2="15" stroke="white" stroke-width="0.6"/><line x1="13.5" y1="13.2" x2="17.5" y2="13.2" stroke="white" stroke-width="0.6"/><rect x="8.5" y="14.5" width="5" height="6.5" fill="#8b5820" rx="0.5"/><circle cx="13" cy="17.8" r="0.6" fill="#d4a020"/></svg></button>
+    <span style="font-family:Arial,sans-serif;font-size:11px;color:#000;white-space:nowrap;padding:0 4px 0 6px;">Address:</span>
+    <div class="xp-url-wrap"><input class="xp-url" id="url-bar" type="text" readonly /></div>
+  </div>
+
+  <!-- ══ SKY AREA ══ -->
+  <div class="sky-area">
+    <div class="main-container">
+
+      <!-- BANNER -->
+      <div class="banner"><img src="assets/banner.png" alt="Anish Srinivasan" /></div>
+
+      <!-- NAV BAR -->
+      <nav class="navbar">
+        <a class="nav-item" href="index.html">&#171; Select a File</a>
+        <span class="nav-sep">|</span>
+        <a class="nav-item" href="profile.html">Profile</a>
+        <span class="nav-sep">|</span>
+        <a class="nav-item" href="experiences.html">Experiences</a>
+        <span class="nav-sep">|</span>
+        <span class="nav-item is-active">Forum</span>
+      </nav>
+
+      <!-- ══ FORUM BODY ══ -->
+      <div class="forum-body">
+
+        <!-- ── THREAD LIST VIEW ── -->
+        <div id="view-list">
+          <div class="forum-col-header">
+            <div class="col-header-author">Author</div>
+            <div class="col-header-msg">
+              <span>Thread</span>
+              <div class="col-header-msg-nav">
+                <span class="forum-thread-nav">Previous Thread :: Next Thread</span>
+                <a class="admin-link" href="admin.html">[ + Post ]</a>
+              </div>
+            </div>
+          </div>
+          <div id="thread-list-container"><!-- Populated by JS --></div>
+          <div class="forum-footer">Page 1 of 1</div>
+        </div>
+
+        <!-- ── FULL POST VIEW (hidden) ── -->
+        <div id="view-post" style="display:none;">
+          <div class="full-post-header">
+            <a class="back-link" id="btn-back-to-list" href="#">&#171; Back</a>
+            <span class="full-post-title-text" id="fp-title">—</span>
+            <span class="full-post-thread-nav">Previous Thread :: Next Thread</span>
+          </div>
+          <div class="forum-col-header">
+            <div class="col-header-author">Author</div>
+            <div class="col-header-msg" id="fp-col-subject">—</div>
+          </div>
+          <div id="fp-body-container"><!-- Populated by JS --></div>
+        </div>
+
+      </div><!-- /.forum-body -->
+    </div><!-- /.main-container -->
+  </div><!-- /.sky-area -->
+
+  <!-- ══ XP TASKBAR ══ -->
+  <footer class="xp-taskbar">
+    <img src="assets/startbutton.png" class="xp-start" alt="Start" />
+    <div class="taskbar-sep"></div>
+    <div class="taskbar-tabs"></div>
+    <div class="xp-systray">
+      <svg width="14" height="12" viewBox="0 0 14 12" fill="none" style="flex-shrink:0"><rect x="1" y="7" width="2" height="4" fill="white" opacity="0.45"/><rect x="4.5" y="4.5" width="2" height="6.5" fill="white" opacity="0.65"/><rect x="8" y="2" width="2" height="9" fill="white" opacity="0.85"/><rect x="11.5" y="0" width="2" height="11" fill="white"/></svg>
+      <svg width="13" height="12" viewBox="0 0 13 12" fill="none" style="flex-shrink:0"><polygon points="1,4 4,4 7,2 7,10 4,8 1,8" fill="white"/><path d="M8.5 3.5a3 3 0 0 1 0 5" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M10 2a5 5 0 0 1 0 8" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.6"/></svg>
+      <span class="xp-clock" id="xp-clock">--:-- --</span>
+    </div>
+  </footer>
+  <div id="start-menu" style="display:none">
+    <div><a href="profile.html">Profile</a> &gt;&gt; A little bit about me and my projects.</div>
+    <div><a href="experiences.html">Experiences</a> &gt;&gt; Some organizations I've worked with.</div>
+    <div><a href="forum.html">Forum</a> &gt;&gt; Place to share my thoughts and journey.</div>
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  // ── ADDRESS BAR ──
+  document.getElementById('url-bar').value = 'http://anish.bio/forum.html';
+
+  // ── CLOCK ──
+  function updateClock() {
+    const now = new Date();
+    let h = now.getHours(), m = now.getMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    document.getElementById('xp-clock').textContent = h + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+  }
+  updateClock(); setInterval(updateClock, 10000);
+
+  // ── NAV BUTTONS ──
+  document.getElementById('btn-back').onclick    = () => history.back();
+  document.getElementById('btn-fwd').onclick     = () => history.forward();
+  document.getElementById('btn-refresh').onclick = () => location.reload();
+  document.getElementById('btn-home').onclick    = () => { window.location.href = 'index.html'; };
+
+  // ── SEED POSTS ──
+  const SEED_POSTS = [];
+
+  // ── ESCAPE HTML ──
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // ── ADMIN FLAG ──
+  const IS_ADMIN = localStorage.getItem('anish_admin') === '1';
+
+  // ── LOAD ALL POSTS (user-authored first, then seeds; filter deleted seeds) ──
+  let _posts = [];
+  function getAllPosts() {
+    const saved        = JSON.parse(localStorage.getItem('anish_forum_posts')    || '[]');
+    const deletedSeeds = JSON.parse(localStorage.getItem('anish_deleted_seeds')  || '[]');
+    const seeds        = SEED_POSTS.filter(p => !deletedSeeds.includes(p.id));
+    return [...saved, ...seeds];
+  }
+
+  // ── VISIT COUNTER (CountAPI) ──
+  async function fetchVisitCount(postId) {
+    try {
+      const res  = await fetch(`https://api.counterapi.dev/v1/anish-forum/${encodeURIComponent(postId)}/get`);
+      const data = await res.json();
+      return data.count || 0;
+    } catch { return 0; }
+  }
+  async function incrementVisit(postId) {
+    try {
+      const res  = await fetch(`https://api.counterapi.dev/v1/anish-forum/${encodeURIComponent(postId)}/up`);
+      const data = await res.json();
+      return data.count || 0;
+    } catch { return 0; }
+  }
+
+  // ── DELETE POST (admin only) ──
+  function deletePost(postId) {
+    if (postId.startsWith('seed-')) {
+      const deleted = JSON.parse(localStorage.getItem('anish_deleted_seeds') || '[]');
+      if (!deleted.includes(postId)) {
+        deleted.push(postId);
+        localStorage.setItem('anish_deleted_seeds', JSON.stringify(deleted));
+      }
+    } else {
+      const saved = JSON.parse(localStorage.getItem('anish_forum_posts') || '[]');
+      localStorage.setItem('anish_forum_posts', JSON.stringify(saved.filter(p => p.id !== postId)));
+    }
+    renderList();
+  }
+
+  // ── RENDER THREAD LIST ──
+  function renderList() {
+    _posts = getAllPosts();
+    const container = document.getElementById('thread-list-container');
+    if (_posts.length === 0) {
+      container.innerHTML = '<div style="font-family:Arial,sans-serif;font-size:11px;color:#666;padding:14px 12px;">No posts yet.</div>';
+      return;
+    }
+    container.innerHTML = _posts.map((p, i) => {
+      const isEven    = i % 2 !== 0;
+      const authorBg  = isEven ? '#ccd8ef' : '#E1E9F5';
+      const msgBg     = isEven ? '#f2f2f2' : '#ffffff';
+      const joined    = p.joined    || '3/2/2026';
+      const postCount = p.posts !== undefined ? p.posts : 1;
+      const deleteBtn = IS_ADMIN
+        ? `<span class="post-delete" onclick="event.stopPropagation();deletePost('${esc(p.id)}')">[ x ]</span>`
+        : '';
+      return `
+        <div class="post-row" onclick="openPost(${i})">
+          <div class="post-author-col" style="background:${authorBg}">
+            <div class="author-avatar"></div>
+            <div class="author-name-row">
+              <span class="author-dot"></span>
+              <span class="author-name">${esc(p.author)}</span>
+            </div>
+            <div class="author-meta">Joined: ${esc(String(joined))}</div>
+            <div class="author-meta">Total Posts: ${postCount}</div>
+          </div>
+          <div class="post-msg-col" style="background:${msgBg}">
+            <div class="post-msg-top">
+              <div class="thread-subject">${esc(p.title)}</div>
+              ${deleteBtn}
+            </div>
+            <div class="thread-posted">Posted: ${esc(p.date)}</div>
+            <div class="thread-preview-text">${esc(p.body)}</div>
+            <div class="thread-actions">
+              <span class="thread-visits-count" id="visits-${i}">Visits: ...</span>
+              <span class="thread-report">Report Abuse</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Populate visit counts asynchronously
+    _posts.forEach((p, i) => {
+      fetchVisitCount(p.id).then(count => {
+        const el = document.getElementById('visits-' + i);
+        if (el) el.textContent = 'Visits: ' + count.toLocaleString();
+      });
+    });
+  }
+
+  // ── OPEN FULL POST ──
+  function openPost(idx) {
+    const p         = _posts[idx];
+    const joined    = p.joined    || '3/2/2026';
+    const postCount = p.posts !== undefined ? p.posts : 1;
+    const deleteBtn = IS_ADMIN
+      ? `<span class="post-delete" onclick="deletePost('${esc(p.id)}');document.getElementById('view-post').style.display='none';document.getElementById('view-list').style.display='';">[ x ]</span>`
+      : '';
+    document.getElementById('view-list').style.display = 'none';
+    document.getElementById('view-post').style.display = '';
+    document.getElementById('fp-title').textContent = p.title;
+    document.getElementById('fp-col-subject').textContent = 'Thread: ' + p.title;
+    document.getElementById('fp-body-container').innerHTML = `
+      <div class="post-row is-full-post">
+        <div class="post-author-col" style="background:#E1E9F5">
+          <div class="author-avatar"></div>
+          <div class="author-name-row">
+            <span class="author-dot"></span>
+            <span class="author-name">${esc(p.author)}</span>
+          </div>
+          <div class="author-meta">Joined: ${esc(String(joined))}</div>
+          <div class="author-meta">Total Posts: ${postCount}</div>
+        </div>
+        <div class="post-msg-col" style="background:#fff">
+          <div class="post-msg-top">
+            <div class="thread-subject">${esc(p.title)}</div>
+            ${deleteBtn}
+          </div>
+          <div class="thread-posted">Posted: ${esc(p.date)}</div>
+          <div class="post-body">${esc(p.body)}</div>
+          <div class="post-actions">
+            <span class="post-visits-count" id="fp-visits">Visits: ...</span>
+            <span class="post-report">Report Abuse</span>
+          </div>
+        </div>
+      </div>
+    `;
+    // Increment visit on open; update both full-post and list-view counters
+    incrementVisit(p.id).then(count => {
+      const fpEl   = document.getElementById('fp-visits');
+      const listEl = document.getElementById('visits-' + idx);
+      const label  = 'Visits: ' + count.toLocaleString();
+      if (fpEl)   fpEl.textContent   = label;
+      if (listEl) listEl.textContent = label;
+    });
+    window.scrollTo(0, 0);
+  }
+
+  // ── BACK TO LIST ──
+  document.getElementById('btn-back-to-list').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('view-post').style.display = 'none';
+    document.getElementById('view-list').style.display = '';
+    window.scrollTo(0, 0);
+  });
+
+  // ── INIT ──
+  renderList();
+
+  // ══ TASKBAR TAB SYSTEM ══
+  const TABS_KEY = 'xp_open_tabs';
+  const PAGE_ID  = 'forum';
+  const TAB_CONFIG = {
+    profile:     { label: 'Anish - Profile',      href: 'profile.html' },
+    experiences: { label: 'Anish - Experiences',  href: 'experiences.html' },
+    forum:       { label: 'Anish - Forum',         href: 'forum.html' },
+  };
+  const TAB_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><path d="M2 1H8.5L12 4.5V13H2V1Z" fill="white" stroke="#5588cc" stroke-width="1"/><path d="M8.5 1V4.5H12" fill="none" stroke="#5588cc" stroke-width="1"/></svg>';
+  function renderTabs() {
+    const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+    const container = document.querySelector('.taskbar-tabs');
+    if (!container) return;
+    container.innerHTML = tabs.map(function(tabId) {
+      const cfg = TAB_CONFIG[tabId]; if (!cfg) return '';
+      return '<div class="taskbar-tab' + (tabId === PAGE_ID ? ' active' : '') + '" onclick="window.location.href=\'' + cfg.href + '\'">' + TAB_SVG + '<span class="tab-label">' + cfg.label + '</span></div>';
+    }).join('');
+  }
+  (function initTabs() {
+    const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+    if (!tabs.includes(PAGE_ID)) { tabs.push(PAGE_ID); sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs)); }
+    renderTabs();
+    const closeBtn = document.querySelector('.xp-btn.xp-close');
+    if (closeBtn) {
+      closeBtn.onclick = function() {
+        let tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+        tabs = tabs.filter(function(t) { return t !== PAGE_ID; });
+        sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs));
+        window.location.href = tabs.length > 0 ? TAB_CONFIG[tabs[tabs.length - 1]].href : 'index.html';
+      };
+    }
+    const startBtn = document.querySelector('.xp-start');
+    const startMenu = document.getElementById('start-menu');
+    if (startBtn && startMenu) {
+      startBtn.addEventListener('click', function(e) { e.stopPropagation(); startMenu.style.display = startMenu.style.display === 'none' ? '' : 'none'; });
+      document.addEventListener('click', function() { if (startMenu) startMenu.style.display = 'none'; });
+      startMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+  })();
+</script>
+</body>
+</html>

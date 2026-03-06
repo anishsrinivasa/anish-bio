@@ -231,26 +231,31 @@
     ============================================================ */
     .sky-area::-webkit-scrollbar { width: 16px; }
     .sky-area::-webkit-scrollbar-track {
-      background: repeating-linear-gradient(
-        45deg, #dfdfdf, #dfdfdf 2px, #d0d0d0 2px, #d0d0d0 4px
-      );
-      border-left: 1px solid #888;
+      background: #d0d8e4;
+      border-left: 1px solid #8898aa;
     }
     .sky-area::-webkit-scrollbar-thumb {
-      background: #c0c0c0;
-      border-top:    2px solid #ffffff;
-      border-left:   2px solid #ffffff;
-      border-bottom: 2px solid #666666;
-      border-right:  2px solid #666666;
+      background: #b8c4d0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 14'%3E%3Cline x1='3' y1='3' x2='13' y2='3' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='4' x2='13' y2='4' stroke='%23667788' stroke-width='1'/%3E%3Cline x1='3' y1='7' x2='13' y2='7' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='8' x2='13' y2='8' stroke='%23667788' stroke-width='1'/%3E%3Cline x1='3' y1='11' x2='13' y2='11' stroke='%23ddeeff' stroke-width='1'/%3E%3Cline x1='3' y1='12' x2='13' y2='12' stroke='%23667788' stroke-width='1'/%3E%3C/svg%3E") no-repeat center;
+      border-top:    2px solid #ddeeff;
+      border-left:   2px solid #ddeeff;
+      border-bottom: 2px solid #445566;
+      border-right:  2px solid #445566;
     }
-    .sky-area::-webkit-scrollbar-button {
-      display: block;
-      background: #c0c0c0;
-      border-top:    2px solid #ffffff;
-      border-left:   2px solid #ffffff;
-      border-bottom: 2px solid #666666;
-      border-right:  2px solid #666666;
-      height: 16px;
+    .sky-area::-webkit-scrollbar-button:vertical:decrement {
+      display: block; height: 16px;
+      background: #c8d0dc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolygon points='8,4 12,12 4,12' fill='%23223344'/%3E%3C/svg%3E") no-repeat center / 8px 8px;
+      border-top:    2px solid #ddeeff;
+      border-left:   2px solid #ddeeff;
+      border-bottom: 2px solid #445566;
+      border-right:  2px solid #445566;
+    }
+    .sky-area::-webkit-scrollbar-button:vertical:increment {
+      display: block; height: 16px;
+      background: #c8d0dc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolygon points='8,12 12,4 4,4' fill='%23223344'/%3E%3C/svg%3E") no-repeat center / 8px 8px;
+      border-top:    2px solid #ddeeff;
+      border-left:   2px solid #ddeeff;
+      border-bottom: 2px solid #445566;
+      border-right:  2px solid #445566;
     }
 
     /* ============================================================
@@ -381,15 +386,12 @@
     .s-key {
       font-family: Arial, sans-serif;
       font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0px;
-      color: #4169E1;
+      color: #0033BB;
     }
     .s-val {
       font-family: Arial, sans-serif;
       font-weight: bold;
-      text-transform: uppercase;
-      color: #4169E1;
+      color: #0033BB;
     }
 
     /* ══ ZONE 2: Slot header — black text only ══ */
@@ -439,7 +441,10 @@
       overflow: hidden;
       letter-spacing: 0.3px;
     }
+    .taskbar-tab { cursor: pointer; }
     .taskbar-tab:hover { background: #5a9aff; }
+    .taskbar-tab.active { background: #1a52c4; border-top-color: #0d35a0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.35); }
+    .taskbar-tab.active:hover { background: #1a52c4; }
 
     .tab-label {
       overflow: hidden;
@@ -465,6 +470,9 @@
       border-radius: 0 3px 3px 0;
     }
     .xp-start:hover { filter: brightness(1.18); }
+    .start-menu { position: fixed; bottom: 44px; left: 0; background: #ffffff; border: 1px solid #000; box-shadow: 2px 2px 6px rgba(0,0,0,0.45); padding: 8px 12px; font-family: Arial, sans-serif; font-size: 12px; z-index: 9999; white-space: nowrap; line-height: 2.1; }
+    .start-menu a { color: #0000cc; font-weight: bold; text-decoration: none; }
+    .start-menu a:hover { text-decoration: underline; }
 
     .xp-systray {
       margin-left: auto;
@@ -507,8 +515,15 @@
        PROFILE PAGE — structural layout
     ============================================================ */
 
-    /* Sky area: align to top so banner+nav+content stack naturally */
-    .sky-area { justify-content: flex-start; }
+    /* Sky area: fill height, no scroll, minimal padding */
+    .sky-area {
+      justify-content: flex-start;
+      overflow: hidden;
+      padding: 8px 12px;
+    }
+
+    /* Main container stretches to fill full sky-area height */
+    .main-container { flex: 1; min-height: 0; }
 
     /* 1px precision: override all borders to pure black, remove shadow */
     .slot { border: 1px solid #000; box-shadow: 0 0 0 0.5px #000; }
@@ -520,53 +535,100 @@
     a.nav-item:hover { text-decoration: underline; }
     .nav-item.is-active { text-decoration: underline; font-weight: bold; }
 
-    /* Two-column body — minimum height ensures imposing vertical presence */
+    /* Two-column body — fills all remaining height inside main-container */
     .profile-body {
       flex: 1;
-      min-height: 700px;
+      min-height: 0;
       display: flex;
       gap: 12px;
       padding: 12px;
     }
 
-    /* Left column — 65% */
+    /* Left column — 65%, flex column to stack two slot boxes */
     .profile-left {
       flex: 65;
       min-width: 0;
-    }
-
-    /* Inner area for project rows — no extra padding, tight */
-    .proj-grid-body {
-      flex: 1;
-      min-height: 0;
-      padding: 0 10px;
-    }
-
-    /* Each horizontal row of project cards — 1px dotted black divider, tight */
-    .proj-row {
       display: flex;
+      flex-direction: column;
       gap: 8px;
-      padding: 6px 0;
-      align-items: flex-start;
     }
 
-    /* Individual project card */
-    .proj-card {
+    /* Inner area — fixed gap keeps divider close to top rows */
+    .proj-grid-body {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 20px;
+      padding: 10px 8px 8px 8px;
     }
 
-    /* Project thumbnails — perfect square via aspect-ratio, 1px solid black border */
+    /* Bottom group: separator + In Progress row with breathing room */
+    .proj-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* 'Page 1 of 1' footer — pinned to bottom of proj-grid-body */
+    .proj-pagination {
+      margin-top: auto;
+      padding: 5px 10px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      color: #555;
+      border-top: 1px solid rgba(0,0,0,0.15);
+    }
+
+    /* Top group: My Projects rows stacked with uniform 15px gap */
+    .proj-rows-top { display: flex; flex-direction: column; gap: 15px; }
+
+    /* Each row — 4-column CSS grid, uniform 15px gap, snaps edge-to-edge */
+    .proj-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      align-items: start;
+    }
+
+    /* 'In Progress' divider — weighted line top/bottom, 10px padding */
+    .proj-separator {
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      box-shadow: 0 -0.5px 0 0 #000, 0 0.5px 0 0 #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    .proj-sep-label {
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      text-align: center;
+    }
+
+    /* Individual project card — fills 1fr grid cell, 11px text */
+    .proj-card {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 11px;
+    }
+
+    /* Project thumbnails — perfect 90×90 square */
     .proj-card .slot-img {
       flex: none;
       width: 100%;
       aspect-ratio: 1;
       height: auto;
-      margin: 0 0 3px 0;
+      margin: 0;
       border: 1px solid #000;
     }
+
+    /* Merged slot fills all of profile-left height */
+    .profile-left > .slot { flex: 1; }
 
     /* [ view ] tag — top-right of every project square */
     .slot-view {
@@ -582,7 +644,7 @@
     }
     .slot-view:hover { color: #001a88; text-decoration: underline; }
 
-    /* Right column — 35% */
+    /* Right column — 35%, stretches via align-items:stretch default */
     .profile-right {
       flex: 35;
       min-width: 0;
@@ -591,14 +653,16 @@
       gap: 8px;
     }
 
-    /* Character photo — tall but not overwhelming */
+    /* Character photo — perfect square filling sidebar width */
+    .char-slot { flex: none; aspect-ratio: 1; width: 100%; }
     .char-slot .slot-img {
-      flex: none;
-      height: 400px;
+      flex: 1;
+      min-height: 0;
+      height: auto;
       border: none;
     }
 
-    /* About Me — fills all remaining right column height */
+    /* About Me — grows to fill all remaining sidebar height */
     .about-slot { flex: 1; min-height: 0; }
     .about-body {
       flex: 1;
@@ -675,50 +739,105 @@
       <!-- ══ PROFILE BODY ══ -->
       <div class="profile-body">
 
-        <!-- LEFT COLUMN: My Projects -->
-        <div class="slot profile-left">
-          <div class="slot-title">My Projects</div>
-          <div class="proj-grid-body">
+        <!-- LEFT COLUMN: single merged slot -->
+        <div class="profile-left">
 
-            <!-- Row 1 -->
-            <div class="proj-row">
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 1</span>
-                <span class="s-val">Short description here</span>
-              </div>
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 2</span>
-                <span class="s-val">Short description here</span>
-              </div>
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 3</span>
-                <span class="s-val">Short description here</span>
-              </div>
-            </div>
+          <div class="slot">
+            <div class="slot-title">My Projects</div>
+            <div class="proj-grid-body">
 
-            <!-- Row 2 -->
-            <div class="proj-row">
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 4</span>
-                <span class="s-val">Short description here</span>
-              </div>
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 5</span>
-                <span class="s-val">Short description here</span>
-              </div>
-              <div class="proj-card">
-                <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                <span class="s-key">Project 6</span>
-                <span class="s-val">Short description here</span>
-              </div>
-            </div>
+              <!-- Item 1 (top): My Projects — 2 rows of 4 -->
+              <div class="proj-rows-top">
 
-          </div><!-- /.proj-grid-body -->
+                <!-- Row 1 — Projects 1–4 -->
+                <div class="proj-row">
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 1</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 2</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 3</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 4</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                </div>
+
+                <!-- Row 2 — Projects 5–8 -->
+                <div class="proj-row">
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 5</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 6</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 7</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 8</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                </div>
+
+              </div><!-- /.proj-rows-top -->
+
+              <!-- Bottom group: divider + In Progress row snug together -->
+              <div class="proj-bottom">
+
+                <!-- 'In Progress' bordered divider -->
+                <div class="proj-separator">
+                  <span class="proj-sep-label">In Progress</span>
+                </div>
+
+                <!-- In Progress — 4 cards -->
+                <div class="proj-row">
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 9</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 10</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 11</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
+                    <span class="s-key">Project 12</span>
+                    <span class="s-val">Short description here</span>
+                  </div>
+                </div>
+
+              </div><!-- /.proj-bottom -->
+
+              <div class="proj-pagination">Page 1 of 1</div>
+
+            </div><!-- /.proj-grid-body -->
+          </div><!-- /.slot merged -->
+
         </div><!-- /.profile-left -->
 
         <!-- RIGHT COLUMN: My Character + About Me -->
@@ -751,18 +870,18 @@
   <footer class="xp-taskbar">
     <img src="assets/startbutton.png" class="xp-start" alt="Start" />
     <div class="taskbar-sep"></div>
-    <div class="taskbar-tabs">
-      <div class="taskbar-tab">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><path d="M2 1H8.5L12 4.5V13H2V1Z" fill="white" stroke="#5588cc" stroke-width="1"/><path d="M8.5 1V4.5H12" fill="none" stroke="#5588cc" stroke-width="1"/></svg>
-        <span class="tab-label">Anish Srinivasan - Profile</span>
-      </div>
-    </div>
+    <div class="taskbar-tabs"></div>
     <div class="xp-systray">
       <svg width="14" height="12" viewBox="0 0 14 12" fill="none" style="flex-shrink:0"><rect x="1" y="7" width="2" height="4" fill="white" opacity="0.45"/><rect x="4.5" y="4.5" width="2" height="6.5" fill="white" opacity="0.65"/><rect x="8" y="2" width="2" height="9" fill="white" opacity="0.85"/><rect x="11.5" y="0" width="2" height="11" fill="white"/></svg>
       <svg width="13" height="12" viewBox="0 0 13 12" fill="none" style="flex-shrink:0"><polygon points="1,4 4,4 7,2 7,10 4,8 1,8" fill="white"/><path d="M8.5 3.5a3 3 0 0 1 0 5" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M10 2a5 5 0 0 1 0 8" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.6"/></svg>
       <span class="xp-clock" id="xp-clock">--:-- --</span>
     </div>
   </footer>
+  <div id="start-menu" style="display:none">
+    <div><a href="profile.html">Profile</a> &gt;&gt; A little bit about me and my projects.</div>
+    <div><a href="experiences.html">Experiences</a> &gt;&gt; Some organizations I've worked with.</div>
+    <div><a href="forum.html">Forum</a> &gt;&gt; Place to share my thoughts and journey.</div>
+  </div>
 
 </div><!-- /.page -->
 
@@ -788,6 +907,46 @@
     }
     update();
     setInterval(update, 1000);
+  })();
+
+  // ══ TASKBAR TAB SYSTEM ══
+  const TABS_KEY = 'xp_open_tabs';
+  const PAGE_ID  = 'profile';
+  const TAB_CONFIG = {
+    profile:     { label: 'Anish - Profile',      href: 'profile.html' },
+    experiences: { label: 'Anish - Experiences',  href: 'experiences.html' },
+    forum:       { label: 'Anish - Forum',         href: 'forum.html' },
+  };
+  const TAB_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><path d="M2 1H8.5L12 4.5V13H2V1Z" fill="white" stroke="#5588cc" stroke-width="1"/><path d="M8.5 1V4.5H12" fill="none" stroke="#5588cc" stroke-width="1"/></svg>';
+  function renderTabs() {
+    const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+    const container = document.querySelector('.taskbar-tabs');
+    if (!container) return;
+    container.innerHTML = tabs.map(function(tabId) {
+      const cfg = TAB_CONFIG[tabId]; if (!cfg) return '';
+      return '<div class="taskbar-tab' + (tabId === PAGE_ID ? ' active' : '') + '" onclick="window.location.href=\'' + cfg.href + '\'">' + TAB_SVG + '<span class="tab-label">' + cfg.label + '</span></div>';
+    }).join('');
+  }
+  (function initTabs() {
+    const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+    if (!tabs.includes(PAGE_ID)) { tabs.push(PAGE_ID); sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs)); }
+    renderTabs();
+    const closeBtn = document.querySelector('.xp-btn.xp-close');
+    if (closeBtn) {
+      closeBtn.onclick = function() {
+        let tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+        tabs = tabs.filter(function(t) { return t !== PAGE_ID; });
+        sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs));
+        window.location.href = tabs.length > 0 ? TAB_CONFIG[tabs[tabs.length - 1]].href : 'index.html';
+      };
+    }
+    const startBtn = document.querySelector('.xp-start');
+    const startMenu = document.getElementById('start-menu');
+    if (startBtn && startMenu) {
+      startBtn.addEventListener('click', function(e) { e.stopPropagation(); startMenu.style.display = startMenu.style.display === 'none' ? '' : 'none'; });
+      document.addEventListener('click', function() { if (startMenu) startMenu.style.display = 'none'; });
+      startMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
   })();
 </script>
 </body>

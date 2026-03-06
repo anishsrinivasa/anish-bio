@@ -412,7 +412,7 @@
       font-family: Arial, sans-serif !important;
       font-size: 10px;
       font-weight: bold;
-      color: #4169E1 !important;
+      color: #0033BB !important;
       text-decoration: none;
     }
     .slot-view:hover { color: #2952b3 !important; text-decoration: underline; }
@@ -433,25 +433,22 @@
     }
     .s-key {
       font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0px;
-      color: #4169E1;
+      color: #0033BB;
     }
     .s-val {
       font-weight: bold;
-      text-transform: uppercase;
-      color: #4169E1;
+      color: #0033BB;
     }
 
     /* ══ ZONE 1: Slot card text — split by role ══ */
     .slot .slot-stats .s-row .s-key {
-      color: #4169E1 !important;
+      color: #0033BB !important;
       text-shadow: none !important;
       -webkit-text-stroke: 0px !important;
       opacity: 1 !important;
     }
     .slot .slot-stats .s-row .s-val {
-      color: #4169E1 !important;
+      color: #0033BB !important;
       text-shadow: none !important;
       -webkit-text-stroke: 0px !important;
       opacity: 1 !important;
@@ -532,7 +529,14 @@
       overflow: hidden;
       letter-spacing: 0.3px;
     }
+    .taskbar-tab { cursor: pointer; }
     .taskbar-tab:hover { background: #5a9aff; }
+    .taskbar-tab.active {
+      background: #1a52c4;
+      border-top-color: #0d35a0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.35);
+    }
+    .taskbar-tab.active:hover { background: #1a52c4; }
 
     .tab-icon {
       width: 12px;
@@ -570,6 +574,62 @@
       border-radius: 0 3px 3px 0;
     }
     .xp-start:hover { filter: brightness(1.18); }
+
+    /* ── LORE EASTER EGG ── */
+    #page-content {
+      transition: transform 0.22s ease-in, opacity 0.2s ease-in;
+      transform-origin: center bottom;
+    }
+    #page-content.is-minimized {
+      transform: scale(0.88) translateY(24px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    #lore-overlay {
+      width: 100%;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+    .lore-box {
+      max-width: 600px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      font-weight: bold;
+      color: #4169E1;
+      line-height: 1.9;
+      text-align: center;
+    }
+    .lore-back {
+      display: inline-block;
+      margin-top: 26px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      color: #4169E1;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+    }
+    .lore-back:hover { text-decoration: underline; }
+
+    /* ── START MENU BUBBLE ── */
+    .start-menu {
+      position: fixed;
+      bottom: 44px;
+      left: 0;
+      background: #ffffff;
+      border: 1px solid #000000;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.45);
+      padding: 8px 12px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      z-index: 9999;
+      white-space: nowrap;
+      line-height: 2.1;
+    }
+    .start-menu a { color: #0000cc; font-weight: bold; text-decoration: none; }
+    .start-menu a:hover { text-decoration: underline; }
 
     /* ============================================================
        XP SYSTEM TRAY + CLOCK — lightens on hover
@@ -677,7 +737,7 @@
         </div>
 
         <!-- SLOT 2: EXPERIENCES -->
-        <div class="slot live">
+        <div class="slot live" onclick="window.location.href='experiences.html'" style="cursor:url('assets/cursorselect.png'),pointer">
           <div class="slot-title">Experiences</div>
           <div class="slot-img"><a class="slot-view">[ view ]</a><span>[PIXEL<br>ART<br>HERE]</span></div>
           <div class="slot-stats">
@@ -689,7 +749,7 @@
         </div>
 
         <!-- SLOT 3: FORUM -->
-        <div class="slot live">
+        <div class="slot live" onclick="window.location.href='forum.html'" style="cursor:url('assets/cursorselect.png'),pointer">
           <div class="slot-title">Forum</div>
           <div class="slot-img"><a class="slot-view">[ view ]</a><span>[PIXEL<br>ART<br>HERE]</span></div>
           <div class="slot-stats">
@@ -749,24 +809,34 @@
 
       </div><!-- /.slot-grid -->
     </div><!-- /.main-container -->
+
+    <!-- ══ LORE OVERLAY ══ -->
+    <div id="lore-overlay" style="display:none">
+      <div class="lore-box">
+        I grew up playing Roblox, constantly hearing stories about the &ldquo;OG&rdquo; era of the platform that I&rsquo;d missed. Now, as an adult in college (who also achieved my younger self&rsquo;s goal of becoming a notable Roblox Developer), I&rsquo;m still inspired by the simplicity of that era. Whether you lived through it or heard about it as legend, I hope this serves as a fun time capsule!<br><br>
+        PS: to those who know me from my games, I prefer to stay anonymous.<br><br>
+        <span class="lore-back" onclick="window.loreBack()">[ Back ]</span>
+      </div>
+    </div>
+
   </div><!-- /.sky-area -->
 
   <!-- ══ XP TASKBAR FOOTER ══ -->
   <footer class="xp-taskbar">
     <img src="assets/startbutton.png" class="xp-start" alt="Start" />
     <div class="taskbar-sep"></div>
-    <div class="taskbar-tabs">
-      <div class="taskbar-tab">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><path d="M2 1H8.5L12 4.5V13H2V1Z" fill="white" stroke="#5588cc" stroke-width="1"/><path d="M8.5 1V4.5H12" fill="none" stroke="#5588cc" stroke-width="1"/></svg>
-        <span class="tab-label">Anish Srinivasan - Portfolio</span>
-      </div>
-    </div>
+    <div class="taskbar-tabs"></div>
     <div class="xp-systray">
       <svg width="14" height="12" viewBox="0 0 14 12" fill="none" style="flex-shrink:0"><rect x="1" y="7" width="2" height="4" fill="white" opacity="0.45"/><rect x="4.5" y="4.5" width="2" height="6.5" fill="white" opacity="0.65"/><rect x="8" y="2" width="2" height="9" fill="white" opacity="0.85"/><rect x="11.5" y="0" width="2" height="11" fill="white"/></svg>
       <svg width="13" height="12" viewBox="0 0 13 12" fill="none" style="flex-shrink:0"><polygon points="1,4 4,4 7,2 7,10 4,8 1,8" fill="white"/><path d="M8.5 3.5a3 3 0 0 1 0 5" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M10 2a5 5 0 0 1 0 8" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.6"/></svg>
       <span class="xp-clock" id="xp-clock">--:-- --</span>
     </div>
   </footer>
+  <div id="start-menu" style="display:none">
+    <div><a href="profile.html">Profile</a> &gt;&gt; A little bit about me and my projects.</div>
+    <div><a href="experiences.html">Experiences</a> &gt;&gt; Some organizations I've worked with.</div>
+    <div><a href="forum.html">Forum</a> &gt;&gt; Place to share my thoughts and journey.</div>
+  </div>
 
 </div><!-- /.page -->
 
@@ -848,6 +918,90 @@
       const stored = localStorage.getItem('discord-last-seen');
       el.textContent = stored ? timeAgo(parseInt(stored)) : LAST_SEEN_FALLBACK;
     }
+  })();
+
+  // ══ TASKBAR TAB SYSTEM ══
+  const TABS_KEY = 'xp_open_tabs';
+  const PAGE_ID  = null; // index is home — not tracked as a tab
+
+  const TAB_CONFIG = {
+    profile:     { label: 'Anish - Profile',      href: 'profile.html' },
+    experiences: { label: 'Anish - Experiences',  href: 'experiences.html' },
+    forum:       { label: 'Anish - Forum',         href: 'forum.html' },
+  };
+
+  const TAB_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="flex-shrink:0"><path d="M2 1H8.5L12 4.5V13H2V1Z" fill="white" stroke="#5588cc" stroke-width="1"/><path d="M8.5 1V4.5H12" fill="none" stroke="#5588cc" stroke-width="1"/></svg>';
+
+  function renderTabs() {
+    const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+    const container = document.querySelector('.taskbar-tabs');
+    if (!container) return;
+    container.innerHTML = tabs.map(function(tabId) {
+      const cfg = TAB_CONFIG[tabId];
+      if (!cfg) return '';
+      const isActive = tabId === PAGE_ID;
+      return '<div class="taskbar-tab' + (isActive ? ' active' : '') + '" onclick="window.location.href=\'' + cfg.href + '\'">' + TAB_SVG + '<span class="tab-label">' + cfg.label + '</span></div>';
+    }).join('');
+  }
+
+  (function initTabs() {
+    if (PAGE_ID) {
+      const tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+      if (!tabs.includes(PAGE_ID)) { tabs.push(PAGE_ID); sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs)); }
+    }
+    renderTabs();
+    const closeBtn = document.querySelector('.xp-btn.xp-close');
+    if (closeBtn) {
+      closeBtn.onclick = function() {
+        let tabs = JSON.parse(sessionStorage.getItem(TABS_KEY) || '[]');
+        if (PAGE_ID) {
+          tabs = tabs.filter(function(t) { return t !== PAGE_ID; });
+          sessionStorage.setItem(TABS_KEY, JSON.stringify(tabs));
+        }
+        window.location.href = tabs.length > 0 ? TAB_CONFIG[tabs[tabs.length - 1]].href : 'index.html';
+      };
+    }
+    const startBtn = document.querySelector('.xp-start');
+    const startMenu = document.getElementById('start-menu');
+    if (startBtn && startMenu) {
+      startBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        startMenu.style.display = startMenu.style.display === 'none' ? '' : 'none';
+      });
+      document.addEventListener('click', function() { if (startMenu) startMenu.style.display = 'none'; });
+      startMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+    }
+  })();
+
+  // ── LORE EASTER EGG (index.html only) ──
+  (function() {
+    var pageContent = document.getElementById('page-content');
+    var loreOverlay = document.getElementById('lore-overlay');
+    if (!pageContent || !loreOverlay) return;
+
+    function loreMinimize() {
+      pageContent.classList.add('is-minimized');
+      pageContent.addEventListener('transitionend', function() {
+        pageContent.style.display = 'none';
+        loreOverlay.style.display = 'flex';
+      }, { once: true });
+    }
+
+    window.loreBack = function() {
+      loreOverlay.style.display = 'none';
+      pageContent.style.display = '';
+      // Double rAF ensures the browser paints the element before removing the class,
+      // so the fade-in transition fires correctly.
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          pageContent.classList.remove('is-minimized');
+        });
+      });
+    };
+
+    // Override the close button on index.html to trigger lore instead of navigating
+    var closeBtn = document.querySelector('.xp-btn.xp-close');
+    if (closeBtn) closeBtn.onclick = loreMinimize;
   })();
 </script>
 </body>
