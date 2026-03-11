@@ -391,7 +391,7 @@
     .s-val {
       font-family: Arial, sans-serif;
       font-weight: bold;
-      color: #0033BB;
+      color: #000000;
     }
 
     /* ══ ZONE 2: Slot header — black text only ══ */
@@ -649,9 +649,10 @@
       font-family: Arial, sans-serif;
       font-size: 9px;
       font-weight: bold;
-      color: #0033BB;
+      color: #0033BB !important;
       text-decoration: none;
       cursor: url('assets/cursorselect.png'), pointer;
+      z-index: 2;
     }
     .slot-view:hover { color: #001a88; text-decoration: underline; }
 
@@ -669,8 +670,18 @@
     .char-slot .slot-img {
       flex: 1;
       min-height: 0;
-      height: auto;
       border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+    }
+    .char-slot .slot-img img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      flex: 1;
+      min-height: 0;
     }
 
     /* About Me — grows to fill all remaining sidebar height */
@@ -763,14 +774,14 @@
                 <!-- Row 1 — Projects 1–4 -->
                 <div class="proj-row">
                   <div class="proj-card live">
-                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><img src="assets/project1.png" alt="Unsilenced"></div>
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/Unsilenced" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/project1.png" alt="Unsilenced"></a>
                     <span class="s-key">Unsilenced</span>
                     <span class="s-val">MadHacks 2025 Winner</span>
                   </div>
-                  <div class="proj-card">
-                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                    <span class="s-key">Project 2</span>
-                    <span class="s-val">Short description here</span>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/CalHacks" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/project2.png" alt="ScopeAI"></a>
+                    <span class="s-key">ScopeAI</span>
+                    <span class="s-val">CalHacks 12.0 Project</span>
                   </div>
                   <div class="proj-card">
                     <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
@@ -820,10 +831,10 @@
 
                 <!-- In Progress — 4 cards -->
                 <div class="proj-row">
-                  <div class="proj-card">
-                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                    <span class="s-key">Project 9</span>
-                    <span class="s-val">Short description here</span>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/Dynamic-Version-Control" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/ver.png" alt="Dynamic Version Control"></a>
+                    <span class="s-key">Dynamic Version Control</span>
+                    <span class="s-val">Version control for collaborators</span>
                   </div>
                   <div class="proj-card">
                     <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
@@ -858,7 +869,7 @@
           <div class="slot char-slot">
             <div class="slot-title">My Character</div>
             <div class="slot-img">
-              <span>[PHOTO<br>HERE]</span>
+              <img src="assets/profilepic.jpg" alt="My Character">
             </div>
           </div>
 

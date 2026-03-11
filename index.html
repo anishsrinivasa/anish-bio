@@ -396,6 +396,7 @@
       justify-content: center;
       position: relative;
     }
+    .slot-img img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
     .slot-img span {
       font-family: Arial, sans-serif !important;
       font-size: 10px;
@@ -414,6 +415,7 @@
       font-weight: bold;
       color: #0033BB !important;
       text-decoration: none;
+      z-index: 2;
     }
     .slot-view:hover { color: #2952b3 !important; text-decoration: underline; }
 
@@ -727,7 +729,7 @@
         <!-- SLOT 1: PROFILE -->
         <div class="slot live" onclick="window.location.href='profile.html'" style="cursor:url('assets/cursorselect.png'),pointer">
           <div class="slot-title">Profile</div>
-          <div class="slot-img"><a class="slot-view">[ view ]</a><span>[PIXEL<br>AVATAR<br>HERE]</span></div>
+          <div class="slot-img"><a class="slot-view">[ view ]</a><img src="assets/profile.png" alt="Profile"></div>
           <div class="slot-stats">
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
@@ -739,7 +741,7 @@
         <!-- SLOT 2: EXPERIENCES -->
         <div class="slot live" onclick="window.location.href='experiences.html'" style="cursor:url('assets/cursorselect.png'),pointer">
           <div class="slot-title">Experiences</div>
-          <div class="slot-img"><a class="slot-view">[ view ]</a><span>[PIXEL<br>ART<br>HERE]</span></div>
+          <div class="slot-img"><a class="slot-view">[ view ]</a><img src="assets/experiences.png" alt="Experiences"></div>
           <div class="slot-stats">
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
@@ -751,7 +753,7 @@
         <!-- SLOT 3: FORUM -->
         <div class="slot live" onclick="window.location.href='forum.html'" style="cursor:url('assets/cursorselect.png'),pointer">
           <div class="slot-title">Forum</div>
-          <div class="slot-img"><a class="slot-view">[ view ]</a><span>[PIXEL<br>ART<br>HERE]</span></div>
+          <div class="slot-img"><a class="slot-view">[ view ]</a><img src="assets/forums.png" alt="Forum"></div>
           <div class="slot-stats">
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
             <div class="s-row"><span class="s-key">DEMO</span><span class="s-val">DEMO</span></div>
@@ -871,10 +873,10 @@
   (async () => {
     const el = document.getElementById('visit-count');
     try {
-      const res  = await fetch('https://api.counterapi.dev/v1/anish-srinivasan-portfolio/visits/up');
+      const res  = await fetch('https://api.countapi.xyz/hit/anish.bio/visits');
       const data = await res.json();
-      el.textContent = data.count.toLocaleString();
-      localStorage.setItem('visit-cache', data.count);
+      el.textContent = data.value.toLocaleString();
+      localStorage.setItem('visit-cache', data.value);
     } catch {
       const cached = localStorage.getItem('visit-cache') || '?';
       el.textContent = cached !== '?' ? parseInt(cached).toLocaleString() : '?';

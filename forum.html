@@ -238,7 +238,9 @@
       border: 1px solid #000;
       background: #c8c8c8;
       flex-shrink: 0; margin-bottom: 2px;
+      overflow: hidden;
     }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Username + red online dot */
     .author-name-row { display: flex; align-items: center; gap: 4px; }
@@ -549,7 +551,7 @@
       return `
         <div class="post-row" onclick="openPost(${i})">
           <div class="post-author-col" style="background:${authorBg}">
-            <div class="author-avatar"></div>
+            <div class="author-avatar">${p.author === 'Anish_Admin' ? '<img src="assets/profilepic.jpg" alt="Anish_Admin">' : ''}</div>
             <div class="author-name-row">
               <span class="author-dot"></span>
               <span class="author-name">${esc(p.author)}</span>
@@ -595,7 +597,7 @@
     document.getElementById('fp-body-container').innerHTML = `
       <div class="post-row is-full-post">
         <div class="post-author-col" style="background:#E1E9F5">
-          <div class="author-avatar"></div>
+          <div class="author-avatar">${p.author === 'Anish_Admin' ? '<img src="assets/profilepic.jpg" alt="Anish_Admin">' : ''}</div>
           <div class="author-name-row">
             <span class="author-dot"></span>
             <span class="author-name">${esc(p.author)}</span>

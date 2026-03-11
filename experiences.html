@@ -549,12 +549,10 @@
         <div class="exp-sidebar">
           <div class="exp-browse-header">Browse</div>
           <div class="exp-category-list">
-            <a class="exp-cat-link is-active" href="#">Most Recent</a>
-            <a class="exp-cat-link" href="#">Internships</a>
-            <a class="exp-cat-link" href="#">Labs</a>
-            <a class="exp-cat-link" href="#">Open Source</a>
-            <a class="exp-cat-link" href="#">Research</a>
-            <a class="exp-cat-link" href="#">All</a>
+            <a class="exp-cat-link is-active" href="#" data-filter="all">Most Recent</a>
+            <a class="exp-cat-link" href="#" data-filter="internship">Internships</a>
+            <a class="exp-cat-link" href="#" data-filter="research">Research</a>
+            <a class="exp-cat-link" href="#" data-filter="hackathon">Hackathons</a>
           </div>
         </div>
 
@@ -564,7 +562,7 @@
           <div class="exp-card-list">
 
             <!-- Card 1 -->
-            <div class="exp-card" data-exp-key="anish-exp-1">
+            <div class="exp-card" data-exp-key="anish-exp-1" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-1">[ view ]</a>
                 <span>[LOGO]</span>
@@ -576,7 +574,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="exp-card" data-exp-key="anish-exp-2">
+            <div class="exp-card" data-exp-key="anish-exp-2" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-2">[ view ]</a>
                 <span>[LOGO]</span>
@@ -588,7 +586,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="exp-card" data-exp-key="anish-exp-3">
+            <div class="exp-card" data-exp-key="anish-exp-3" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-3">[ view ]</a>
                 <span>[LOGO]</span>
@@ -600,7 +598,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="exp-card" data-exp-key="anish-exp-4">
+            <div class="exp-card" data-exp-key="anish-exp-4" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-4">[ view ]</a>
                 <span>[LOGO]</span>
@@ -612,7 +610,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div class="exp-card" data-exp-key="anish-exp-5">
+            <div class="exp-card" data-exp-key="anish-exp-5" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-5">[ view ]</a>
                 <span>[LOGO]</span>
@@ -624,7 +622,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div class="exp-card" data-exp-key="anish-exp-6">
+            <div class="exp-card" data-exp-key="anish-exp-6" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-6">[ view ]</a>
                 <span>[LOGO]</span>
@@ -636,7 +634,7 @@
             </div>
 
             <!-- Card 7 -->
-            <div class="exp-card" data-exp-key="anish-exp-7">
+            <div class="exp-card" data-exp-key="anish-exp-7" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-7">[ view ]</a>
                 <span>[LOGO]</span>
@@ -648,7 +646,7 @@
             </div>
 
             <!-- Card 8 -->
-            <div class="exp-card" data-exp-key="anish-exp-8">
+            <div class="exp-card" data-exp-key="anish-exp-8" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-8">[ view ]</a>
                 <span>[LOGO]</span>
@@ -660,7 +658,7 @@
             </div>
 
             <!-- Card 9 -->
-            <div class="exp-card" data-exp-key="anish-exp-9">
+            <div class="exp-card" data-exp-key="anish-exp-9" data-category="">
               <div class="exp-card-logo">
                 <a class="exp-view-link" href="#" data-exp-key="anish-exp-9">[ view ]</a>
                 <span>[LOGO]</span>
@@ -743,6 +741,24 @@
       const n = bumpVisits(key);
       link.closest('.exp-card').querySelector('.visit-count').textContent =
         n.toLocaleString();
+    });
+  });
+
+  // ── CATEGORY FILTER ──
+  document.querySelectorAll('.exp-cat-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const filter = link.dataset.filter;
+      document.querySelectorAll('.exp-cat-link').forEach(function(l) { l.classList.remove('is-active'); });
+      link.classList.add('is-active');
+      document.querySelectorAll('.exp-card').forEach(function(card) {
+        if (filter === 'all') {
+          card.style.display = '';
+        } else {
+          const cats = (card.dataset.category || '').split(',').map(function(s) { return s.trim(); });
+          card.style.display = cats.includes(filter) ? '' : 'none';
+        }
+      });
     });
   });
 
