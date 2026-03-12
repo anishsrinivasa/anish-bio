@@ -6,7 +6,7 @@
   <title>Anish Srinivasan — Profile</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&family=Press+Start+2P&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 
   <style>
     /* ── Shared outline text-shadow — ensures readability over sky ── */
@@ -571,7 +571,7 @@
 
     /* 'Page 1 of 1' footer — pinned to bottom of proj-grid-body */
     .proj-pagination {
-      margin-top: auto;
+      margin-top: 8px;
       padding: 5px 10px;
       text-align: center;
       font-family: Arial, sans-serif;
@@ -695,6 +695,68 @@
       padding: 14px;
       line-height: 1.8;
       overflow-y: auto;
+    }
+    .about-body a { color: #0033BB; font-weight: bold; text-decoration: none; }
+    .about-body a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       MOBILE — max-width 768px
+    ============================================================ */
+    @media (max-width: 768px) {
+      html, body {
+        height: auto;
+        overflow: auto;
+        font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
+      }
+
+      .page {
+        height: auto;
+        min-height: 100svh;
+        padding-bottom: 48px;
+      }
+
+      .xp-addressbar { display: none; }
+
+      .taskbar-tabs { display: none; }
+
+      .xp-taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+      }
+
+      .profile-body {
+        flex-direction: column;
+        overflow: visible;
+        height: auto;
+        min-height: 0;
+      }
+
+      .profile-left,
+      .profile-right {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        height: auto;
+      }
+
+      .proj-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .slot-box {
+        min-height: 0;
+        height: auto;
+        overflow: visible;
+      }
+
+      .proj-grid-body {
+        height: auto;
+        overflow: visible;
+      }
     }
 
   </style>
@@ -821,8 +883,10 @@
 
               </div><!-- /.proj-rows-top -->
 
+              <div class="proj-pagination" style="margin-top:0">Page 1 of 1</div>
+
               <!-- Bottom group: divider + In Progress row snug together -->
-              <div class="proj-bottom">
+              <div class="proj-bottom" style="margin-top:10px">
 
                 <!-- 'In Progress' bordered divider -->
                 <div class="proj-separator">
@@ -853,9 +917,9 @@
                   </div>
                 </div>
 
-              </div><!-- /.proj-bottom -->
+                <div class="proj-pagination">Page 1 of 1</div>
 
-              <div class="proj-pagination">Page 1 of 1</div>
+              </div><!-- /.proj-bottom -->
 
             </div><!-- /.proj-grid-body -->
           </div><!-- /.slot merged -->
@@ -877,7 +941,10 @@
           <div class="slot about-slot">
             <div class="slot-title">About Me</div>
             <div class="about-body">
-              [Add your bio here]
+              Hey, I'm Anish Srinivasan. I'm a freshman at the University of Wisconsin-Madison majoring in Computer Science.<br><br>
+              I currently working on AI safety research through fellowships like <a href="https://www.aisafety.camp/" target="_blank">AI Safety Camp</a> and with university affiliated research groups like the <a href="https://xrisk.uchicago.edu/" target="_blank">Existential Risk Laboratory</a> at UChicago and <a href="https://baulab.info/" target="_blank">Bau Lab</a> at Northeastern.<br><br>
+              During high school, I founded and scaled 2 Roblox game studios to millions of plays across our games and over 20 developers working with us. Feel free to talk to me about this 1-1!<br><br>
+              I spend most of my free time running independent ventures, strengthening my technical skills, and going through the <a href="https://www.arena.education/curriculum" target="_blank">ARENA curriculum</a>.
             </div>
           </div>
 
@@ -903,7 +970,7 @@
     <div><a href="profile.html">Profile</a> &gt;&gt; A little bit about me and my projects.</div>
     <div><a href="experiences.html">Experiences</a> &gt;&gt; Some organizations I've worked with.</div>
     <div><a href="forum.html">Forum</a> &gt;&gt; Place to share my thoughts and journey.</div>
-    <div>Try clicking on the red &ldquo;X&rdquo; on the top right!</div>
+    <div>Try clicking on the red &ldquo;X&rdquo; at the top right corner of the page!</div>
   </div>
 
 </div><!-- /.page -->

@@ -6,7 +6,7 @@
   <title>Anish Srinivasan — Forum</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 
   <style>
     /* ── Reset ── */
@@ -353,6 +353,41 @@
       border-top: 1px solid rgba(0,0,0,0.15); flex-shrink: 0;
       text-align: center;
     }
+
+    /* ============================================================
+       MOBILE — max-width 768px
+    ============================================================ */
+    @media (max-width: 768px) {
+      html, body {
+        height: auto;
+        overflow: auto;
+        font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
+      }
+
+      .page {
+        height: auto;
+        min-height: 100svh;
+        padding-bottom: 48px;
+      }
+
+      .xp-addressbar { display: none; }
+
+      .taskbar-tabs { display: none; }
+
+      .xp-taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+      }
+
+      .sky-area {
+        flex: none;
+        overflow: visible;
+        height: auto;
+      }
+    }
   </style>
 </head>
 
@@ -449,7 +484,7 @@
     <div><a href="profile.html">Profile</a> &gt;&gt; A little bit about me and my projects.</div>
     <div><a href="experiences.html">Experiences</a> &gt;&gt; Some organizations I've worked with.</div>
     <div><a href="forum.html">Forum</a> &gt;&gt; Place to share my thoughts and journey.</div>
-    <div>Try clicking on the red &ldquo;X&rdquo; on the top right!</div>
+    <div>Try clicking on the red &ldquo;X&rdquo; at the top right corner of the page!</div>
   </div>
 
 </div><!-- /.page -->
