@@ -666,6 +666,12 @@
       html, body {
         height: auto;
         overflow: auto;
+      }
+
+      /* Comic Sans fallback for all Comic-Sans-using elements */
+      html, body,
+      .main-container, .slot-title, .nav-item, .nav-sep,
+      .banner-title, .ticker-text {
         font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
       }
 
@@ -705,8 +711,16 @@
         grid-template-rows: auto;
       }
 
+      /* Give slots a fixed height so slot-img (flex:1) has something to fill */
       .slot {
-        min-height: 220px;
+        height: 260px;
+      }
+
+      /* slot-img is position:relative + flex:1; give it aspect-ratio fallback */
+      .slot-img {
+        flex: none;
+        width: calc(100% - 12px);
+        aspect-ratio: 1;
       }
 
       .nav-item, .nav-sep {

@@ -706,6 +706,12 @@
       html, body {
         height: auto;
         overflow: auto;
+      }
+
+      /* Comic Sans fallback for all Comic-Sans-using elements */
+      html, body,
+      .main-container, .slot-title, .nav-item, .nav-sep,
+      .proj-separator, .exp-browse-header, .exp-main-header {
         font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
       }
 
@@ -734,6 +740,11 @@
         min-height: 0;
       }
 
+      /* Move My Character + About Me (right column) above My Projects (left column) */
+      .profile-right {
+        order: -1;
+      }
+
       .profile-left,
       .profile-right {
         flex: none;
@@ -756,6 +767,20 @@
       .proj-grid-body {
         height: auto;
         overflow: visible;
+      }
+
+      /* Project thumbnails — use aspect-ratio so they scale correctly */
+      .proj-card .slot-img {
+        aspect-ratio: 1;
+        width: 100%;
+        height: auto;
+      }
+
+      /* My Character slot — fixed reasonable height on mobile */
+      .char-slot {
+        aspect-ratio: 1;
+        width: 100%;
+        height: auto;
       }
     }
 
