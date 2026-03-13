@@ -481,6 +481,73 @@
       color: #666;
     }
 
+    /* Cards are clickable */
+    .exp-card { cursor: url('assets/cursorselect.png'), pointer; }
+    .exp-card:hover .exp-card-logo { border-color: #4478c8; }
+
+    /* Thumbnail images fill the logo box */
+    .exp-card-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Experience Popup ── */
+    #exp-popup-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #exp-popup {
+      width: 460px; max-width: 92vw;
+      background: #d4d0c8;
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      display: flex; flex-direction: column;
+      font-family: Arial, sans-serif;
+    }
+    .popup-titlebar {
+      background: linear-gradient(to right, #0058e6, #3a93ff);
+      padding: 3px 5px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .popup-title { font-size: 13px; font-weight: bold; color: #fff; white-space: nowrap; }
+    .popup-close-btn {
+      width: 20px; height: 18px;
+      background: linear-gradient(to bottom, #e8736f, #c03030);
+      border-top: 1px solid #fff; border-left: 1px solid #fff;
+      border-bottom: 1px solid #7a0000; border-right: 1px solid #7a0000;
+      color: #fff; font-size: 11px; font-weight: bold;
+      display: flex; align-items: center; justify-content: center;
+      cursor: url('assets/cursorselect.png'), pointer; flex-shrink: 0;
+    }
+    .popup-body { padding: 10px; display: flex; gap: 10px; }
+    .popup-thumb-wrap {
+      width: 130px; flex-shrink: 0; aspect-ratio: 4/3;
+      border: 1px solid #888; background: #aaa; overflow: hidden;
+    }
+    .popup-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .popup-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .popup-org { font-size: 13px; font-weight: bold; color: #0033BB; }
+    .popup-role { font-size: 11px; font-weight: bold; color: #222; }
+    .popup-timeline { font-size: 11px; color: #555; margin-bottom: 4px; }
+    .popup-desc { font-size: 11px; color: #333; line-height: 1.55; }
+    .popup-desc a { color: #0033BB; font-weight: bold; text-decoration: none; }
+    .popup-desc a:hover { text-decoration: underline; }
+    .popup-footer {
+      padding: 6px 10px; display: flex; justify-content: flex-end;
+      border-top: 1px solid #aaa; flex-shrink: 0;
+    }
+    .popup-footer-btn {
+      font-family: Arial, sans-serif; font-size: 11px; padding: 3px 20px;
+      background: #d4d0c8;
+      border-top: 1px solid #fff; border-left: 1px solid #fff;
+      border-bottom: 1px solid #555; border-right: 1px solid #555;
+      cursor: url('assets/cursorselect.png'), pointer;
+    }
+    .popup-footer-btn:active {
+      border-top-color: #555; border-left-color: #555;
+      border-bottom-color: #fff; border-right-color: #fff;
+    }
+
     /* ============================================================
        MOBILE — max-width 768px
     ============================================================ */
@@ -615,6 +682,7 @@
             <a class="exp-cat-link" href="#" data-filter="internship">Internships</a>
             <a class="exp-cat-link" href="#" data-filter="research">Research</a>
             <a class="exp-cat-link" href="#" data-filter="hackathon">Hackathons</a>
+            <a class="exp-cat-link" href="#" data-filter="organization">Organizations</a>
           </div>
         </div>
 
@@ -623,112 +691,144 @@
           <div class="exp-main-header">Recently Played</div>
           <div class="exp-card-list">
 
-            <!-- Card 1 -->
-            <div class="exp-card" data-exp-key="anish-exp-1" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-1">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">May 2024 — Aug 2024</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 1: AI Safety Camp — Present (research) -->
+            <div class="exp-card" data-exp-key="exp-1" data-category="research"
+                 data-thumb="assets/aiscthumbnail.png"
+                 data-org="AI Safety Camp"
+                 data-role="Research Fellow"
+                 data-timeline="Dec 2025 — Present"
+                 data-desc="AISC project #22 (https://docs.google.com/document/d/1XPz4klVt7DZWDDWXdD3hMEkhENuSMqSNfsp7FsdZCMQ/edit?usp=sharing) supervised by Ihor Kendiukhov, on-going.">
+              <div class="exp-card-logo"><img src="assets/aiscthumbnail.png" alt="AI Safety Camp"></div>
+              <div class="exp-org">AI Safety Camp</div>
+              <div class="exp-role">Research Fellow</div>
+              <div class="exp-duration">Dec 2025 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 2 -->
-            <div class="exp-card" data-exp-key="anish-exp-2" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-2">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Jan 2024 — May 2024</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 2: Existential Risks Laboratory — Present (research) -->
+            <div class="exp-card" data-exp-key="exp-2" data-category="research"
+                 data-thumb="assets/xlabthumbnail.png"
+                 data-org="Existential Risks Laboratory"
+                 data-role="Affiliate Researcher"
+                 data-timeline="Feb 2026 — Present"
+                 data-desc="Building AI safety workshops, supervised by the ARENA curriculum lead.">
+              <div class="exp-card-logo"><img src="assets/xlabthumbnail.png" alt="Existential Risks Laboratory"></div>
+              <div class="exp-org">Existential Risks Laboratory</div>
+              <div class="exp-role">Affiliate Researcher</div>
+              <div class="exp-duration">Feb 2026 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 3 -->
-            <div class="exp-card" data-exp-key="anish-exp-3" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-3">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Jun 2023 — Dec 2023</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 3: Roblox — Present (organization) -->
+            <div class="exp-card" data-exp-key="exp-3" data-category="organization"
+                 data-thumb="assets/robloxthumbnail.png"
+                 data-org="Roblox"
+                 data-role="Indie Game Developer"
+                 data-timeline="Feb 2021 — Present"
+                 data-desc="Founded 3 game studios with a combined play-count of over 25 million, a team of 20+ developers, and $xxx,xxx-equivalent in revenue; also founded AssetDeveloper--a marketplace for my code, 3D models, and UI packs--with 1,000+ sales and $xx,xxx-equivalent in revenue.">
+              <div class="exp-card-logo"><img src="assets/robloxthumbnail.png" alt="Roblox"></div>
+              <div class="exp-org">Roblox</div>
+              <div class="exp-role">Indie Game Developer</div>
+              <div class="exp-duration">Feb 2021 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 4 -->
-            <div class="exp-card" data-exp-key="anish-exp-4" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-4">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Sep 2022 — May 2023</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 4: Wisconsin AI Safety Initiative — Present (organization) -->
+            <div class="exp-card" data-exp-key="exp-4" data-category="organization"
+                 data-thumb="assets/waisithumbnail.png"
+                 data-org="Wisconsin AI Safety Initiative"
+                 data-role="Technical Safety Scholar"
+                 data-timeline="Sep 2025 — Present"
+                 data-desc="Member and Technical Safety Scholar at WAISI, UW-Madison's AI safety student organization.">
+              <div class="exp-card-logo"><img src="assets/waisithumbnail.png" alt="Wisconsin AI Safety Initiative"></div>
+              <div class="exp-org">Wisconsin AI Safety Initiative</div>
+              <div class="exp-role">Technical Safety Scholar</div>
+              <div class="exp-duration">Sep 2025 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 5 -->
-            <div class="exp-card" data-exp-key="anish-exp-5" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-5">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Jan 2022 — Aug 2022</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 5: Transcend UW — Present (organization) -->
+            <div class="exp-card" data-exp-key="exp-5" data-category="organization"
+                 data-thumb="assets/transcendthumbnail.png"
+                 data-org="Transcend UW"
+                 data-role="Executive Board Member and Web Team Lead"
+                 data-timeline="Sep 2025 — Present"
+                 data-desc="Leadership at UW-Madison's largest entrepreneurship/startup organization backed by the College of Engineering and School of Business. Built transcenduw.com and managed the 2026 iteration of the annual Pitch Competition with $50,000+ in prizes.">
+              <div class="exp-card-logo"><img src="assets/transcendthumbnail.png" alt="Transcend UW"></div>
+              <div class="exp-org">Transcend UW</div>
+              <div class="exp-role">Executive Board Member and Web Team Lead</div>
+              <div class="exp-duration">Sep 2025 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 6 -->
-            <div class="exp-card" data-exp-key="anish-exp-6" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-6">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Oct 2021 — Jan 2022</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 6: Bau Lab — ended March 2026 (research) -->
+            <div class="exp-card" data-exp-key="exp-6" data-category="research"
+                 data-thumb="assets/baulabthumbnail.png"
+                 data-org="Bau Lab"
+                 data-role="Research Contributor"
+                 data-timeline="Jan 2026 — March 2026"
+                 data-desc="Reimplemented papers using nnsight as part of the NSF-funded NDIF project.">
+              <div class="exp-card-logo"><img src="assets/baulabthumbnail.png" alt="Bau Lab"></div>
+              <div class="exp-org">Bau Lab</div>
+              <div class="exp-role">Research Contributor</div>
+              <div class="exp-duration">Jan 2026 — March 2026</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 7 -->
-            <div class="exp-card" data-exp-key="anish-exp-7" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-7">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Jun 2021 — Sep 2021</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 7: MadHacks 2026 — Nov 2025 (hackathon) -->
+            <div class="exp-card" data-exp-key="exp-7" data-category="hackathon"
+                 data-thumb="assets/madhacksthumbnail.png"
+                 data-org="MadHacks 2026"
+                 data-role="Participant, Winner"
+                 data-timeline="November 2025 — November 2025"
+                 data-desc="Competed at MadHacks 2026. We won the Fish Audio track + a 500$ prize.">
+              <div class="exp-card-logo"><img src="assets/madhacksthumbnail.png" alt="MadHacks 2026"></div>
+              <div class="exp-org">MadHacks 2026</div>
+              <div class="exp-role">Participant, Winner</div>
+              <div class="exp-duration">November 2025 — November 2025</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 8 -->
-            <div class="exp-card" data-exp-key="anish-exp-8" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-8">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Jan 2021 — May 2021</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 8: Cal Hacks 12.0 — Oct 2025 (hackathon) -->
+            <div class="exp-card" data-exp-key="exp-8" data-category="hackathon"
+                 data-thumb="assets/calhacksthumbnail.png"
+                 data-org="Cal Hacks 12.0"
+                 data-role="Participant"
+                 data-timeline="Oct 2025 — Oct 2025"
+                 data-desc="Competed at Cal Hacks 12.0. We didn't win anything but did learn a lot.">
+              <div class="exp-card-logo"><img src="assets/calhacksthumbnail.png" alt="Cal Hacks 12.0"></div>
+              <div class="exp-org">Cal Hacks 12.0</div>
+              <div class="exp-role">Participant</div>
+              <div class="exp-duration">Oct 2025 — Oct 2025</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- Card 9 -->
-            <div class="exp-card" data-exp-key="anish-exp-9" data-category="">
-              <div class="exp-card-logo">
-                <a class="exp-view-link" href="#" data-exp-key="anish-exp-9">[ view ]</a>
-                <span>[LOGO]</span>
-              </div>
-              <div class="exp-org">Organization Name</div>
-              <div class="exp-role">Role / Title Here</div>
-              <div class="exp-duration">Aug 2020 — Dec 2020</div>
-              <div class="exp-visits">Visits: <span class="visit-count">—</span></div>
+            <!-- 9: Lumiere — Sep 2024 (research) -->
+            <div class="exp-card" data-exp-key="exp-9" data-category="research"
+                 data-thumb="assets/lumierethumbnail.png"
+                 data-org="Lumiere"
+                 data-role="Student Researcher"
+                 data-timeline="Apr 2024 — Sep 2024"
+                 data-desc="Cooler &quot;research&quot;. I authored a review paper on deepfake attacks (https://drive.google.com/file/d/1XMVMfaORZwG6O3bdtokScQtHstMTwJqK/view?usp=sharing) which was recognized by UC San Diego. I refused to publish in high school journals, lol.">
+              <div class="exp-card-logo"><img src="assets/lumierethumbnail.png" alt="Lumiere"></div>
+              <div class="exp-org">Lumiere</div>
+              <div class="exp-role">Student Researcher</div>
+              <div class="exp-duration">Apr 2024 — Sep 2024</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
+            </div>
+
+            <!-- 10: Inspirit AI — Jun 2023 (research) -->
+            <div class="exp-card" data-exp-key="exp-10" data-category="research"
+                 data-thumb="assets/inspiritthumbnail.png"
+                 data-org="Inspirit AI"
+                 data-role="Student Researcher"
+                 data-timeline="Apr 2023 — Jun 2023"
+                 data-desc="My first taste of &quot;research&quot;--ML for natural disaster alerts.">
+              <div class="exp-card-logo"><img src="assets/inspiritthumbnail.png" alt="Inspirit AI"></div>
+              <div class="exp-org">Inspirit AI</div>
+              <div class="exp-role">Student Researcher</div>
+              <div class="exp-duration">Apr 2023 — Jun 2023</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
           </div><!-- /.exp-card-list -->
@@ -739,6 +839,30 @@
 
     </div><!-- /.main-container -->
   </div><!-- /.sky-area -->
+
+  <!-- ══ EXPERIENCE POPUP ══ -->
+  <div id="exp-popup-overlay" style="display:none">
+    <div id="exp-popup">
+      <div class="popup-titlebar">
+        <span class="popup-title">Experience Details</span>
+        <button class="popup-close-btn" id="popup-close">✕</button>
+      </div>
+      <div class="popup-body">
+        <div class="popup-thumb-wrap">
+          <img id="popup-thumb" src="" alt="">
+        </div>
+        <div class="popup-info">
+          <div class="popup-org" id="popup-org"></div>
+          <div class="popup-role" id="popup-role"></div>
+          <div class="popup-timeline" id="popup-timeline"></div>
+          <div class="popup-desc" id="popup-desc"></div>
+        </div>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-footer-btn" id="popup-close-btn2">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ══ XP TASKBAR FOOTER ══ -->
   <footer class="xp-taskbar">
@@ -765,15 +889,9 @@
   document.getElementById('url-bar').value = 'http://anish.bio/experiences.html';
 
   // ── VISIT COUNTERS ──
-  // Seeded starting values so counts look lived-in on first load.
-  // localStorage persists across sessions; swap in a real API (e.g. CountAPI,
-  // Upstash REST) by replacing getVisits / bumpVisits below.
   const SEED = {
-    'anish-exp-1': 1247, 'anish-exp-2': 893,
-    'anish-exp-3': 2104, 'anish-exp-4': 567,
-    'anish-exp-5': 1832, 'anish-exp-6': 429,
-    'anish-exp-7': 318,  'anish-exp-8': 741,
-    'anish-exp-9': 205
+    'exp-1': 0, 'exp-2': 0, 'exp-3': 0, 'exp-4': 0, 'exp-5': 0,
+    'exp-6': 0, 'exp-7': 0, 'exp-8': 0, 'exp-9': 0, 'exp-10': 0
   };
 
   function getVisits(key) {
@@ -795,14 +913,34 @@
       getVisits(card.dataset.expKey).toLocaleString();
   });
 
-  // Increment on [ View ] click
-  document.querySelectorAll('.exp-view-link[data-exp-key]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const key = link.dataset.expKey;
-      const n = bumpVisits(key);
-      link.closest('.exp-card').querySelector('.visit-count').textContent =
-        n.toLocaleString();
+  // ── POPUP ──
+  function linkify(text) {
+    return text.replace(/(https?:\/\/[^\s<>"]+)/g, '<a href="$1" target="_blank">$1</a>');
+  }
+
+  const overlay = document.getElementById('exp-popup-overlay');
+  function closePopup() { overlay.style.display = 'none'; }
+  document.getElementById('popup-close').onclick = closePopup;
+  document.getElementById('popup-close-btn2').onclick = closePopup;
+  overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
+
+  document.querySelectorAll('.exp-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.getElementById('popup-thumb').src = card.dataset.thumb || '';
+      document.getElementById('popup-thumb').alt = card.dataset.org || '';
+      document.getElementById('popup-org').textContent = card.dataset.org || '';
+      document.getElementById('popup-role').textContent = card.dataset.role || '';
+      document.getElementById('popup-timeline').textContent = card.dataset.timeline || '';
+      // decode HTML entities in data-desc before linkifying
+      const tmp = document.createElement('textarea');
+      tmp.innerHTML = card.dataset.desc || '';
+      document.getElementById('popup-desc').innerHTML = linkify(tmp.value);
+      overlay.style.display = 'flex';
+      const key = card.dataset.expKey;
+      if (key) {
+        const n = bumpVisits(key);
+        card.querySelector('.visit-count').textContent = n.toLocaleString();
+      }
     });
   });
 
