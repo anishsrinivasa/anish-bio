@@ -483,6 +483,7 @@
 
     /* Cards are clickable */
     .exp-card { cursor: url('assets/cursorselect.png'), pointer; }
+    .exp-card:hover { background: #F0F4F7; }
     .exp-card:hover .exp-card-logo { border-color: #4478c8; }
 
     /* Thumbnail images fill the logo box */
@@ -497,14 +498,14 @@
     }
     #exp-popup {
       width: 460px; max-width: 92vw;
+      max-height: 85vh;
       background: #d4d0c8;
       border: 2px solid #000;
-      box-shadow: 4px 4px 0 #000;
       display: flex; flex-direction: column;
       font-family: Arial, sans-serif;
     }
     .popup-titlebar {
-      background: linear-gradient(to right, #0058e6, #3a93ff);
+      background: rgba(77, 116, 155, 0.95);
       padding: 3px 5px;
       display: flex; align-items: center; justify-content: space-between;
       flex-shrink: 0;
@@ -519,34 +520,20 @@
       display: flex; align-items: center; justify-content: center;
       cursor: url('assets/cursorselect.png'), pointer; flex-shrink: 0;
     }
-    .popup-body { padding: 10px; display: flex; gap: 10px; }
+    .popup-body { padding: 10px; display: flex; gap: 10px; overflow-y: auto; }
     .popup-thumb-wrap {
-      width: 130px; flex-shrink: 0; aspect-ratio: 4/3;
+      width: 130px; flex-shrink: 0;
       border: 1px solid #888; background: #aaa; overflow: hidden;
+      align-self: flex-start;
     }
-    .popup-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .popup-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-    .popup-org { font-size: 13px; font-weight: bold; color: #0033BB; }
-    .popup-role { font-size: 11px; font-weight: bold; color: #222; }
+    .popup-thumb-wrap img { width: 100%; height: auto; display: block; }
+    .popup-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .popup-org { font-size: 13px; font-weight: bold; color: #0033BB; word-break: break-word; }
+    .popup-role { font-size: 11px; font-weight: bold; color: #222; word-break: break-word; }
     .popup-timeline { font-size: 11px; color: #555; margin-bottom: 4px; }
-    .popup-desc { font-size: 11px; color: #333; line-height: 1.55; }
+    .popup-desc { font-size: 11px; color: #333; line-height: 1.55; word-break: break-word; }
     .popup-desc a { color: #0033BB; font-weight: bold; text-decoration: none; }
     .popup-desc a:hover { text-decoration: underline; }
-    .popup-footer {
-      padding: 6px 10px; display: flex; justify-content: flex-end;
-      border-top: 1px solid #aaa; flex-shrink: 0;
-    }
-    .popup-footer-btn {
-      font-family: Arial, sans-serif; font-size: 11px; padding: 3px 20px;
-      background: #d4d0c8;
-      border-top: 1px solid #fff; border-left: 1px solid #fff;
-      border-bottom: 1px solid #555; border-right: 1px solid #555;
-      cursor: url('assets/cursorselect.png'), pointer;
-    }
-    .popup-footer-btn:active {
-      border-top-color: #555; border-left-color: #555;
-      border-bottom-color: #fff; border-right-color: #fff;
-    }
 
     /* ============================================================
        MOBILE — max-width 768px
@@ -858,9 +845,6 @@
           <div class="popup-desc" id="popup-desc"></div>
         </div>
       </div>
-      <div class="popup-footer">
-        <button class="popup-footer-btn" id="popup-close-btn2">Close</button>
-      </div>
     </div>
   </div>
 
@@ -921,7 +905,7 @@
   const overlay = document.getElementById('exp-popup-overlay');
   function closePopup() { overlay.style.display = 'none'; }
   document.getElementById('popup-close').onclick = closePopup;
-  document.getElementById('popup-close-btn2').onclick = closePopup;
+
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
 
   document.querySelectorAll('.exp-card').forEach(card => {
