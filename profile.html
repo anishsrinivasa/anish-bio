@@ -522,8 +522,11 @@
       padding: 8px 12px;
     }
 
-    /* Main container stretches to fill full sky-area height */
-    .main-container { flex: 1; min-height: 0; }
+    /* Main container and profile body grow naturally so sky-area scroll works */
+    .main-container { flex: none; height: auto; width: 100%; }
+    .profile-body { flex: none; height: auto; }
+    .profile-left > .slot { flex: none; height: auto; overflow: visible; }
+    .proj-grid-body { flex: none; height: auto; }
 
     /* 1px precision: override all borders to pure black, remove shadow */
     .slot { border: 1px solid #000; box-shadow: 0 0 0 0.5px #000; }
