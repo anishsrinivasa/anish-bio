@@ -678,6 +678,20 @@
           <div class="exp-main-header">Recently Played</div>
           <div class="exp-card-list">
 
+            <!-- 0: AfterQuery — May–Aug 2026 (internship) -->
+            <div class="exp-card" data-exp-key="exp-11" data-category="internship"
+                 data-thumb="assets/afterquerythumbnail.png"
+                 data-org="AfterQuery"
+                 data-role="Research Engineer Intern"
+                 data-timeline="May 2026 — August 2026"
+                 data-desc="Reinforcement learning environments, evals, LLM post-training with Sam Jung.">
+              <div class="exp-card-logo"><img src="assets/afterquerythumbnail.png" alt="AfterQuery"></div>
+              <div class="exp-org">AfterQuery</div>
+              <div class="exp-role">Research Engineer Intern</div>
+              <div class="exp-duration">May 2026 — August 2026</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
+            </div>
+
             <!-- 1: AI Safety Camp — Present (research) -->
             <div class="exp-card" data-exp-key="exp-1" data-category="research"
                  data-thumb="assets/aiscthumbnail.png"
@@ -754,7 +768,7 @@
                  data-org="Bau Lab"
                  data-role="Research Contributor"
                  data-timeline="Jan 2026 — March 2026"
-                 data-desc="Reimplemented papers using nnsight as part of the NSF-funded NDIF project.">
+                 data-desc="Reimplemented interpretability papers using nnsight as part of the NSF-funded NDIF project with Alice Rigg.">
               <div class="exp-card-logo"><img src="assets/baulabthumbnail.png" alt="Bau Lab"></div>
               <div class="exp-org">Bau Lab</div>
               <div class="exp-role">Research Contributor</div>
@@ -773,48 +787,6 @@
               <div class="exp-org">MadHacks 2026</div>
               <div class="exp-role">Participant, Winner</div>
               <div class="exp-duration">November 2025 — November 2025</div>
-              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
-            </div>
-
-            <!-- 8: Cal Hacks 12.0 — Oct 2025 (hackathon) -->
-            <div class="exp-card" data-exp-key="exp-8" data-category="hackathon"
-                 data-thumb="assets/calhacksthumbnail.png"
-                 data-org="Cal Hacks 12.0"
-                 data-role="Participant"
-                 data-timeline="Oct 2025 — Oct 2025"
-                 data-desc="Competed at Cal Hacks 12.0. We didn't win anything but did learn a lot.">
-              <div class="exp-card-logo"><img src="assets/calhacksthumbnail.png" alt="Cal Hacks 12.0"></div>
-              <div class="exp-org">Cal Hacks 12.0</div>
-              <div class="exp-role">Participant</div>
-              <div class="exp-duration">Oct 2025 — Oct 2025</div>
-              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
-            </div>
-
-            <!-- 9: Lumiere — Sep 2024 (research) -->
-            <div class="exp-card" data-exp-key="exp-9" data-category="research"
-                 data-thumb="assets/lumierethumbnail.png"
-                 data-org="Lumiere"
-                 data-role="Student Researcher"
-                 data-timeline="Apr 2024 — Sep 2024"
-                 data-desc="Cooler &quot;research&quot;. I authored a review paper on deepfake attacks (https://drive.google.com/file/d/1XMVMfaORZwG6O3bdtokScQtHstMTwJqK/view?usp=sharing) which was recognized by UC San Diego. I refused to publish in high school journals, lol.">
-              <div class="exp-card-logo"><img src="assets/lumierethumbnail.png" alt="Lumiere"></div>
-              <div class="exp-org">Lumiere</div>
-              <div class="exp-role">Student Researcher</div>
-              <div class="exp-duration">Apr 2024 — Sep 2024</div>
-              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
-            </div>
-
-            <!-- 10: Inspirit AI — Jun 2023 (research) -->
-            <div class="exp-card" data-exp-key="exp-10" data-category="research"
-                 data-thumb="assets/inspiritthumbnail.png"
-                 data-org="Inspirit AI"
-                 data-role="Student Researcher"
-                 data-timeline="Apr 2023 — Jun 2023"
-                 data-desc="My first taste of &quot;research&quot;--ML for natural disaster alerts.">
-              <div class="exp-card-logo"><img src="assets/inspiritthumbnail.png" alt="Inspirit AI"></div>
-              <div class="exp-org">Inspirit AI</div>
-              <div class="exp-role">Student Researcher</div>
-              <div class="exp-duration">Apr 2023 — Jun 2023</div>
               <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
@@ -874,8 +846,9 @@
 
   // ── VISIT COUNTERS ──
   const SEED = {
+    'exp-11': 0,
     'exp-1': 0, 'exp-2': 0, 'exp-3': 0, 'exp-4': 0, 'exp-5': 0,
-    'exp-6': 0, 'exp-7': 0, 'exp-8': 0, 'exp-9': 0, 'exp-10': 0
+    'exp-6': 0, 'exp-7': 0
   };
 
   function getVisits(key) {
