@@ -941,7 +941,7 @@
   (async () => {
     const el = document.getElementById('visit-count');
     try {
-      const res  = await fetch('https://abacus.jasoncameron.dev/hit/anish.bio/visits');
+      const res  = await fetch('https://abacus.jasoncameron.dev/hit/anishbio/visits');
       const data = await res.json();
       el.textContent = data.value.toLocaleString();
       localStorage.setItem('visit-cache', data.value);
