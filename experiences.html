@@ -714,7 +714,7 @@
                  data-org="Existential Risks Laboratory"
                  data-role="Affiliate Researcher"
                  data-timeline="Feb 2026 — May 2026"
-                 data-desc="Built technical AI safety curriculum, supervised by the ARENA lead James Hindmarch (https://github.com/anishsrinivasa/AI-Safety-Workshop-Interpretability).">
+                 data-desc="I was one of the 4 authors of this technical AI safety workshop centered around mechanistic interpretability under the supervision of the ARENA lead James Hindmarch (https://github.com/anishsrinivasa/AI-Safety-Workshop-Interpretability). It's been/being taught at university AI safety initiatives at UW-Madison, UChicago, and Georgia Tech.">
               <div class="exp-card-logo"><img src="assets/xlabthumbnail.png" alt="Existential Risks Laboratory"></div>
               <div class="exp-org">Existential Risks Laboratory</div>
               <div class="exp-role">Affiliate Researcher</div>
@@ -874,7 +874,12 @@
 
   // ── POPUP ──
   function linkify(text) {
-    return text.replace(/(https?:\/\/[^\s<>"]+)/g, '<a href="$1" target="_blank">$1</a>');
+    return text.replace(/(https?:\/\/[^\s<>"]+)/g, function(url) {
+      // Don't swallow punctuation that closes the sentence, e.g. "(https://x.com/y)."
+      var trail = (url.match(/[).,;:!?\]]+$/) || [''])[0];
+      if (trail) url = url.slice(0, url.length - trail.length);
+      return '<a href="' + url + '" target="_blank">' + url + '</a>' + trail;
+    });
   }
 
   const overlay = document.getElementById('exp-popup-overlay');
