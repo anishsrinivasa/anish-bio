@@ -365,6 +365,12 @@
     }
     .exp-cat-link:hover { text-decoration: underline; }
     .exp-cat-link.is-active { color: #001a88; }
+    .exp-cat-link.is-active::before {
+      content: '■';
+      color: #cc0000;
+      font-size: 7px;
+      flex-shrink: 0;
+    }
 
     /* ── Gallery two-level Browse: parent caret + dropdown sub-list ── */
     .exp-cat-caret {
