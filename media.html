@@ -706,19 +706,35 @@
         <div class="exp-sidebar">
           <div class="exp-browse-header">Browse</div>
           <div class="exp-category-list">
-            <a class="exp-cat-link is-active" href="#" data-cat="watched">Watched</a>
-            <a class="exp-cat-link" href="#" data-cat="upnext">Up Next</a>
+
+            <!-- Anime group -->
+            <a class="exp-cat-link is-active is-open" href="#" data-cat="anime">
+              <span class="exp-cat-caret">▸</span>Anime
+            </a>
+            <div class="exp-subcat-list is-open" data-parent="anime">
+              <a class="exp-subcat-link" href="#" data-sub="watched">Watched</a>
+              <a class="exp-subcat-link" href="#" data-sub="upnext">Up Next</a>
+            </div>
+
+            <!-- Music group -->
+            <a class="exp-cat-link" href="#" data-cat="music">
+              <span class="exp-cat-caret">▸</span>Music
+            </a>
+            <div class="exp-subcat-list" data-parent="music">
+              <a class="exp-subcat-link" href="#" data-sub="music-soon">Coming soon</a>
+            </div>
+
           </div>
         </div>
 
         <!-- RIGHT: Experience card grid -->
         <div class="exp-main">
-          <div class="exp-main-header">Watch History</div>
+          <div class="exp-main-header" id="media-header">Watch History</div>
           <div class="exp-card-list">
 
             <!-- ══ WATCHED ══ -->
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/attack-on-titan.jpg"
                  data-org="Attack on Titan" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -727,7 +743,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/vinland-saga.jpg"
                  data-org="Vinland Saga" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -736,7 +752,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/kaguya-sama-love-is-war.jpg"
                  data-org="Kaguya-sama: Love is War" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -745,7 +761,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/your-name.jpg"
                  data-org="Your Name." data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -754,7 +770,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/fairy-tail.jpg"
                  data-org="Fairy Tail" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -763,7 +779,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/pok-mon.jpg"
                  data-org="Pokémon" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -772,7 +788,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/beyblade.jpg"
                  data-org="Beyblade" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -781,7 +797,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/darling-in-the-franxx.jpg"
                  data-org="DARLING in the FRANXX" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -790,7 +806,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/rascal-does-not-dream-of-bunny-girl-senpai.jpg"
                  data-org="Rascal Does Not Dream of Bunny Girl Senpai" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -799,7 +815,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/makeine-too-many-losing-heroines.jpg"
                  data-org="Makeine: Too Many Losing Heroines!" data-role="My Score: 10/10"
                  data-desc="My Score: 10/10">
@@ -808,7 +824,7 @@
               <div class="exp-role">My Score: 10/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/re-zero-starting-life-in-another-world.jpg"
                  data-org="Re:ZERO -Starting Life in Another World-" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -817,7 +833,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/your-lie-in-april.jpg"
                  data-org="Your lie in April" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -826,7 +842,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/death-note.jpg"
                  data-org="Death Note" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -835,7 +851,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/blue-box.jpg"
                  data-org="Blue Box" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -844,7 +860,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/weathering-with-you.jpg"
                  data-org="Weathering With You" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -853,7 +869,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/86-eighty-six.jpg"
                  data-org="86 EIGHTY-SIX" data-role="My Score: 9/10"
                  data-desc="My Score: 9/10">
@@ -862,7 +878,7 @@
               <div class="exp-role">My Score: 9/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/jujutsu-kaisen.jpg"
                  data-org="JUJUTSU KAISEN" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -871,7 +887,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/oshi-no-ko.jpg"
                  data-org="OSHI NO KO" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -880,7 +896,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/black-clover.jpg"
                  data-org="Black Clover" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -889,7 +905,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/mushoku-tensei-jobless-reincarnation.jpg"
                  data-org="Mushoku Tensei: Jobless Reincarnation" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -898,7 +914,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/the-apothecary-diaries.jpg"
                  data-org="The Apothecary Diaries" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -907,7 +923,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/toradora.jpg"
                  data-org="Toradora!" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -916,7 +932,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/suzume.jpg"
                  data-org="Suzume" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -925,7 +941,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/chitose-is-in-the-ramune-bottle.jpg"
                  data-org="Chitose Is in the Ramune Bottle" data-role="My Score: 8/10"
                  data-desc="My Score: 8/10">
@@ -934,7 +950,7 @@
               <div class="exp-role">My Score: 8/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/kaiju-no-8.jpg"
                  data-org="Kaiju No. 8" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -943,7 +959,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/horimiya.jpg"
                  data-org="Horimiya" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -952,7 +968,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/alya-sometimes-hides-her-feelings-in-russian.jpg"
                  data-org="Alya Sometimes Hides Her Feelings in Russian" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -961,7 +977,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/dan-da-dan.jpg"
                  data-org="DAN DA DAN" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -970,7 +986,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/solo-leveling.jpg"
                  data-org="Solo Leveling" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -979,7 +995,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/frieren-beyond-journey-s-end.jpg"
                  data-org="Frieren: Beyond Journey’s End" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -988,7 +1004,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/i-want-to-end-this-love-game.jpg"
                  data-org="I Want to End this Love Game" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -997,7 +1013,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/shikimori-s-not-just-a-cutie.jpg"
                  data-org="Shikimori's Not Just a Cutie" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -1006,7 +1022,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/i-want-to-eat-your-pancreas.jpg"
                  data-org="I Want to Eat Your Pancreas" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -1015,7 +1031,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/tonikawa-over-the-moon-for-you.jpg"
                  data-org="TONIKAWA: Over The Moon For You" data-role="My Score: 7/10"
                  data-desc="My Score: 7/10">
@@ -1024,7 +1040,7 @@
               <div class="exp-role">My Score: 7/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/my-dress-up-darling.jpg"
                  data-org="My Dress-Up Darling" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1033,7 +1049,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/the-fragrant-flower-blooms-with-dignity.jpg"
                  data-org="The Fragrant Flower Blooms With Dignity" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1042,7 +1058,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/my-teen-romantic-comedy-snafu.jpg"
                  data-org="My Teen Romantic Comedy SNAFU" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1051,7 +1067,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/more-than-a-married-couple-but-not-lovers.jpg"
                  data-org="More than a Married Couple, but Not Lovers." data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1060,7 +1076,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/i-made-friends-with-the-second-prettiest-girl-in-m.jpg"
                  data-org="I Made Friends with the Second Prettiest Girl in My Class" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1069,7 +1085,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/hyouka.jpg"
                  data-org="Hyouka" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1078,7 +1094,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/bakugan-battle-brawlers.jpg"
                  data-org="Bakugan Battle Brawlers" data-role="My Score: 6/10"
                  data-desc="My Score: 6/10">
@@ -1087,7 +1103,7 @@
               <div class="exp-role">My Score: 6/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/spy-x-family.jpg"
                  data-org="SPY x FAMILY" data-role="My Score: 5/10"
                  data-desc="My Score: 5/10">
@@ -1096,7 +1112,7 @@
               <div class="exp-role">My Score: 5/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/the-angel-next-door-spoils-me-rotten.jpg"
                  data-org="The Angel Next Door Spoils Me Rotten" data-role="My Score: 5/10"
                  data-desc="My Score: 5/10">
@@ -1105,7 +1121,7 @@
               <div class="exp-role">My Score: 5/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/masamune-kun-s-revenge.jpg"
                  data-org="Masamune-kun's Revenge" data-role="My Score: 4/10"
                  data-desc="My Score: 4/10">
@@ -1114,7 +1130,7 @@
               <div class="exp-role">My Score: 4/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/pseudo-harem.jpg"
                  data-org="Pseudo Harem" data-role="My Score: 3/10"
                  data-desc="My Score: 3/10">
@@ -1123,7 +1139,7 @@
               <div class="exp-role">My Score: 3/10</div>
             </div>
 
-            <div class="exp-card" data-cat="watched"
+            <div class="exp-card" data-cat="anime" data-sub="watched"
                  data-thumb="assets/media/oh-boy-was-i-wrong-about-her.jpg"
                  data-org="Oh Boy, Was I Wrong About Her" data-role="My Score: 2/10"
                  data-desc="My Score: 2/10">
@@ -1134,7 +1150,7 @@
 
             <!-- ══ UP NEXT ══ -->
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/demon-slayer-kimetsu-no-yaiba.jpg"
                  data-org="Demon Slayer: Kimetsu no Yaiba" data-role="Up Next"
                  data-desc="Up Next">
@@ -1143,7 +1159,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/marriagetoxin.jpg"
                  data-org="MARRIAGETOXIN" data-role="Up Next"
                  data-desc="Up Next">
@@ -1152,7 +1168,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/akame-ga-kill.jpg"
                  data-org="Akame ga Kill!" data-role="Up Next"
                  data-desc="Up Next">
@@ -1161,7 +1177,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/steins-gate.jpg"
                  data-org="Steins;Gate" data-role="Up Next"
                  data-desc="Up Next">
@@ -1170,7 +1186,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/kimi-ni-todoke-from-me-to-you.jpg"
                  data-org="Kimi ni Todoke: From Me to You" data-role="Up Next"
                  data-desc="Up Next">
@@ -1179,7 +1195,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/fruits-basket.jpg"
                  data-org="Fruits Basket" data-role="Up Next"
                  data-desc="Up Next">
@@ -1188,7 +1204,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/golden-time.jpg"
                  data-org="Golden Time" data-role="Up Next"
                  data-desc="Up Next">
@@ -1197,7 +1213,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/witch-hat-atelier.jpg"
                  data-org="Witch Hat Atelier" data-role="Up Next"
                  data-desc="Up Next">
@@ -1206,7 +1222,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/sakamoto-days.jpg"
                  data-org="SAKAMOTO DAYS" data-role="Up Next"
                  data-desc="Up Next">
@@ -1215,7 +1231,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/erased.jpg"
                  data-org="ERASED" data-role="Up Next"
                  data-desc="Up Next">
@@ -1224,7 +1240,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/takopi-s-original-sin.jpg"
                  data-org="Takopi's Original Sin" data-role="Up Next"
                  data-desc="Up Next">
@@ -1233,7 +1249,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/a-silent-voice.jpg"
                  data-org="A Silent Voice" data-role="Up Next"
                  data-desc="Up Next">
@@ -1242,7 +1258,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/monster.jpg"
                  data-org="Monster" data-role="Up Next"
                  data-desc="Up Next">
@@ -1251,7 +1267,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/violet-evergarden.jpg"
                  data-org="Violet Evergarden" data-role="Up Next"
                  data-desc="Up Next">
@@ -1260,7 +1276,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/the-rising-of-the-shield-hero.jpg"
                  data-org="The Rising of the Shield Hero" data-role="Up Next"
                  data-desc="Up Next">
@@ -1269,7 +1285,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/josee-the-tiger-and-the-fish.jpg"
                  data-org="Josee, the Tiger and the Fish" data-role="Up Next"
                  data-desc="Up Next">
@@ -1278,7 +1294,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/tokyo-ghoul.jpg"
                  data-org="Tokyo Ghoul" data-role="Up Next"
                  data-desc="Up Next">
@@ -1287,7 +1303,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/you-and-i-are-polar-opposites.jpg"
                  data-org="You and I Are Polar Opposites" data-role="Up Next"
                  data-desc="Up Next">
@@ -1296,7 +1312,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/komi-can-t-communicate.jpg"
                  data-org="Komi Can’t Communicate" data-role="Up Next"
                  data-desc="Up Next">
@@ -1305,7 +1321,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/the-girl-i-like-forgot-her-glasses.jpg"
                  data-org="The Girl I Like Forgot Her Glasses" data-role="Up Next"
                  data-desc="Up Next">
@@ -1314,7 +1330,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/i-m-getting-married-to-a-girl-i-hate-in-my-class.jpg"
                  data-org="I'm Getting Married to a Girl I Hate in My Class" data-role="Up Next"
                  data-desc="Up Next">
@@ -1323,7 +1339,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/a-whisker-away.jpg"
                  data-org="A Whisker Away" data-role="Up Next"
                  data-desc="Up Next">
@@ -1332,7 +1348,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/banana-fish.jpg"
                  data-org="BANANA FISH" data-role="Up Next"
                  data-desc="Up Next">
@@ -1341,7 +1357,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/that-time-i-got-reincarnated-as-a-slime.jpg"
                  data-org="That Time I Got Reincarnated as a Slime" data-role="Up Next"
                  data-desc="Up Next">
@@ -1350,7 +1366,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/sword-art-online.jpg"
                  data-org="Sword Art Online" data-role="Up Next"
                  data-desc="Up Next">
@@ -1359,7 +1375,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/to-your-eternity.jpg"
                  data-org="To Your Eternity" data-role="Up Next"
                  data-desc="Up Next">
@@ -1368,7 +1384,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/code-geass-lelouch-of-the-rebellion.jpg"
                  data-org="Code Geass: Lelouch of the Rebellion" data-role="Up Next"
                  data-desc="Up Next">
@@ -1377,7 +1393,7 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/gintama.jpg"
                  data-org="Gintama" data-role="Up Next"
                  data-desc="Up Next">
@@ -1386,13 +1402,23 @@
               <div class="exp-role">Up Next</div>
             </div>
 
-            <div class="exp-card" data-cat="upnext"
+            <div class="exp-card" data-cat="anime" data-sub="upnext"
                  data-thumb="assets/media/chainsaw-man.jpg"
                  data-org="Chainsaw Man" data-role="Up Next"
                  data-desc="Up Next">
               <div class="exp-card-logo"><img src="assets/media/chainsaw-man.jpg" alt="Chainsaw Man"></div>
               <div class="exp-org">Chainsaw Man</div>
               <div class="exp-role">Up Next</div>
+            </div>
+
+
+            <!-- ══ MUSIC (placeholder) ══ -->
+            <div class="exp-card" data-cat="music" data-sub="music-soon"
+                 data-thumb="" data-org="Music coming soon" data-role=""
+                 data-desc="My music picks are coming soon.">
+              <div class="exp-card-logo"><span>[coming soon]</span></div>
+              <div class="exp-org">Music coming soon</div>
+              <div class="exp-role"></div>
             </div>
 
           </div><!-- /.exp-card-list -->
@@ -1500,6 +1526,12 @@
     });
   }
 
+  // Header reflects the active top-level category
+  function setHeader(cat) {
+    const h = document.getElementById('media-header');
+    if (h) h.textContent = (cat === 'music') ? 'Listen History' : 'Watch History';
+  }
+
   // Parent selector: open only this group's dropdown, show whole category
   catLinks.forEach(function(link) {
     link.addEventListener('click', function(e) {
@@ -1513,6 +1545,7 @@
         list.classList.toggle('is-open', list.dataset.parent === cat);
       });
       filterCards('cat', cat);
+      setHeader(cat);
     });
   });
 
@@ -1523,11 +1556,14 @@
       clearActive();
       link.classList.add('is-active');
       filterCards('sub', link.dataset.sub);
+      const parent = link.closest('.exp-subcat-list');
+      if (parent) setHeader(parent.dataset.parent);
     });
   });
 
-  // Default view — Watched
-  filterCards('cat', 'watched');
+  // Default view — Anime
+  filterCards('cat', 'anime');
+  setHeader('anime');
 
   // ── NAV BUTTONS ──
   document.getElementById('btn-back').onclick = () => history.back();
