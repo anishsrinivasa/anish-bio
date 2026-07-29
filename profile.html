@@ -668,6 +668,32 @@
       gap: 8px;
     }
 
+    /* Character photo — perfect square filling sidebar width (empty for now) */
+    .char-slot { flex: none; aspect-ratio: 1; width: 100%; }
+    .char-slot .slot-img {
+      flex: 1;
+      min-height: 0;
+      border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .char-slot .slot-img img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      flex: 1;
+      min-height: 0;
+    }
+    .char-empty {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      color: #8899AA;
+    }
+
     /* About Me — grows to fill all remaining sidebar height */
     .about-slot { flex: 1; min-height: 0; }
     .about-body {
@@ -753,7 +779,7 @@
         min-height: 0;
       }
 
-      /* Move About Me (right column) above My Projects (left column) */
+      /* Move My Character + About Me (right column) above My Projects (left column) */
       .profile-right {
         order: -1;
       }
@@ -784,6 +810,13 @@
 
       /* Project thumbnails — use aspect-ratio so they scale correctly */
       .proj-card .slot-img {
+        aspect-ratio: 1;
+        width: 100%;
+        height: auto;
+      }
+
+      /* My Character slot — fixed reasonable height on mobile */
+      .char-slot {
         aspect-ratio: 1;
         width: 100%;
         height: auto;
@@ -971,8 +1004,16 @@
 
         </div><!-- /.profile-left -->
 
-        <!-- RIGHT COLUMN: About Me -->
+        <!-- RIGHT COLUMN: My Character + About Me -->
         <div class="profile-right">
+
+          <!-- My Character photo frame (empty for now) -->
+          <div class="slot char-slot">
+            <div class="slot-title">My Character</div>
+            <div class="slot-img">
+              <span class="char-empty">[ empty ]</span>
+            </div>
+          </div>
 
           <!-- About Me text -->
           <div class="slot about-slot">
