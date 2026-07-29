@@ -660,7 +660,28 @@
       padding: 14px 16px;
       font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
       color: #0f1419;
+      cursor: url('assets/cursorselect.png'), pointer;
+      transition: box-shadow .12s ease, transform .12s ease;
     }
+    .post:hover { box-shadow: 0 3px 10px rgba(0,0,0,0.18); transform: translateY(-1px); }
+
+    /* Quoted post (nested card, e.g. a quote-tweet) */
+    .post-quote {
+      margin-top: 12px;
+      border: 1px solid #cfd9de;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #f7f9f9;
+    }
+    .post-quote-head { font-size: 13px; }
+    .post-quote-name { font-weight: 700; color: #0f1419; }
+    .post-quote-handle { color: #536471; }
+    .post-quote-body {
+      font-size: 14px; line-height: 1.45; color: #0f1419;
+      margin-top: 4px; white-space: pre-wrap; word-break: break-word;
+    }
+    .post-quote-body a { color: #1d9bf0; text-decoration: none; }
+    .post-quote-body a:hover { text-decoration: underline; }
     .post-head { display: flex; align-items: center; gap: 10px; }
     .post-avatar {
       width: 42px; height: 42px; border-radius: 50%;
@@ -801,17 +822,21 @@
   const POSTS = [
     {
       platform: 'x',
-      date: 'Example',
-      text: "This is a sample X post. Replace the entries in the POSTS array with your real posts — text, an optional image, the date, and a link to the original.",
+      date: 'Jul 2026',
+      text: "Excited to have worked on this with Legora!",
+      url: 'https://x.com/anishngmi/status/2082243608409932163',
       media: '',
-      url: 'https://x.com/anishngmi'
+      quote: {
+        name: 'AfterQuery', handle: '@AfterQuery',
+        text: "Congrats to the @WeAreLegora team on the release of the Legora BAR, a benchmark for agentic legal work built on 5,161 real law firm cases across 28 practice areas!\n\n@AfterQuery helped QA the benchmark with Legora. Proud to work with their team on measuring the frontier of agentic legal work.\n\nFull blog post: https://legora.com/bar"
+      }
     },
     {
       platform: 'linkedin',
-      date: 'Example',
-      text: "This is a sample LinkedIn post. Same idea — paste your posts here and they show up in this feed, newest at the top.",
-      media: '',
-      url: 'https://www.linkedin.com/in/srinivasan-anish'
+      date: 'Apr 2026',
+      text: "I'll be joining AfterQuery as a Research Engineer Intern in San Francisco this summer.",
+      url: 'https://www.linkedin.com/feed/update/urn:li:activity:7450031820986953728/',
+      media: ''
     }
   ];
 
@@ -845,8 +870,15 @@
       const cfg = PLATFORM[p.platform] || PLATFORM.x;
       const body = linkify(esc(p.text)).replace(/\n/g, '<br>');
       const media = p.media ? '<img class="post-media" src="'+p.media+'" alt="">' : '';
+      const quote = p.quote ? (
+        '<div class="post-quote">'
+        + '<div class="post-quote-head"><span class="post-quote-name">'+esc(p.quote.name)+'</span> '
+        +   '<span class="post-quote-handle">'+esc(p.quote.handle)+'</span></div>'
+        + '<div class="post-quote-body">'+linkify(esc(p.quote.text)).replace(/\n/g,'<br>')+'</div>'
+        + '</div>'
+      ) : '';
       return (
-        '<article class="post">'
+        '<article class="post" data-url="'+p.url+'">'
         + '<div class="post-head">'
         +   '<img class="post-avatar" src="assets/anish.jpeg" alt="'+esc(cfg.name)+'">'
         +   '<div class="post-id"><span class="post-name">'+esc(cfg.name)+'</span>'
@@ -854,12 +886,21 @@
         +   '<span class="post-badge" style="background:'+cfg.color+'" title="'+cfg.label+'">'+cfg.badge+'</span>'
         + '</div>'
         + '<div class="post-body">'+body+'</div>'
+        + quote
         + media
         + '<div class="post-foot"><span class="post-date">'+esc(p.date)+'</span>'
         +   '<a class="post-link" href="'+p.url+'" target="_blank" rel="noopener">view on '+cfg.label+' →</a></div>'
         + '</article>'
       );
     }).join('');
+
+    // Whole card is clickable (except when clicking a real link)
+    feed.querySelectorAll('.post').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return;
+        window.open(card.dataset.url, '_blank', 'noopener');
+      });
+    });
   })();
 
   // ── NAV BUTTONS ──
