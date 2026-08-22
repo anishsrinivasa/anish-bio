@@ -365,6 +365,12 @@
     }
     .exp-cat-link:hover { text-decoration: underline; }
     .exp-cat-link.is-active { color: #001a88; }
+    .exp-cat-link.is-active::before {
+      content: '■';
+      color: #cc0000;
+      font-size: 7px;
+      flex-shrink: 0;
+    }
 
     /* ── Gallery two-level Browse: parent caret + dropdown sub-list ── */
     .exp-cat-caret {
@@ -703,25 +709,8 @@
           <div class="exp-browse-header">Browse</div>
           <div class="exp-category-list">
 
-            <!-- Photography group -->
-            <a class="exp-cat-link is-active is-open" href="#" data-cat="photography">
-              <span class="exp-cat-caret">▸</span>Photography
-            </a>
-            <div class="exp-subcat-list is-open" data-parent="photography">
-              <a class="exp-subcat-link" href="#" data-sub="birds">Birds</a>
-              <a class="exp-subcat-link" href="#" data-sub="animals">Animals</a>
-              <a class="exp-subcat-link" href="#" data-sub="naturescape">Naturescape</a>
-            </div>
-
-            <!-- Art group -->
-            <a class="exp-cat-link" href="#" data-cat="art">
-              <span class="exp-cat-caret">▸</span>Art
-            </a>
-            <div class="exp-subcat-list" data-parent="art">
-              <a class="exp-subcat-link" href="#" data-sub="painting">Painting</a>
-              <a class="exp-subcat-link" href="#" data-sub="sketching">Sketching</a>
-              <a class="exp-subcat-link" href="#" data-sub="miscellaneous">Miscellaneous</a>
-            </div>
+            <a class="exp-cat-link is-active" href="#" data-cat="photography">Photography</a>
+            <a class="exp-cat-link" href="#" data-cat="art">Art</a>
 
             <!-- 3D group — DISABLED (cards remain in grid; uncomment to re-enable)
             <a class="exp-cat-link" href="#" data-cat="3d">
