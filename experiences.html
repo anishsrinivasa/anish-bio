@@ -489,6 +489,20 @@
     /* Thumbnail images fill the logo box */
     .exp-card-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+    /* [ view ] — top-right corner of the thumbnail, like profile.html */
+    .exp-view-link {
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      font-weight: bold;
+      color: #0033BB;
+      text-decoration: none;
+      cursor: url('assets/cursorselect.png'), pointer;
+    }
+    .exp-view-link:hover { color: #001a88; text-decoration: underline; }
+
     /* ── Experience Popup ── */
     #exp-popup-overlay {
       position: fixed; inset: 0;
@@ -683,6 +697,20 @@
           <div class="exp-main-header">Recently Played</div>
           <div class="exp-card-list">
 
+            <!-- 0: Columbia AI Alignment Club — Sep 2026 (organization) -->
+            <div class="exp-card" data-exp-key="exp-12" data-category="organization"
+                 data-thumb="assets/cuaicthumbnail.png"
+                 data-org="Columbia AI Alignment Club"
+                 data-role="Member (Associated Researcher)"
+                 data-timeline="September 2026 — Present"
+                 data-desc="Currently a member here after transferring to Columbia (ily WAISI). (https://www.cualignment.org/)">
+              <div class="exp-card-logo"><img src="assets/cuaicthumbnail.png" alt="Columbia AI Alignment Club"><a class="exp-view-link" href="https://www.cualignment.org/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Columbia AI Alignment Club</div>
+              <div class="exp-role">Member (Associated Researcher)</div>
+              <div class="exp-duration">September 2026 — Present</div>
+              <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
+            </div>
+
             <!-- 0: AfterQuery — May–Aug 2026 (internship) -->
             <div class="exp-card" data-exp-key="exp-11" data-category="internship"
                  data-thumb="assets/afterquerythumbnail.png"
@@ -690,7 +718,7 @@
                  data-role="Research Engineer Intern"
                  data-timeline="May 2026 — August 2026"
                  data-desc="Built reinforcement learning environments, released a public benchmark, and shipped this data to several frontier lab clients under the supervision of Sam Jung.">
-              <div class="exp-card-logo"><img src="assets/afterquerythumbnail.png" alt="AfterQuery"></div>
+              <div class="exp-card-logo"><img src="assets/afterquerythumbnail.png" alt="AfterQuery"><a class="exp-view-link" href="https://www.afterquery.com/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">AfterQuery</div>
               <div class="exp-role">Research Engineer Intern</div>
               <div class="exp-duration">May 2026 — August 2026</div>
@@ -704,7 +732,7 @@
                  data-role="Research Fellow"
                  data-timeline="Dec 2025 — May 2026"
                  data-desc="Mechanistic interpretability - AISC project #22 (https://docs.google.com/document/d/1XPz4klVt7DZWDDWXdD3hMEkhENuSMqSNfsp7FsdZCMQ/edit?usp=sharing) supervised by Ihor Kendiukhov, on-going.">
-              <div class="exp-card-logo"><img src="assets/aiscthumbnail.png" alt="AI Safety Camp"></div>
+              <div class="exp-card-logo"><img src="assets/aiscthumbnail.png" alt="AI Safety Camp"><a class="exp-view-link" href="https://www.aisafety.camp/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">AI Safety Camp</div>
               <div class="exp-role">Research Fellow</div>
               <div class="exp-duration">Dec 2025 — May 2026</div>
@@ -718,7 +746,7 @@
                  data-role="Affiliate Researcher"
                  data-timeline="Feb 2026 — May 2026"
                  data-desc="I was one of the 4 authors of this technical AI safety workshop centered around mechanistic interpretability under the supervision of the ARENA lead James Hindmarch (https://github.com/anishsrinivasa/AI-Safety-Workshop-Interpretability). It's been/being taught at university AI safety initiatives at UW-Madison, UChicago, and Georgia Tech.">
-              <div class="exp-card-logo"><img src="assets/xlabthumbnail.png" alt="Existential Risks Laboratory"></div>
+              <div class="exp-card-logo"><img src="assets/xlabthumbnail.png" alt="Existential Risks Laboratory"><a class="exp-view-link" href="https://xrisk.uchicago.edu/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">Existential Risks Laboratory</div>
               <div class="exp-role">Affiliate Researcher</div>
               <div class="exp-duration">Feb 2026 — May 2026</div>
@@ -732,7 +760,7 @@
                  data-role="Research Contributor"
                  data-timeline="Dec 2025 — Feb 2026"
                  data-desc="Reimplemented several fundamental interpretability papers using nnsight with Alice Rigg at Bau Lab for an NDIF research paper (https://github.com/anishsrinivasa/NDIF-Project).">
-              <div class="exp-card-logo"><img src="assets/baulabthumbnail.png" alt="Bau Lab"></div>
+              <div class="exp-card-logo"><img src="assets/baulabthumbnail.png" alt="Bau Lab"><a class="exp-view-link" href="https://baulab.info/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">Bau Lab</div>
               <div class="exp-role">Research Contributor</div>
               <div class="exp-duration">Dec 2025 — Feb 2026</div>
@@ -760,7 +788,7 @@
                  data-role="Technical Safety Scholar"
                  data-timeline="Sep 2025 — May 2026"
                  data-desc="Member and Technical Safety Scholar at WAISI, UW-Madison's AI safety student organization.">
-              <div class="exp-card-logo"><img src="assets/waisithumbnail.png" alt="Wisconsin AI Safety Initiative"></div>
+              <div class="exp-card-logo"><img src="assets/waisithumbnail.png" alt="Wisconsin AI Safety Initiative"><a class="exp-view-link" href="https://waisi.org/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">Wisconsin AI Safety Initiative</div>
               <div class="exp-role">Technical Safety Scholar</div>
               <div class="exp-duration">Sep 2025 — May 2026</div>
@@ -774,7 +802,7 @@
                  data-role="Executive Board Member and Web Team Lead"
                  data-timeline="Sep 2025 — May 2026"
                  data-desc="Leadership at UW-Madison's largest entrepreneurship/startup organization backed by the College of Engineering and School of Business. Built transcenduw.com and managed the 2026 iteration of the annual Pitch Competition with $50,000+ in prizes.">
-              <div class="exp-card-logo"><img src="assets/transcendthumbnail.png" alt="Transcend UW"></div>
+              <div class="exp-card-logo"><img src="assets/transcendthumbnail.png" alt="Transcend UW"><a class="exp-view-link" href="https://www.transcenduw.com/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">Transcend UW</div>
               <div class="exp-role">Executive Board Member and Web Team Lead</div>
               <div class="exp-duration">Sep 2025 — May 2026</div>
@@ -837,7 +865,7 @@
 
   // ── VISIT COUNTERS ──
   const SEED = {
-    'exp-11': 0,
+    'exp-12': 0, 'exp-11': 0,
     'exp-1': 0, 'exp-2': 0, 'exp-3': 0, 'exp-4': 0, 'exp-5': 0,
     'exp-6': 0
   };
@@ -878,7 +906,8 @@
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
 
   document.querySelectorAll('.exp-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.exp-view-link')) return;  // let the link open, no popup
       document.getElementById('popup-thumb').src = card.dataset.thumb || '';
       document.getElementById('popup-thumb').alt = card.dataset.org || '';
       document.getElementById('popup-org').textContent = card.dataset.org || '';
