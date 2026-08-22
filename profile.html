@@ -668,8 +668,11 @@
       gap: 8px;
     }
 
-    /* Character photo — perfect square filling sidebar width (empty for now) */
-    .char-slot { flex: none; aspect-ratio: 1; width: 100%; }
+    /* Character photo — perfect square filling sidebar width.
+       --char-crop-y slides the visible window over the portrait:
+       0% = top of the photo, 50% = dead centre, 100% = bottom
+       (higher value => the photo sits higher in the frame). */
+    .char-slot { flex: none; aspect-ratio: 1; width: 100%; --char-crop-y: 100%; }
     .char-slot .slot-img {
       flex: 1;
       min-height: 0;
@@ -683,10 +686,10 @@
     }
     .char-slot .slot-img img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
+      object-position: center var(--char-crop-y);
       display: block;
-      flex: 1;
-      min-height: 0;
     }
     .char-empty {
       font-family: Arial, sans-serif;
