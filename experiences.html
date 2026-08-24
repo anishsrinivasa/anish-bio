@@ -701,12 +701,12 @@
             <div class="exp-card" data-exp-key="exp-12" data-category="organization"
                  data-thumb="assets/cuaicthumbnail.png"
                  data-org="Columbia AI Alignment Club"
-                 data-role="Member (Associated Researcher)"
+                 data-role="Member"
                  data-timeline="September 2026 — Present"
                  data-desc="Currently a member here after transferring to Columbia (ily WAISI). (https://www.cualignment.org/)">
               <div class="exp-card-logo"><img src="assets/cuaicthumbnail.png" alt="Columbia AI Alignment Club"><a class="exp-view-link" href="https://www.cualignment.org/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">Columbia AI Alignment Club</div>
-              <div class="exp-role">Member (Associated Researcher)</div>
+              <div class="exp-role">Member</div>
               <div class="exp-duration">September 2026 — Present</div>
               <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
@@ -717,7 +717,7 @@
                  data-org="AfterQuery"
                  data-role="Research Engineer Intern"
                  data-timeline="May 2026 — August 2026"
-                 data-desc="Built reinforcement learning environments, released a public benchmark, and shipped this data to several frontier lab clients under the supervision of Sam Jung.">
+                 data-desc="I built RL environments and shipped training data (RLVR/RLHF/SFT/multimodal/long-horizon tool-use) to frontier labs. I also represented AfterQuery in its collaboration with Legora on <a href='https://anish.bio/updates.html' target='_blank'>Benchmark for Agentic Reasoning (BAR)</a>.">
               <div class="exp-card-logo"><img src="assets/afterquerythumbnail.png" alt="AfterQuery"><a class="exp-view-link" href="https://www.afterquery.com/" target="_blank" rel="noopener">[ view ]</a></div>
               <div class="exp-org">AfterQuery</div>
               <div class="exp-role">Research Engineer Intern</div>
@@ -767,16 +767,16 @@
               <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
 
-            <!-- 4: Roblox — Present (organization) -->
-            <div class="exp-card" data-exp-key="exp-3" data-category="organization"
+            <!-- 4: Roblox — Present (uncategorised; shows under Most Recent only) -->
+            <div class="exp-card" data-exp-key="exp-3" data-category=""
                  data-thumb="assets/robloxthumbnail.png"
                  data-org="Roblox"
-                 data-role="Indie Game Developer"
+                 data-role="Studio Founder and Producer"
                  data-timeline="Feb 2021 — Present"
                  data-desc="Founded 3 Roblox game studios with a combined play-count of over 30 million, a team of 20+ developers, and $xxx,xxx-equivalent in revenue.">
               <div class="exp-card-logo"><img src="assets/robloxthumbnail.png" alt="Roblox"></div>
               <div class="exp-org">Roblox</div>
-              <div class="exp-role">Indie Game Developer</div>
+              <div class="exp-role">Studio Founder and Producer</div>
               <div class="exp-duration">Feb 2021 — Present</div>
               <div class="exp-visits">Visits: <span class="visit-count">0</span></div>
             </div>
@@ -891,12 +891,17 @@
 
   // ── POPUP ──
   function linkify(text) {
-    return text.replace(/(https?:\/\/[^\s<>"]+)/g, function(url) {
-      // Don't swallow punctuation that closes the sentence, e.g. "(https://x.com/y)."
-      var trail = (url.match(/[).,;:!?\]]+$/) || [''])[0];
-      if (trail) url = url.slice(0, url.length - trail.length);
-      return '<a href="' + url + '" target="_blank">' + url + '</a>' + trail;
-    });
+    // Split out any hand-written <a>…</a> so we only auto-link bare URLs —
+    // otherwise the URL inside an href gets wrapped in a second anchor.
+    return text.split(/(<a\b[^>]*>[\s\S]*?<\/a>)/gi).map(function(part, i) {
+      if (i % 2) return part;  // an existing anchor — leave as authored
+      return part.replace(/(https?:\/\/[^\s<>"]+)/g, function(url) {
+        // Don't swallow punctuation that closes the sentence, e.g. "(https://x.com/y)."
+        var trail = (url.match(/[).,;:!?\]]+$/) || [''])[0];
+        if (trail) url = url.slice(0, url.length - trail.length);
+        return '<a href="' + url + '" target="_blank">' + url + '</a>' + trail;
+      });
+    }).join('');
   }
 
   const overlay = document.getElementById('exp-popup-overlay');
