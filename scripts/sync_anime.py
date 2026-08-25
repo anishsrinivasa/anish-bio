@@ -66,7 +66,9 @@ def fetch_discord():
     """
     token = os.environ.get("DISCORD_BOT_TOKEN")
     if not token:
-        sys.exit("DISCORD_BOT_TOKEN is not set")
+        # Same reasoning as the config check below: stay quiet until wired up.
+        print("DISCORD_BOT_TOKEN is not set -- nothing to do")
+        raise SystemExit(0)
     with io.open(CONFIG, encoding="utf-8") as f:
         cfg = json.load(f)
     channel = str(cfg.get("channel_id") or "")
