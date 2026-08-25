@@ -66,14 +66,25 @@ def get(url, token, tries=4):
 
 
 def token_from_env():
+    """Exchange the stored refresh token for a fresh access token.
+
+    Client Credentials is not usable here: app-only tokens 403 on tracks,
+    albums and playlist items. See scripts/spotify_auth.py for how the
+    refresh token is minted (one-time, local).
+    """
     cid = os.environ.get("SPOTIFY_CLIENT_ID")
     secret = os.environ.get("SPOTIFY_CLIENT_SECRET")
+    refresh = os.environ.get("SPOTIFY_REFRESH_TOKEN")
     if not cid or not secret:
         sys.exit("SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET are not set")
+    if not refresh:
+        sys.exit("SPOTIFY_REFRESH_TOKEN is not set -- run scripts/spotify_auth.py")
     basic = base64.b64encode(("%s:%s" % (cid, secret)).encode()).decode()
     req = urllib.request.Request(
         "https://accounts.spotify.com/api/token",
-        data=urllib.parse.urlencode({"grant_type": "client_credentials"}).encode(),
+        data=urllib.parse.urlencode(
+            {"grant_type": "refresh_token", "refresh_token": refresh}
+        ).encode(),
         headers={"Authorization": "Basic " + basic, "User-Agent": UA},
     )
     with urllib.request.urlopen(req, timeout=30) as r:
