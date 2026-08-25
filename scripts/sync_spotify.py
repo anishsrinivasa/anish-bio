@@ -113,9 +113,14 @@ def pick_image(images):
 
 
 def fetch_playlist(pid, token):
+    """Read a playlist via /items.
+
+    Not /tracks: that endpoint now 403s even for a user token. /items is the
+    supported replacement and nests the song under "item" rather than "track".
+    """
     meta = get(API + "/playlists/" + pid + "?fields=name", token)
-    fields = "next,items(track(name,artists(name),album(name,images)))"
-    url = "%s/playlists/%s/tracks?limit=100&fields=%s" % (
+    fields = "next,items(item(id,name,artists(name),album(name,images)))"
+    url = "%s/playlists/%s/items?limit=100&fields=%s" % (
         API,
         pid,
         urllib.parse.quote(fields, safe="(),"),
@@ -123,14 +128,15 @@ def fetch_playlist(pid, token):
     tracks = []
     while url:
         page = get(url, token)
-        for item in page.get("items", []):
-            t = item.get("track")
+        for entry in page.get("items", []):
+            t = entry.get("item") or entry.get("track")
             # local files, removed tracks and podcast episodes all show up here
             if not t or not t.get("name") or not t.get("artists"):
                 continue
             album = t.get("album") or {}
             tracks.append(
                 {
+                    "id": t.get("id") or "",
                     "name": t["name"],
                     "artist": t["artists"][0]["name"],
                     "album": album.get("name", ""),
@@ -144,6 +150,10 @@ def fetch_playlist(pid, token):
 def ensure_art(track):
     """Download the cover once; reuse it on every later sync."""
     base = slug(track["name"] + " " + track["artist"])
+    if not base and track["id"]:
+        # title and artist are both entirely non-Latin (common on the anime
+        # playlist) -- fall back to the Spotify id so the track still renders
+        base = "track-" + track["id"]
     if not base:
         return None
     path = os.path.join(ART_DIR, base + ".jpg")
@@ -169,22 +179,23 @@ def render_cards(playlists):
         out.append("            <!-- MUSIC - %s -->\n" % esc(label))
         for t in tracks:
             art = ensure_art(t)
-            if not art:
-                continue
             name = esc(t["name"])
             artist = esc(t["artist"])
+            if not art:
+                # keep the card -- an empty logo box beats a vanished track
+                print("  ! no cover for %s - %s" % (t["name"], t["artist"]))
+            logo = ('<img src="%s" alt="%s">' % (art, name)) if art else name
             desc = esc(t["artist"] + " · " + t["album"]) if t["album"] else artist
             out.append(
                 '            <div class="exp-card" data-cat="music" data-sub="%s"\n'
                 '                 data-thumb="%s"\n'
                 '                 data-org="%s" data-role="%s"\n'
                 '                 data-desc="%s">\n'
-                '              <div class="exp-card-logo">'
-                '<img src="%s" alt="%s"></div>\n'
+                '              <div class="exp-card-logo">%s</div>\n'
                 '              <div class="exp-org">%s</div>\n'
                 '              <div class="exp-role">%s</div>\n'
                 "            </div>\n"
-                % (sub, art, name, artist, desc, art, name, name, artist)
+                % (sub, art or "", name, artist, desc, logo, name, artist)
             )
     return "\n".join(out)
 
@@ -197,10 +208,11 @@ def render_tabs(playlists):
     )
 
 
-def splice(page, start, end, body):
+def splice(page, start, end, body, indent):
+    """Replace everything between the markers, leaving both markers in place."""
     i = page.index(start)
     j = page.index(end)
-    return page[: i + len(start)] + "\n" + body + page[j:]
+    return page[: i + len(start)] + "\n" + body + indent + page[j:]
 
 
 # -- main --------------------------------------------------------------
@@ -217,7 +229,7 @@ def main():
     for entry in config:
         pid = playlist_id(entry["id"])
         name, tracks = fetch_playlist(pid, token)
-        label = entry.get("label") or name
+        label = (entry.get("label") or name).strip()
         sub = slug(label, 24) or ("playlist%d" % (len(playlists) + 1))
         while sub in seen:  # two playlists could slug alike
             sub += "-2"
@@ -233,8 +245,8 @@ def main():
         if marker not in page:
             sys.exit("marker " + marker + " missing from media.html")
 
-    page = splice(page, TABS_START, TABS_END, render_tabs(playlists))
-    page = splice(page, CARDS_START, CARDS_END, render_cards(playlists) + "\n")
+    page = splice(page, TABS_START, TABS_END, render_tabs(playlists), " " * 14)
+    page = splice(page, CARDS_START, CARDS_END, render_cards(playlists) + "\n", " " * 12)
 
     with open(PAGE, "w", encoding="utf-8") as f:
         f.write(page)
