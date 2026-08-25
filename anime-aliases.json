@@ -1,0 +1,498 @@
+{
+  "5 cm/s": {
+    "title": "5 Centimeters per Second",
+    "image": "assets/media/5-centimeters-per-second.jpg",
+    "source": "site"
+  },
+  "86": {
+    "title": "86 EIGHTY-SIX",
+    "image": "assets/media/86-eighty-six.jpg",
+    "source": "site"
+  },
+  "[c]control": {
+    "title": "[C] - CONTROL - The Money and Soul of Possibility",
+    "image": "assets/media/c-control-the-money-and-soul-of-possibility.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx10163-DGTY24yRLZrt.jpg",
+    "anilist_id": 10163,
+    "source": "anilist"
+  },
+  "a silent voice": {
+    "title": "A Silent Voice",
+    "image": "assets/media/a-silent-voice.jpg",
+    "source": "site"
+  },
+  "a whisker away": {
+    "title": "A Whisker Away",
+    "image": "assets/media/a-whisker-away.jpg",
+    "source": "site"
+  },
+  "akame ga kill": {
+    "title": "Akame ga Kill!",
+    "image": "assets/media/akame-ga-kill.jpg",
+    "source": "site"
+  },
+  "alya sometimes hides": {
+    "title": "Alya Sometimes Hides Her Feelings in Russian",
+    "image": "assets/media/alya-sometimes-hides-her-feelings-in-russian.jpg",
+    "source": "site"
+  },
+  "angel beats": {
+    "title": "Angel Beats!",
+    "image": "assets/media/angel-beats.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx6547-SYexAn5aFyss.png",
+    "anilist_id": 6547,
+    "source": "anilist"
+  },
+  "angel next door": {
+    "title": "The Angel Next Door Spoils Me Rotten",
+    "image": "assets/media/the-angel-next-door-spoils-me-rotten.jpg",
+    "source": "site"
+  },
+  "apothecary diaries": {
+    "title": "The Apothecary Diaries",
+    "image": "assets/media/the-apothecary-diaries.jpg",
+    "source": "site"
+  },
+  "attack on titan": {
+    "title": "Attack on Titan",
+    "image": "assets/media/attack-on-titan.jpg",
+    "source": "site"
+  },
+  "bakugan": {
+    "title": "Bakugan Battle Brawlers",
+    "image": "assets/media/bakugan-battle-brawlers.jpg",
+    "source": "site"
+  },
+  "banana fish": {
+    "title": "BANANA FISH",
+    "image": "assets/media/banana-fish.jpg",
+    "source": "site"
+  },
+  "beyblade": {
+    "title": "Beyblade",
+    "image": "assets/media/beyblade.jpg",
+    "source": "site"
+  },
+  "black clover": {
+    "title": "Black Clover",
+    "image": "assets/media/black-clover.jpg",
+    "source": "site"
+  },
+  "bleach": {
+    "title": "BLEACH",
+    "image": "assets/media/bleach.jpg",
+    "source": "site"
+  },
+  "blue box": {
+    "title": "Blue Box",
+    "image": "assets/media/blue-box.jpg",
+    "source": "site"
+  },
+  "bocchi": {
+    "title": "BOCCHI THE ROCK!",
+    "image": "assets/media/bocchi-the-rock.jpg",
+    "source": "site"
+  },
+  "bunny girl senpai": {
+    "title": "Rascal Does Not Dream of Bunny Girl Senpai",
+    "image": "assets/media/rascal-does-not-dream-of-bunny-girl-senpai.jpg",
+    "source": "site"
+  },
+  "chitose is in the ramune": {
+    "title": "Chitose Is in the Ramune Bottle",
+    "image": "assets/media/chitose-is-in-the-ramune-bottle.jpg",
+    "source": "site"
+  },
+  "code geass": {
+    "title": "Code Geass: Lelouch of the Rebellion",
+    "image": "assets/media/code-geass-lelouch-of-the-rebellion.jpg",
+    "source": "site"
+  },
+  "csm": {
+    "title": "Chainsaw Man",
+    "image": "assets/media/chainsaw-man.jpg",
+    "source": "site"
+  },
+  "cyberpunk edge runners": {
+    "title": "Cyberpunk: Edgerunners",
+    "image": "assets/media/cyberpunk-edgerunners.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx120377-ayZPoxiWt4Li.jpg",
+    "anilist_id": 120377,
+    "source": "anilist"
+  },
+  "dan da dan": {
+    "title": "DAN DA DAN",
+    "image": "assets/media/dan-da-dan.jpg",
+    "source": "site"
+  },
+  "darling in the franxx": {
+    "title": "DARLING in the FRANXX",
+    "image": "assets/media/darling-in-the-franxx.jpg",
+    "source": "site"
+  },
+  "death note": {
+    "title": "Death Note",
+    "image": "assets/media/death-note.jpg",
+    "source": "site"
+  },
+  "demon slayer": {
+    "title": "Demon Slayer: Kimetsu no Yaiba",
+    "image": "assets/media/demon-slayer-kimetsu-no-yaiba.jpg",
+    "source": "site"
+  },
+  "eminence in shadow": {
+    "title": "The Eminence in Shadow",
+    "image": "assets/media/the-eminence-in-shadow.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx130298-YMdcKHytpWNH.jpg",
+    "anilist_id": 130298,
+    "source": "anilist"
+  },
+  "erased": {
+    "title": "ERASED",
+    "image": "assets/media/erased.jpg",
+    "source": "site"
+  },
+  "fairy tail": {
+    "title": "Fairy Tail",
+    "image": "assets/media/fairy-tail.jpg",
+    "source": "site"
+  },
+  "fireforce": {
+    "title": "Fire Force",
+    "image": "assets/media/fire-force.jpg",
+    "source": "site"
+  },
+  "fragrant flower": {
+    "title": "The Fragrant Flower Blooms With Dignity",
+    "image": "assets/media/the-fragrant-flower-blooms-with-dignity.jpg",
+    "source": "site"
+  },
+  "frieren": {
+    "title": "Frieren: Beyond Journey’s End",
+    "image": "assets/media/frieren-beyond-journey-s-end.jpg",
+    "source": "site"
+  },
+  "fruits basket": {
+    "title": "Fruits Basket",
+    "image": "assets/media/fruits-basket.jpg",
+    "source": "site"
+  },
+  "gachiakuta": {
+    "title": "Gachiakuta",
+    "image": "assets/media/gachiakuta.jpg",
+    "source": "site"
+  },
+  "gintama": {
+    "title": "Gintama",
+    "image": "assets/media/gintama.jpg",
+    "source": "site"
+  },
+  "golden time": {
+    "title": "Golden Time",
+    "image": "assets/media/golden-time.jpg",
+    "source": "site"
+  },
+  "gurren lagann": {
+    "title": "Gurren Lagann",
+    "image": "assets/media/gurren-lagann.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx2001-XwRnjzGeFWRQ.png",
+    "anilist_id": 2001,
+    "source": "anilist"
+  },
+  "haikyuu": {
+    "title": "HAIKYU!!",
+    "image": "assets/media/haikyu.jpg",
+    "source": "site"
+  },
+  "horimiya": {
+    "title": "Horimiya",
+    "image": "assets/media/horimiya.jpg",
+    "source": "site"
+  },
+  "hyouka": {
+    "title": "Hyouka",
+    "image": "assets/media/hyouka.jpg",
+    "source": "site"
+  },
+  "i made friends with the second prettiest girl in my class": {
+    "title": "I Made Friends with the Second Prettiest Girl in My Class",
+    "image": "assets/media/i-made-friends-with-the-second-prettiest-girl-in-m.jpg",
+    "source": "site"
+  },
+  "i want to eat your pancreas": {
+    "title": "I Want to Eat Your Pancreas",
+    "image": "assets/media/i-want-to-eat-your-pancreas.jpg",
+    "source": "site"
+  },
+  "i want to end this love game": {
+    "title": "I Want to End this Love Game",
+    "image": "assets/media/i-want-to-end-this-love-game.jpg",
+    "source": "site"
+  },
+  "josee the tiger": {
+    "title": "Josee, the Tiger and the Fish",
+    "image": "assets/media/josee-the-tiger-and-the-fish.jpg",
+    "source": "site"
+  },
+  "jujutsu kaisen": {
+    "title": "JUJUTSU KAISEN",
+    "image": "assets/media/jujutsu-kaisen.jpg",
+    "source": "site"
+  },
+  "kaguya-sama": {
+    "title": "Kaguya-sama: Love is War",
+    "image": "assets/media/kaguya-sama-love-is-war.jpg",
+    "source": "site"
+  },
+  "kaiju no. 8": {
+    "title": "Kaiju No. 8",
+    "image": "assets/media/kaiju-no-8.jpg",
+    "source": "site"
+  },
+  "kimi no todoke": {
+    "title": "Kimi ni Todoke: From Me to You",
+    "image": "assets/media/kimi-ni-todoke-from-me-to-you.jpg",
+    "source": "site"
+  },
+  "konosuba": {
+    "title": "KONOSUBA -God's blessing on this wonderful world!",
+    "image": "assets/media/konosuba-god-s-blessing-on-this-wonderful-world.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21202-mPOr80AEjUcZ.png",
+    "anilist_id": 21202,
+    "source": "anilist"
+  },
+  "magi": {
+    "title": "Magi: The Labyrinth of Magic",
+    "image": "assets/media/magi-the-labyrinth-of-magic.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx14513-HuUdrFFYftA7.jpg",
+    "anilist_id": 14513,
+    "source": "anilist"
+  },
+  "magic kaito": {
+    "title": "Magic Kaito 1412",
+    "image": "assets/media/magic-kaito-1412.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx20790-ZOXZWSlvlN1W.jpg",
+    "anilist_id": 20790,
+    "source": "anilist"
+  },
+  "makeine": {
+    "title": "Makeine: Too Many Losing Heroines!",
+    "image": "assets/media/makeine-too-many-losing-heroines.jpg",
+    "source": "site"
+  },
+  "marriagetoxin": {
+    "title": "MARRIAGETOXIN",
+    "image": "assets/media/marriagetoxin.jpg",
+    "source": "site"
+  },
+  "masamune kun": {
+    "title": "Masamune-kun's Revenge",
+    "image": "assets/media/masamune-kun-s-revenge.jpg",
+    "source": "site"
+  },
+  "mob psycho": {
+    "title": "Mob Psycho 100",
+    "image": "assets/media/mob-psycho-100.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21507-6YUSbh2m0N1p.jpg",
+    "anilist_id": 21507,
+    "source": "anilist"
+  },
+  "monster": {
+    "title": "Monster",
+    "image": "assets/media/monster.jpg",
+    "source": "site"
+  },
+  "more than a married couple but not lovers": {
+    "title": "More than a Married Couple, but Not Lovers.",
+    "image": "assets/media/more-than-a-married-couple-but-not-lovers.jpg",
+    "source": "site"
+  },
+  "mushoku tensei": {
+    "title": "Mushoku Tensei: Jobless Reincarnation",
+    "image": "assets/media/mushoku-tensei-jobless-reincarnation.jpg",
+    "source": "site"
+  },
+  "my dress-up darling": {
+    "title": "My Dress-Up Darling",
+    "image": "assets/media/my-dress-up-darling.jpg",
+    "source": "site"
+  },
+  "my teen romantic comedy": {
+    "title": "My Teen Romantic Comedy SNAFU",
+    "image": "assets/media/my-teen-romantic-comedy-snafu.jpg",
+    "source": "site"
+  },
+  "oh boy was i wrong about you": {
+    "title": "Oh Boy, Was I Wrong About Her",
+    "image": "assets/media/oh-boy-was-i-wrong-about-her.jpg",
+    "source": "site"
+  },
+  "oshi no ko": {
+    "title": "OSHI NO KO",
+    "image": "assets/media/oshi-no-ko.jpg",
+    "source": "site"
+  },
+  "parasyte": {
+    "title": "Parasyte -the maxim-",
+    "image": "assets/media/parasyte-the-maxim.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx20623-dUARfggnNDOe.jpg",
+    "anilist_id": 20623,
+    "source": "anilist"
+  },
+  "pokemon": {
+    "title": "Pokémon",
+    "image": "assets/media/pok-mon.jpg",
+    "source": "site"
+  },
+  "pseudo harem": {
+    "title": "Pseudo Harem",
+    "image": "assets/media/pseudo-harem.jpg",
+    "source": "site"
+  },
+  "re:zero": {
+    "title": "Re:ZERO -Starting Life in Another World-",
+    "image": "assets/media/re-zero-starting-life-in-another-world.jpg",
+    "source": "site"
+  },
+  "romantic killer": {
+    "title": "Romantic Killer",
+    "image": "assets/media/romantic-killer.jpg",
+    "source": "site"
+  },
+  "sakamoto days": {
+    "title": "SAKAMOTO DAYS",
+    "image": "assets/media/sakamoto-days.jpg",
+    "source": "site"
+  },
+  "sakamoto desu ga": {
+    "title": "Haven't You Heard? I'm Sakamoto",
+    "image": "assets/media/haven-t-you-heard-i-m-sakamoto.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21595-vQ658r2Roe1g.jpg",
+    "anilist_id": 21595,
+    "source": "anilist"
+  },
+  "sao": {
+    "title": "Sword Art Online",
+    "image": "assets/media/sword-art-online.jpg",
+    "source": "site"
+  },
+  "shield hero": {
+    "title": "The Rising of the Shield Hero",
+    "image": "assets/media/the-rising-of-the-shield-hero.jpg",
+    "source": "site"
+  },
+  "shikimoris not just a cutie": {
+    "title": "Shikimori's Not Just a Cutie",
+    "image": "assets/media/shikimori-s-not-just-a-cutie.jpg",
+    "source": "site"
+  },
+  "sk8:the infinity": {
+    "title": "SK8 the Infinity",
+    "image": "assets/media/sk8-the-infinity.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx124153-uEBI764OSavB.png",
+    "anilist_id": 124153,
+    "source": "anilist"
+  },
+  "slime": {
+    "title": "That Time I Got Reincarnated as a Slime",
+    "image": "assets/media/that-time-i-got-reincarnated-as-a-slime.jpg",
+    "source": "site"
+  },
+  "solo leveling": {
+    "title": "Solo Leveling",
+    "image": "assets/media/solo-leveling.jpg",
+    "source": "site"
+  },
+  "spy x family": {
+    "title": "SPY x FAMILY",
+    "image": "assets/media/spy-x-family.jpg",
+    "source": "site"
+  },
+  "steins gate": {
+    "title": "Steins;Gate",
+    "image": "assets/media/steins-gate.jpg",
+    "source": "site"
+  },
+  "suzume": {
+    "title": "Suzume",
+    "image": "assets/media/suzume.jpg",
+    "source": "site"
+  },
+  "tada never falls in love": {
+    "title": "Tada Never Falls In Love",
+    "image": "assets/media/tada-never-falls-in-love.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/nx100179-jDGTOMxtoDkt.jpg",
+    "anilist_id": 100179,
+    "source": "anilist"
+  },
+  "takopi": {
+    "title": "Takopi's Original Sin",
+    "image": "assets/media/takopi-s-original-sin.jpg",
+    "source": "site"
+  },
+  "the tunnel to summer, the exit of goodbyes": {
+    "title": "The Tunnel to Summer, the Exit of Goodbyes",
+    "image": "assets/media/the-tunnel-to-summer-the-exit-of-goodbyes.jpg",
+    "source": "site"
+  },
+  "to you in the beyond": {
+    "title": "To Your Eternity",
+    "image": "assets/media/to-your-eternity.jpg",
+    "source": "site"
+  },
+  "tokyo ghoul": {
+    "title": "Tokyo Ghoul",
+    "image": "assets/media/tokyo-ghoul.jpg",
+    "source": "site"
+  },
+  "tonikawa": {
+    "title": "TONIKAWA: Over The Moon For You",
+    "image": "assets/media/tonikawa-over-the-moon-for-you.jpg",
+    "source": "site"
+  },
+  "toradora": {
+    "title": "Toradora!",
+    "image": "assets/media/toradora.jpg",
+    "source": "site"
+  },
+  "vinland saga": {
+    "title": "Vinland Saga",
+    "image": "assets/media/vinland-saga.jpg",
+    "source": "site"
+  },
+  "violet evergarden": {
+    "title": "Violet Evergarden",
+    "image": "assets/media/violet-evergarden.jpg",
+    "source": "site"
+  },
+  "weathering with you": {
+    "title": "Weathering With You",
+    "image": "assets/media/weathering-with-you.jpg",
+    "source": "site"
+  },
+  "windbreaker": {
+    "title": "WIND BREAKER",
+    "image": "assets/media/wind-breaker.jpg",
+    "source": "site"
+  },
+  "witch hat": {
+    "title": "Witch Hat Atelier",
+    "image": "assets/media/witch-hat-atelier.jpg",
+    "source": "site"
+  },
+  "you and i are polar opposites": {
+    "title": "You and I Are Polar Opposites",
+    "image": "assets/media/you-and-i-are-polar-opposites.jpg",
+    "source": "site"
+  },
+  "your lie in april": {
+    "title": "Your lie in April",
+    "image": "assets/media/your-lie-in-april.jpg",
+    "source": "site"
+  },
+  "your name": {
+    "title": "Your Name.",
+    "image": "assets/media/your-name.jpg",
+    "source": "site"
+  }
+}
