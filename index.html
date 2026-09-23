@@ -335,6 +335,62 @@
       padding: 0 16px;
     }
 
+    .now-playing {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      max-width: 310px;
+    }
+
+    .now-playing-label { flex-shrink: 0; }
+
+    .now-playing-link {
+      min-width: 0;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .now-playing-link[href]:hover { text-decoration: underline; }
+
+    .spotify-audio-toggle {
+      width: 25px;
+      height: 25px;
+      margin-left: 5px;
+      border: 0;
+      background: transparent;
+      color: #ffffff;
+      font: inherit;
+      font-size: 17px;
+      line-height: 1;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .spotify-audio-toggle:disabled {
+      cursor: inherit;
+      opacity: 0.48;
+    }
+
+    .spotify-audio-toggle:not(:disabled):hover {
+      filter: brightness(1.2);
+      transform: scale(1.08);
+    }
+
+    /* The official Spotify player supplies the audio, but the site keeps its
+       own compact controls instead of displaying the embed window. */
+    .spotify-audio-host-wrap {
+      position: fixed;
+      left: -10000px;
+      top: 0;
+      width: 300px;
+      height: 80px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
     /* ============================================================
        SLOT GRID
     ============================================================ */
@@ -738,6 +794,10 @@
       .navbar { padding: 5px 8px; flex-wrap: wrap; justify-content: center; gap: 2px; }
       .nav-item { font-size: 10px; white-space: normal; }
       .nav-sep  { font-size: 10px; padding: 0 6px; }
+      .now-playing-sep { display: none; }
+      .now-playing { flex-basis: 100%; justify-content: center; max-width: 100%; }
+      .now-playing-link { white-space: nowrap; }
+      .spotify-audio-toggle { width: 20px; height: 20px; margin-left: 2px; font-size: 13px; }
 
       .slot-title { font-size: 11px; padding: 4px 6px; white-space: normal; }
     }
@@ -799,6 +859,13 @@
         <span class="nav-item">Last seen online: <span id="last-seen"></span></span>
         <span class="nav-sep">|</span>
         <span class="nav-item">Joined: 3/2/2026</span>
+        <span class="nav-sep now-playing-sep">|</span>
+        <span class="nav-item now-playing">
+          <span class="now-playing-label">Now Playing:&nbsp;</span>
+          <a class="now-playing-link" id="now-playing" target="_blank" rel="noopener noreferrer">Checking...</a>
+          <button class="spotify-audio-toggle" id="spotify-audio-toggle" type="button"
+                  aria-label="Listen along" title="Nothing is playing right now" disabled>🔇</button>
+        </span>
       </nav>
 
       <!-- SECTION LABEL -->
@@ -907,6 +974,10 @@
 
 </div><!-- /.page -->
 
+<div class="spotify-audio-host-wrap" aria-hidden="true">
+  <div id="spotify-audio-host"></div>
+</div>
+
 <script>
   // ── DYNAMIC ADDRESS BAR ──
   document.getElementById('url-bar').value = window.location.href;
@@ -947,8 +1018,17 @@
     }
   })();
 
-  // ── DISCORD PRESENCE via Lanyard ──
+  // ── DISCORD + SPOTIFY PRESENCE via Lanyard ──
   const DISCORD_ID = '1192117392353005645';
+  const PRESENCE_REFRESH_MS = 15000;
+  let currentSpotify = null;
+  let spotifyController = null;
+  let spotifyIframeApi = null;
+  let spotifyApiPromise = null;
+  let spotifyControllerPromise = null;
+  let spotifyAudioEnabled = false;
+  let loadedSpotifyTrackId = null;
+  let presenceRequestRunning = false;
 
   function timeAgo(ts) {
     const s = Math.floor((Date.now() - ts) / 1000);
@@ -961,31 +1041,187 @@
                           return `${d} day${d !== 1 ? 's' : ''} ago`;
   }
 
-  (async () => {
+  function updateLastSeen(data) {
     const el = document.getElementById('last-seen');
+    const status = data.discord_status;
+    if (status === 'online') {
+      localStorage.setItem('discord-last-seen', Date.now());
+      el.textContent = 'Active now';
+    } else if (status === 'idle') {
+      localStorage.setItem('discord-last-seen', Date.now());
+      el.textContent = 'Active now (idle)';
+    } else if (status === 'dnd') {
+      localStorage.setItem('discord-last-seen', Date.now());
+      el.textContent = 'Active now (DND)';
+    } else {
+      const stored = localStorage.getItem('discord-last-seen');
+      el.textContent = stored ? timeAgo(parseInt(stored)) : LAST_SEEN_FALLBACK;
+    }
+  }
+
+  function updateAudioButton() {
+    const button = document.getElementById('spotify-audio-toggle');
+    button.textContent = spotifyAudioEnabled ? '🔊' : '🔇';
+    button.disabled = !currentSpotify && !spotifyAudioEnabled;
+    button.setAttribute('aria-pressed', String(spotifyAudioEnabled));
+    button.setAttribute('aria-label', spotifyAudioEnabled ? 'Mute listen along' : 'Listen along');
+    button.title = spotifyAudioEnabled
+      ? 'Mute listen along'
+      : (currentSpotify ? 'Listen along from the current point' : 'Nothing is playing right now');
+  }
+
+  function spotifyPositionSeconds(spotify) {
+    const started = spotify && spotify.timestamps && Number(spotify.timestamps.start);
+    if (!started) return 0;
+    return Math.max(0, Math.floor((Date.now() - started) / 1000));
+  }
+
+  function loadSpotifyIframeApi() {
+    if (spotifyIframeApi) return Promise.resolve(spotifyIframeApi);
+    if (spotifyApiPromise) return spotifyApiPromise;
+
+    spotifyApiPromise = new Promise(function(resolve, reject) {
+      window.onSpotifyIframeApiReady = function(IFrameAPI) {
+        spotifyIframeApi = IFrameAPI;
+        resolve(IFrameAPI);
+      };
+
+      const script = document.createElement('script');
+      script.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      script.async = true;
+      script.onerror = function() { reject(new Error('Spotify player failed to load')); };
+      document.body.appendChild(script);
+    });
+
+    return spotifyApiPromise;
+  }
+
+  function getSpotifyController(trackId) {
+    if (spotifyController) return Promise.resolve(spotifyController);
+    if (spotifyControllerPromise) return spotifyControllerPromise;
+
+    spotifyControllerPromise = loadSpotifyIframeApi().then(function(IFrameAPI) {
+      return new Promise(function(resolve) {
+        IFrameAPI.createController(
+          document.getElementById('spotify-audio-host'),
+          { width: 300, height: 80, uri: 'spotify:track:' + trackId },
+          function(controller) {
+            spotifyController = controller;
+            loadedSpotifyTrackId = trackId;
+            resolve(controller);
+          }
+        );
+      });
+    });
+
+    return spotifyControllerPromise;
+  }
+
+  async function playCurrentSpotify() {
+    if (!currentSpotify) return;
+    const controller = await getSpotifyController(currentSpotify.track_id);
+    if (!spotifyAudioEnabled || !currentSpotify) return;
+
+    const position = spotifyPositionSeconds(currentSpotify);
+    if (loadedSpotifyTrackId === currentSpotify.track_id) {
+      controller.seek(position);
+      controller.play();
+    } else {
+      controller.loadEntity(
+        'spotify:track:' + currentSpotify.track_id,
+        false,
+        position
+      );
+      loadedSpotifyTrackId = currentSpotify.track_id;
+      window.setTimeout(function() {
+        if (spotifyAudioEnabled && currentSpotify) controller.play();
+      }, 250);
+    }
+  }
+
+  function updateNowPlaying(data) {
+    const link = document.getElementById('now-playing');
+    const nextSpotify = data.listening_to_spotify && data.spotify ? data.spotify : null;
+    const previousTrackId = currentSpotify && currentSpotify.track_id;
+    currentSpotify = nextSpotify;
+
+    if (currentSpotify) {
+      link.textContent = currentSpotify.song + ' — ' + currentSpotify.artist;
+      link.href = 'https://open.spotify.com/track/' + currentSpotify.track_id;
+      link.title = 'Open ' + currentSpotify.song + ' on Spotify';
+      if (spotifyAudioEnabled && previousTrackId !== currentSpotify.track_id) {
+        playCurrentSpotify().catch(disableSpotifyAudio);
+      } else if (!spotifyControllerPromise) {
+        // Preload the hidden player so the first speaker click counts as a
+        // direct user gesture and is less likely to be blocked by the browser.
+        getSpotifyController(currentSpotify.track_id).catch(function(error) {
+          console.warn(error);
+          spotifyControllerPromise = null;
+        });
+      } else if (spotifyController && previousTrackId !== currentSpotify.track_id) {
+        spotifyController.loadEntity(
+          'spotify:track:' + currentSpotify.track_id,
+          false,
+          spotifyPositionSeconds(currentSpotify)
+        );
+        loadedSpotifyTrackId = currentSpotify.track_id;
+      }
+    } else {
+      link.textContent = 'Nothing playing';
+      link.removeAttribute('href');
+      link.removeAttribute('title');
+      if (spotifyController) spotifyController.pause();
+      loadedSpotifyTrackId = null;
+    }
+
+    updateAudioButton();
+  }
+
+  function disableSpotifyAudio() {
+    spotifyAudioEnabled = false;
+    if (spotifyController) spotifyController.pause();
+    updateAudioButton();
+  }
+
+  document.getElementById('spotify-audio-toggle').addEventListener('click', async function() {
+    if (spotifyAudioEnabled) {
+      disableSpotifyAudio();
+      return;
+    }
+    if (!currentSpotify) return;
+
+    spotifyAudioEnabled = true;
+    updateAudioButton();
+    try {
+      await playCurrentSpotify();
+    } catch (error) {
+      console.warn(error);
+      disableSpotifyAudio();
+      document.getElementById('spotify-audio-toggle').title = 'Audio is unavailable in this browser';
+    }
+  });
+
+  async function updatePresence() {
+    if (presenceRequestRunning) return;
+    presenceRequestRunning = true;
     try {
       const res  = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const json = await res.json();
       if (!json.success) throw new Error();
-      const status = json.data.discord_status;
-      if (status === 'online') {
-        localStorage.setItem('discord-last-seen', Date.now());
-        el.textContent = 'Active now';
-      } else if (status === 'idle') {
-        localStorage.setItem('discord-last-seen', Date.now());
-        el.textContent = 'Active now (idle)';
-      } else if (status === 'dnd') {
-        localStorage.setItem('discord-last-seen', Date.now());
-        el.textContent = 'Active now (DND)';
-      } else {
-        const stored = localStorage.getItem('discord-last-seen');
-        el.textContent = stored ? timeAgo(parseInt(stored)) : LAST_SEEN_FALLBACK;
-      }
+      updateLastSeen(json.data);
+      updateNowPlaying(json.data);
     } catch {
+      const el = document.getElementById('last-seen');
       const stored = localStorage.getItem('discord-last-seen');
       el.textContent = stored ? timeAgo(parseInt(stored)) : LAST_SEEN_FALLBACK;
+      if (!currentSpotify) document.getElementById('now-playing').textContent = 'Unavailable';
+    } finally {
+      presenceRequestRunning = false;
     }
-  })();
+  }
+
+  updatePresence();
+  setInterval(updatePresence, PRESENCE_REFRESH_MS);
 
   // ══ TASKBAR TAB SYSTEM ══
   const TABS_KEY = 'xp_open_tabs';
