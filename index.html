@@ -355,6 +355,14 @@
 
     .now-playing-link[href]:hover { text-decoration: underline; }
 
+    .now-playing.login-required .now-playing-label,
+    .now-playing.login-required .spotify-audio-toggle { display: none; }
+
+    .now-playing.login-required .now-playing-link {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
     .spotify-audio-toggle {
       min-width: 72px;
       height: 24px;
@@ -1055,11 +1063,15 @@
   const DISCORD_ID = '1192117392353005645';
   const PRESENCE_REFRESH_MS = 15000;
   let currentSpotify = null;
+  let lastSpotify = null;
   let spotifyController = null;
   let spotifyIframeApi = null;
   let spotifyApiPromise = null;
   let spotifyControllerPromise = null;
   let spotifyAudioEnabled = false;
+  let spotifyLoginRequired = false;
+  let spotifyPlaybackConfirmed = false;
+  let spotifyPlaybackTimer = null;
   let loadedSpotifyTrackId = null;
   let pendingSpotifySeekSeconds = null;
   let presenceRequestRunning = false;
@@ -1097,12 +1109,63 @@
     const button = document.getElementById('spotify-audio-toggle');
     button.querySelector('.spotify-audio-icon').textContent = spotifyAudioEnabled ? '🔊' : '🔇';
     button.querySelector('.spotify-audio-label').textContent = spotifyAudioEnabled ? 'mute' : 'listen';
-    button.disabled = !currentSpotify && !spotifyAudioEnabled;
+    button.disabled = !currentSpotify && !spotifyAudioEnabled && !spotifyLoginRequired;
     button.setAttribute('aria-pressed', String(spotifyAudioEnabled));
     button.setAttribute('aria-label', spotifyAudioEnabled ? 'Mute listen along' : 'Listen along');
     button.title = spotifyAudioEnabled
       ? 'Mute listen along'
       : (currentSpotify ? 'Listen along from the current point' : 'Nothing is playing right now');
+  }
+
+  function spotifyTrackUrl(spotify) {
+    return spotify ? 'https://open.spotify.com/track/' + spotify.track_id : '';
+  }
+
+  function renderNowPlaying() {
+    const container = document.querySelector('.now-playing');
+    const link = document.getElementById('now-playing');
+    const spotify = currentSpotify || lastSpotify;
+    container.classList.toggle('login-required', spotifyLoginRequired && Boolean(spotify));
+
+    if (spotifyLoginRequired && spotify) {
+      link.textContent = 'log in to Spotify to listen along';
+      link.href = spotifyTrackUrl(spotify);
+      link.title = 'Open Spotify and log in to listen along';
+    } else if (currentSpotify) {
+      link.textContent = currentSpotify.song + ' — ' + currentSpotify.artist;
+      link.href = spotifyTrackUrl(currentSpotify);
+      link.title = 'Open ' + currentSpotify.song + ' on Spotify';
+    } else {
+      link.textContent = '--';
+      link.removeAttribute('href');
+      link.removeAttribute('title');
+    }
+  }
+
+  function clearSpotifyPlaybackTimer() {
+    if (spotifyPlaybackTimer) window.clearTimeout(spotifyPlaybackTimer);
+    spotifyPlaybackTimer = null;
+  }
+
+  function requireSpotifyLogin() {
+    if (!spotifyAudioEnabled) return;
+    spotifyAudioEnabled = false;
+    spotifyLoginRequired = true;
+    pendingSpotifySeekSeconds = null;
+    clearSpotifyPlaybackTimer();
+    if (spotifyController) spotifyController.pause();
+    renderNowPlaying();
+    updateAudioButton();
+  }
+
+  function watchForSpotifyPlayback() {
+    clearSpotifyPlaybackTimer();
+    spotifyPlaybackConfirmed = false;
+    spotifyLoginRequired = false;
+    renderNowPlaying();
+    spotifyPlaybackTimer = window.setTimeout(function() {
+      if (spotifyAudioEnabled && !spotifyPlaybackConfirmed) requireSpotifyLogin();
+    }, 7000);
   }
 
   function spotifyPositionSeconds(spotify) {
@@ -1145,6 +1208,11 @@
             loadedSpotifyTrackId = trackId;
             controller.addListener('playback_update', function(event) {
               const playback = event.data;
+              if (spotifyAudioEnabled && !playback.isPaused && !playback.isBuffering &&
+                  playback.duration > 0) {
+                spotifyPlaybackConfirmed = true;
+                clearSpotifyPlaybackTimer();
+              }
               if (!spotifyAudioEnabled || pendingSpotifySeekSeconds === null ||
                   playback.isPaused || playback.isBuffering) return;
 
@@ -1172,6 +1240,7 @@
     const controller = await getSpotifyController(currentSpotify.track_id);
     if (!spotifyAudioEnabled || !currentSpotify) return;
 
+    watchForSpotifyPlayback();
     pendingSpotifySeekSeconds = spotifyPositionSeconds(currentSpotify);
     if (loadedSpotifyTrackId === currentSpotify.track_id) {
       controller.play();
@@ -1185,17 +1254,14 @@
   }
 
   function updateNowPlaying(data) {
-    const link = document.getElementById('now-playing');
     const nextSpotify = data.listening_to_spotify && data.spotify ? data.spotify : null;
     const previousTrackId = currentSpotify && currentSpotify.track_id;
     currentSpotify = nextSpotify;
 
     if (currentSpotify) {
-      link.textContent = currentSpotify.song + ' — ' + currentSpotify.artist;
-      link.href = 'https://open.spotify.com/track/' + currentSpotify.track_id;
-      link.title = 'Open ' + currentSpotify.song + ' on Spotify';
+      lastSpotify = currentSpotify;
       if (spotifyAudioEnabled && previousTrackId !== currentSpotify.track_id) {
-        playCurrentSpotify().catch(disableSpotifyAudio);
+        playCurrentSpotify().catch(requireSpotifyLogin);
       } else if (!spotifyControllerPromise) {
         // Preload the hidden player so the first speaker click counts as a
         // direct user gesture and is less likely to be blocked by the browser.
@@ -1207,20 +1273,23 @@
         spotifyController.loadEntity('spotify:track:' + currentSpotify.track_id);
         loadedSpotifyTrackId = currentSpotify.track_id;
       }
-    } else {
-      link.textContent = '--';
-      link.removeAttribute('href');
-      link.removeAttribute('title');
+    } else if (!spotifyAudioEnabled && !spotifyLoginRequired) {
       if (spotifyController) spotifyController.pause();
       loadedSpotifyTrackId = null;
     }
 
+    renderNowPlaying();
     updateAudioButton();
   }
 
   function disableSpotifyAudio() {
     spotifyAudioEnabled = false;
+    spotifyLoginRequired = false;
+    spotifyPlaybackConfirmed = false;
+    pendingSpotifySeekSeconds = null;
+    clearSpotifyPlaybackTimer();
     if (spotifyController) spotifyController.pause();
+    renderNowPlaying();
     updateAudioButton();
   }
 
@@ -1237,9 +1306,15 @@
       await playCurrentSpotify();
     } catch (error) {
       console.warn(error);
-      disableSpotifyAudio();
-      document.getElementById('spotify-audio-toggle').title = 'Audio is unavailable in this browser';
+      requireSpotifyLogin();
     }
+  });
+
+  window.addEventListener('focus', function() {
+    if (!spotifyLoginRequired) return;
+    spotifyLoginRequired = false;
+    renderNowPlaying();
+    updateAudioButton();
   });
 
   async function updatePresence() {
@@ -1255,7 +1330,9 @@
       const el = document.getElementById('last-seen');
       const stored = localStorage.getItem('discord-last-seen');
       el.textContent = stored ? timeAgo(parseInt(stored)) : LAST_SEEN_FALLBACK;
-      if (!currentSpotify) document.getElementById('now-playing').textContent = 'Unavailable';
+      if (!currentSpotify && !spotifyAudioEnabled && !spotifyLoginRequired) {
+        document.getElementById('now-playing').textContent = 'Unavailable';
+      }
     } finally {
       presenceRequestRunning = false;
     }
