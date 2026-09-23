@@ -383,12 +383,14 @@
        own compact controls instead of displaying the embed window. */
     .spotify-audio-host-wrap {
       position: fixed;
-      left: -10000px;
+      left: 0;
       top: 0;
       width: 300px;
       height: 80px;
       overflow: hidden;
+      opacity: 0;
       pointer-events: none;
+      z-index: 1;
     }
 
     /* ============================================================
@@ -1028,6 +1030,7 @@
   let spotifyControllerPromise = null;
   let spotifyAudioEnabled = false;
   let loadedSpotifyTrackId = null;
+  let pendingSpotifySeekSeconds = null;
   let presenceRequestRunning = false;
 
   function timeAgo(ts) {
@@ -1108,6 +1111,21 @@
           function(controller) {
             spotifyController = controller;
             loadedSpotifyTrackId = trackId;
+            controller.addListener('playback_update', function(event) {
+              const playback = event.data;
+              if (!spotifyAudioEnabled || pendingSpotifySeekSeconds === null ||
+                  playback.isPaused || playback.isBuffering) return;
+
+              const target = pendingSpotifySeekSeconds;
+              pendingSpotifySeekSeconds = null;
+              // Logged-in listeners can receive the full song and seek to
+              // Anish's position. Anonymous embeds usually receive a short
+              // preview; seeking that preview to the full-song timestamp
+              // would jump straight to silence, so let the preview start at 0.
+              if (playback.duration > 60000 && target < (playback.duration / 1000) - 2) {
+                controller.seek(target);
+              }
+            });
             resolve(controller);
           }
         );
@@ -1122,16 +1140,11 @@
     const controller = await getSpotifyController(currentSpotify.track_id);
     if (!spotifyAudioEnabled || !currentSpotify) return;
 
-    const position = spotifyPositionSeconds(currentSpotify);
+    pendingSpotifySeekSeconds = spotifyPositionSeconds(currentSpotify);
     if (loadedSpotifyTrackId === currentSpotify.track_id) {
-      controller.seek(position);
       controller.play();
     } else {
-      controller.loadEntity(
-        'spotify:track:' + currentSpotify.track_id,
-        false,
-        position
-      );
+      controller.loadEntity('spotify:track:' + currentSpotify.track_id);
       loadedSpotifyTrackId = currentSpotify.track_id;
       window.setTimeout(function() {
         if (spotifyAudioEnabled && currentSpotify) controller.play();
@@ -1159,15 +1172,11 @@
           spotifyControllerPromise = null;
         });
       } else if (spotifyController && previousTrackId !== currentSpotify.track_id) {
-        spotifyController.loadEntity(
-          'spotify:track:' + currentSpotify.track_id,
-          false,
-          spotifyPositionSeconds(currentSpotify)
-        );
+        spotifyController.loadEntity('spotify:track:' + currentSpotify.track_id);
         loadedSpotifyTrackId = currentSpotify.track_id;
       }
     } else {
-      link.textContent = 'Nothing playing';
+      link.textContent = '--';
       link.removeAttribute('href');
       link.removeAttribute('title');
       if (spotifyController) spotifyController.pause();
