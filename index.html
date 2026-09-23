@@ -356,27 +356,54 @@
     .now-playing-link[href]:hover { text-decoration: underline; }
 
     .spotify-audio-toggle {
-      width: 25px;
-      height: 25px;
-      margin-left: 5px;
-      border: 0;
-      background: transparent;
-      color: #ffffff;
-      font: inherit;
-      font-size: 17px;
+      min-width: 72px;
+      height: 24px;
+      margin-left: 7px;
+      padding: 1px 7px 2px;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #555555;
+      border-bottom: 2px solid #555555;
+      background: linear-gradient(to bottom, #f3f3f3 0%, #c7c7c7 100%);
+      box-shadow: inset 1px 1px 0 #dfdfdf;
+      color: #111111;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
       line-height: 1;
       text-align: center;
       flex-shrink: 0;
     }
 
+    .spotify-audio-icon { font-size: 13px; }
+    .spotify-audio-label { letter-spacing: 0.2px; text-transform: lowercase; }
+
     .spotify-audio-toggle:disabled {
       cursor: inherit;
-      opacity: 0.48;
+      color: #777777;
+      filter: grayscale(1);
+      opacity: 0.68;
     }
 
     .spotify-audio-toggle:not(:disabled):hover {
-      filter: brightness(1.2);
-      transform: scale(1.08);
+      background: linear-gradient(to bottom, #ffffff 0%, #dddddd 100%);
+      outline: 1px dotted #333333;
+      outline-offset: -5px;
+    }
+
+    .spotify-audio-toggle:not(:disabled):active,
+    .spotify-audio-toggle[aria-pressed="true"] {
+      padding: 2px 6px 1px 8px;
+      border-top-color: #555555;
+      border-left-color: #555555;
+      border-right-color: #ffffff;
+      border-bottom-color: #ffffff;
+      background: #b8cbe4;
+      box-shadow: inset 1px 1px 1px rgba(0,0,0,0.3);
     }
 
     /* The official Spotify player supplies the audio, but the site keeps its
@@ -793,13 +820,14 @@
       /* Scale down text that overflows blue bars */
       .xp-title { font-size: 14px; }
 
-      .navbar { padding: 5px 8px; flex-wrap: wrap; justify-content: center; gap: 2px; }
+      .navbar { align-self: flex-start; width: calc(100vw - 18px); padding: 5px 8px; flex-wrap: wrap; justify-content: center; gap: 2px; }
       .nav-item { font-size: 10px; white-space: normal; }
       .nav-sep  { font-size: 10px; padding: 0 6px; }
       .now-playing-sep { display: none; }
       .now-playing { flex-basis: 100%; justify-content: center; max-width: 100%; }
       .now-playing-link { white-space: nowrap; }
-      .spotify-audio-toggle { width: 20px; height: 20px; margin-left: 2px; font-size: 13px; }
+      .spotify-audio-toggle { min-width: 62px; height: 20px; margin-left: 4px; padding: 1px 5px; font-size: 9px; }
+      .spotify-audio-icon { font-size: 11px; }
 
       .slot-title { font-size: 11px; padding: 4px 6px; white-space: normal; }
     }
@@ -866,7 +894,10 @@
           <span class="now-playing-label">Now Playing:&nbsp;</span>
           <a class="now-playing-link" id="now-playing" target="_blank" rel="noopener noreferrer">Checking...</a>
           <button class="spotify-audio-toggle" id="spotify-audio-toggle" type="button"
-                  aria-label="Listen along" title="Nothing is playing right now" disabled>🔇</button>
+                  aria-label="Listen along" title="Nothing is playing right now" disabled>
+            <span class="spotify-audio-icon" aria-hidden="true">🔇</span>
+            <span class="spotify-audio-label">listen</span>
+          </button>
         </span>
       </nav>
 
@@ -1064,7 +1095,8 @@
 
   function updateAudioButton() {
     const button = document.getElementById('spotify-audio-toggle');
-    button.textContent = spotifyAudioEnabled ? '🔊' : '🔇';
+    button.querySelector('.spotify-audio-icon').textContent = spotifyAudioEnabled ? '🔊' : '🔇';
+    button.querySelector('.spotify-audio-label').textContent = spotifyAudioEnabled ? 'mute' : 'listen';
     button.disabled = !currentSpotify && !spotifyAudioEnabled;
     button.setAttribute('aria-pressed', String(spotifyAudioEnabled));
     button.setAttribute('aria-label', spotifyAudioEnabled ? 'Mute listen along' : 'Listen along');
