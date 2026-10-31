@@ -634,7 +634,23 @@
       .slot-title, .exp-browse-header, .exp-main-header { font-size: 11px; padding: 4px 6px; white-space: normal; }
     }
 
-    .exp-card[data-cat="music"] .exp-card-logo { aspect-ratio: 1 / 1; }
+    .exp-card[data-cat="music"] .exp-card-logo,
+    .exp-card[data-cat="ramen"] .exp-card-logo { aspect-ratio: 1 / 1; }
+
+    /* Pager — Prev / Next sit under 'Page X of Y'; hidden when it's 1 of 1 */
+    .page-btns { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+    .page-btns[hidden] { display: none; }
+    .page-btn {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      color: #000;
+      padding: 2px 10px;
+      border: 1px solid #003c74;
+      border-radius: 3px;
+      background: linear-gradient(#ffffff, #ece9d8);
+    }
+    .page-btn:hover { border-color: #e59700; background: linear-gradient(#ffffff, #fdf1d3); }
 
   </style>
 </head>
@@ -727,6 +743,16 @@
               <a class="exp-subcat-link" href="#" data-sub="j-pop">J-Pop</a>
               <a class="exp-subcat-link" href="#" data-sub="everything-else">Everything Else</a>
               <!-- SPOTIFY:SUBTABS:END -->
+            </div>
+
+            <!-- Ramen group -->
+            <a class="exp-cat-link" href="#" data-cat="ramen">
+              <span class="exp-cat-caret">▸</span>Ramen
+            </a>
+            <div class="exp-subcat-list" data-parent="ramen">
+              <a class="exp-subcat-link" href="#" data-sub="ramen-sf">SF</a>
+              <a class="exp-subcat-link" href="#" data-sub="ramen-dc">DC</a>
+              <a class="exp-subcat-link" href="#" data-sub="ramen-nyc">NYC</a>
             </div>
 
           </div>
@@ -4232,8 +4258,81 @@
             </div>
 
             <!-- SPOTIFY:CARDS:END -->
+
+            <!-- ══ RAMEN — score desc within each city; cards open the shop's page ══ -->
+            <!-- RAMEN - SF -->
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-sf"
+                 data-href="https://www.hinodeyaramen.com/"
+                 data-org="Hinodeya Ramen" data-role="My Score: 9/10">
+              <div class="exp-card-logo"><img src="assets/ramen/hinodeya.jpg" alt="Hinodeya Ramen"><a class="exp-view-link" href="https://www.hinodeyaramen.com/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Hinodeya Ramen</div>
+              <div class="exp-role">My Score: 9/10</div>
+              <div class="exp-duration">Dashi Ramen</div>
+              <div class="exp-visits">Japantown, Union Sq &amp; Downtown</div>
+            </div>
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-sf"
+                 data-href="https://www.marufukuramen.com/"
+                 data-org="Marufuku Ramen" data-role="My Score: 7/10">
+              <div class="exp-card-logo"><img src="assets/ramen/marufuku.jpg" alt="Marufuku Ramen"><a class="exp-view-link" href="https://www.marufukuramen.com/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Marufuku Ramen</div>
+              <div class="exp-role">My Score: 7/10</div>
+              <div class="exp-duration">Hakata Tonkotsu</div>
+              <div class="exp-visits">Japantown</div>
+            </div>
+
+            <!-- RAMEN - DC -->
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-dc"
+                 data-href="https://www.jinyaramenbar.com/locations/washington-dc/"
+                 data-org="JINYA Ramen Bar" data-role="My Score: 8/10">
+              <div class="exp-card-logo"><img src="assets/ramen/jinya.jpg" alt="JINYA Ramen Bar"><a class="exp-view-link" href="https://www.jinyaramenbar.com/locations/washington-dc/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">JINYA Ramen Bar</div>
+              <div class="exp-role">My Score: 8/10</div>
+              <div class="exp-duration">Tonkotsu Ramen</div>
+              <div class="exp-visits">Logan Circle &amp; The Wharf</div>
+            </div>
+
+            <!-- RAMEN - NYC -->
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-nyc"
+                 data-href="https://www.ichiranusa.com/"
+                 data-org="Ichiran" data-role="My Score: 9/10">
+              <div class="exp-card-logo"><img src="assets/ramen/ichiran.jpg" alt="Ichiran"><a class="exp-view-link" href="https://www.ichiranusa.com/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Ichiran</div>
+              <div class="exp-role">My Score: 9/10</div>
+              <div class="exp-duration">Tonkotsu · Solo Booths</div>
+              <div class="exp-visits">Midtown, Times Sq &amp; Bushwick</div>
+            </div>
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-nyc"
+                 data-href="https://www.yelp.com/biz/ramen-takumi-new-york"
+                 data-org="Ramen Takumi" data-role="My Score: 7.5/10">
+              <div class="exp-card-logo"><img src="assets/ramen/takumi.jpg" alt="Ramen Takumi"><a class="exp-view-link" href="https://www.yelp.com/biz/ramen-takumi-new-york" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Ramen Takumi</div>
+              <div class="exp-role">My Score: 7.5/10</div>
+              <div class="exp-duration">Ramen &amp; Sushi</div>
+              <div class="exp-visits">Greenwich Village</div>
+            </div>
+
+            <div class="exp-card" data-cat="ramen" data-sub="ramen-nyc"
+                 data-href="https://www.kyuramen.com/"
+                 data-org="Kyuramen" data-role="My Score: 7.5/10">
+              <div class="exp-card-logo"><img src="assets/ramen/kyuramen.jpg" alt="Kyuramen"><a class="exp-view-link" href="https://www.kyuramen.com/" target="_blank" rel="noopener">[ view ]</a></div>
+              <div class="exp-org">Kyuramen</div>
+              <div class="exp-role">My Score: 7.5/10</div>
+              <div class="exp-duration">Ramen &amp; Tea Bar</div>
+              <div class="exp-visits">Union Sq, Times Sq &amp; more</div>
+            </div>
           </div><!-- /.exp-card-list -->
-          <div class="exp-pagination">Page 1 of 1</div>
+          <div class="exp-pagination">
+            <span class="page-label">Page 1 of 1</span>
+            <div class="page-btns" hidden>
+              <button type="button" class="page-btn" data-step="-1">&laquo; Prev</button>
+              <button type="button" class="page-btn" data-step="1">Next &raquo;</button>
+            </div>
+          </div>
         </div><!-- /.exp-main -->
 
       </div><!-- /.exp-body -->
@@ -4298,7 +4397,12 @@
   overlay.addEventListener('click', e => { if (e.target === overlay) closePopup(); });
 
   document.querySelectorAll('.exp-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Ramen cards open the shop's own page instead of the popup
+      if (card.dataset.href) {
+        if (!e.target.closest('.exp-view-link')) window.open(card.dataset.href, '_blank', 'noopener');
+        return;
+      }
       const thumbEl = document.getElementById('popup-thumb');
       const thumb = card.dataset.thumb || '';
       if (thumb) {
@@ -4320,6 +4424,56 @@
     });
   });
 
+  // ── PAGINATION — at most 3 rows of cards per page ──
+  // Filters tag cards with .is-filtered-out; showPage() shows one page of the
+  // rest. Page size follows the grid's live column count (3 desktop, 2 mobile).
+  const ROWS_PER_PAGE = 3;
+  const cardList = document.querySelector('.exp-card-list');
+  const pageLabel = document.querySelector('.exp-pagination .page-label');
+  const pageBtns = document.querySelector('.exp-pagination .page-btns');
+  let pageIndex = 0;
+  let pageSize = perPage();
+
+  function perPage() {
+    return getComputedStyle(cardList).gridTemplateColumns.split(' ').length * ROWS_PER_PAGE;
+  }
+
+  function showPage(n) {
+    const matches = cardList.querySelectorAll('.exp-card:not(.is-filtered-out)');
+    const pages = Math.max(1, Math.ceil(matches.length / pageSize));
+    pageIndex = Math.min(Math.max(n, 0), pages - 1);
+    cardList.querySelectorAll('.exp-card').forEach(function(card) { card.style.display = 'none'; });
+    for (let i = pageIndex * pageSize; i < Math.min(matches.length, (pageIndex + 1) * pageSize); i++) {
+      matches[i].style.display = '';
+    }
+    pageLabel.textContent = 'Page ' + (pageIndex + 1) + ' of ' + pages;
+    pageBtns.hidden = pages === 1;
+    pageBtns.querySelector('[data-step="-1"]').hidden = pageIndex === 0;
+    pageBtns.querySelector('[data-step="1"]').hidden = pageIndex === pages - 1;
+  }
+
+  pageBtns.querySelectorAll('.page-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      showPage(pageIndex + Number(btn.dataset.step));
+      // the new page starts at the top of the grid — scroll up if that's out of view
+      const main = cardList.closest('.exp-main');
+      const sky = document.querySelector('.sky-area');
+      if (main.getBoundingClientRect().top < (sky ? sky.getBoundingClientRect().top : 0)) {
+        main.scrollIntoView({ block: 'start' });
+      }
+    });
+  });
+
+  // Crossing the mobile breakpoint changes the column count — re-page,
+  // keeping the first card of the current page in view
+  window.addEventListener('resize', function() {
+    const size = perPage();
+    if (size === pageSize) return;
+    const first = pageIndex * pageSize;
+    pageSize = size;
+    showPage(Math.floor(first / size));
+  });
+
   // ── TWO-LEVEL BROWSE FILTER (Photography / Art + sub-categories) ──
   const catLinks = document.querySelectorAll('.exp-cat-link');
   const subLinks = document.querySelectorAll('.exp-subcat-link');
@@ -4330,17 +4484,19 @@
     subLinks.forEach(function(l) { l.classList.remove('is-active'); });
   }
 
-  // Show cards whose `attr` (data-cat or data-sub) equals `value`
+  // Keep cards whose `attr` (data-cat or data-sub) equals `value`, from page 1
   function filterCards(attr, value) {
     document.querySelectorAll('.exp-card').forEach(function(card) {
-      card.style.display = (card.dataset[attr] === value) ? '' : 'none';
+      card.classList.toggle('is-filtered-out', card.dataset[attr] !== value);
     });
+    showPage(0);
   }
 
   // Header reflects the active top-level category
+  const HEADERS = { music: 'Listen History', ramen: 'Eat History' };
   function setHeader(cat) {
     const h = document.getElementById('media-header');
-    if (h) h.textContent = (cat === 'music') ? 'Listen History' : 'Watch History';
+    if (h) h.textContent = HEADERS[cat] || 'Watch History';
   }
 
   // Parent selector: open only this group's dropdown, show whole category

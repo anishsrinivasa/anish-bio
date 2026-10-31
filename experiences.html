@@ -415,6 +415,21 @@
       border-top: 1px solid rgba(0,0,0,0.15);
     }
 
+    /* Pager — Prev / Next sit under 'Page X of Y'; hidden when it's 1 of 1 */
+    .page-btns { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+    .page-btns[hidden] { display: none; }
+    .page-btn {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      color: #000;
+      padding: 2px 10px;
+      border: 1px solid #003c74;
+      border-radius: 3px;
+      background: linear-gradient(#ffffff, #ece9d8);
+    }
+    .page-btn:hover { border-color: #e59700; background: linear-gradient(#ffffff, #fdf1d3); }
+
     /* ── Individual experience card — unframed, floats on glass ── */
     .exp-card {
       display: flex;
@@ -822,7 +837,13 @@
             </div>
 
           </div><!-- /.exp-card-list -->
-          <div class="exp-pagination">Page 1 of 1</div>
+          <div class="exp-pagination">
+            <span class="page-label">Page 1 of 1</span>
+            <div class="page-btns" hidden>
+              <button type="button" class="page-btn" data-step="-1">&laquo; Prev</button>
+              <button type="button" class="page-btn" data-step="1">Next &raquo;</button>
+            </div>
+          </div>
         </div><!-- /.exp-main -->
 
       </div><!-- /.exp-body -->
@@ -943,6 +964,56 @@
     });
   });
 
+  // ── PAGINATION — at most 3 rows of cards per page ──
+  // Filters tag cards with .is-filtered-out; showPage() shows one page of the
+  // rest. Page size follows the grid's live column count (3 desktop, 2 mobile).
+  const ROWS_PER_PAGE = 3;
+  const cardList = document.querySelector('.exp-card-list');
+  const pageLabel = document.querySelector('.exp-pagination .page-label');
+  const pageBtns = document.querySelector('.exp-pagination .page-btns');
+  let pageIndex = 0;
+  let pageSize = perPage();
+
+  function perPage() {
+    return getComputedStyle(cardList).gridTemplateColumns.split(' ').length * ROWS_PER_PAGE;
+  }
+
+  function showPage(n) {
+    const matches = cardList.querySelectorAll('.exp-card:not(.is-filtered-out)');
+    const pages = Math.max(1, Math.ceil(matches.length / pageSize));
+    pageIndex = Math.min(Math.max(n, 0), pages - 1);
+    cardList.querySelectorAll('.exp-card').forEach(function(card) { card.style.display = 'none'; });
+    for (let i = pageIndex * pageSize; i < Math.min(matches.length, (pageIndex + 1) * pageSize); i++) {
+      matches[i].style.display = '';
+    }
+    pageLabel.textContent = 'Page ' + (pageIndex + 1) + ' of ' + pages;
+    pageBtns.hidden = pages === 1;
+    pageBtns.querySelector('[data-step="-1"]').hidden = pageIndex === 0;
+    pageBtns.querySelector('[data-step="1"]').hidden = pageIndex === pages - 1;
+  }
+
+  pageBtns.querySelectorAll('.page-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      showPage(pageIndex + Number(btn.dataset.step));
+      // the new page starts at the top of the grid — scroll up if that's out of view
+      const main = cardList.closest('.exp-main');
+      const sky = document.querySelector('.sky-area');
+      if (main.getBoundingClientRect().top < (sky ? sky.getBoundingClientRect().top : 0)) {
+        main.scrollIntoView({ block: 'start' });
+      }
+    });
+  });
+
+  // Crossing the mobile breakpoint changes the column count — re-page,
+  // keeping the first card of the current page in view
+  window.addEventListener('resize', function() {
+    const size = perPage();
+    if (size === pageSize) return;
+    const first = pageIndex * pageSize;
+    pageSize = size;
+    showPage(Math.floor(first / size));
+  });
+
   // ── CATEGORY FILTER ──
   document.querySelectorAll('.exp-cat-link').forEach(function(link) {
     link.addEventListener('click', function(e) {
@@ -951,15 +1022,15 @@
       document.querySelectorAll('.exp-cat-link').forEach(function(l) { l.classList.remove('is-active'); });
       link.classList.add('is-active');
       document.querySelectorAll('.exp-card').forEach(function(card) {
-        if (filter === 'all') {
-          card.style.display = '';
-        } else {
-          const cats = (card.dataset.category || '').split(',').map(function(s) { return s.trim(); });
-          card.style.display = cats.includes(filter) ? '' : 'none';
-        }
+        const cats = (card.dataset.category || '').split(',').map(function(s) { return s.trim(); });
+        card.classList.toggle('is-filtered-out', filter !== 'all' && !cats.includes(filter));
       });
+      showPage(0);
     });
   });
+
+  // Default view — everything, page 1
+  showPage(0);
 
   // ── NAV BUTTONS ──
   document.getElementById('btn-back').onclick = () => history.back();
