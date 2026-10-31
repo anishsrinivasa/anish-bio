@@ -58,6 +58,8 @@ def get(url, token, tries=4):
             elif e.code >= 500:
                 wait = 2 ** attempt
             else:
+                # Spotify's body says why (a bare 403 hid a lapsed Premium once)
+                print("  %d on %s -- %s" % (e.code, url, e.read().decode("utf-8", "replace")[:300]))
                 raise
             if attempt == tries - 1:
                 raise
@@ -139,6 +141,7 @@ def fetch_playlist(pid, token):
                     "id": t.get("id") or "",
                     "name": t["name"],
                     "artist": t["artists"][0]["name"],
+                    "artists": [a["name"] for a in t["artists"] if a.get("name")],
                     "album": album.get("name", ""),
                     "image": pick_image(album.get("images") or []),
                 }
@@ -186,26 +189,34 @@ def render_cards(playlists):
                 print("  ! no cover for %s - %s" % (t["name"], t["artist"]))
             logo = ('<img src="%s" alt="%s">' % (art, name)) if art else name
             desc = esc(t["artist"] + " · " + t["album"]) if t["album"] else artist
+            # every credited artist, lowercased -- artist tabs match on this
+            artists = esc("|".join(a.lower() for a in t["artists"]))
             out.append(
                 '            <div class="exp-card" data-cat="music" data-sub="%s"\n'
                 '                 data-thumb="%s"\n'
                 '                 data-org="%s" data-role="%s"\n'
+                '                 data-artists="%s"\n'
                 '                 data-desc="%s">\n'
                 '              <div class="exp-card-logo">%s</div>\n'
                 '              <div class="exp-org">%s</div>\n'
                 '              <div class="exp-role">%s</div>\n'
                 "            </div>\n"
-                % (sub, art or "", name, artist, desc, logo, name, artist)
+                % (sub, art or "", name, artist, artists, desc, logo, name, artist)
             )
     return "\n".join(out)
 
 
-def render_tabs(playlists):
-    return "".join(
-        '              <a class="exp-subcat-link" href="#" data-sub="%s">%s</a>\n'
-        % (sub, esc(label))
-        for sub, label, _ in playlists
-    )
+def render_tabs(tabs):
+    """Playlist tabs filter by data-sub; artist tabs carry data-artists and the
+    page filters every music card by credited artist instead."""
+    out = []
+    for sub, label, artists in tabs:
+        extra = (' data-artists="%s"' % esc("|".join(artists))) if artists else ""
+        out.append(
+            '              <a class="exp-subcat-link" href="#" data-sub="%s"%s>%s</a>\n'
+            % (sub, extra, esc(label))
+        )
+    return "".join(out)
 
 
 def splice(page, start, end, body, indent):
@@ -219,21 +230,34 @@ def splice(page, start, end, body, indent):
 def main():
     with open(CONFIG, encoding="utf-8") as f:
         config = json.load(f)
-    if any("PASTE_PLAYLIST_ID" in c["id"] for c in config):
+    if any("PASTE_PLAYLIST_ID" in c.get("id", "") for c in config):
         sys.exit("Fill in the playlist ids in " + os.path.basename(CONFIG) + " first")
 
     token = token_from_env()
 
-    playlists = []
+    # An entry with "artists" instead of "id" is an artist tab: no playlist or
+    # cards of its own, it filters every track by credited artist.
+    playlists = []  # (sub, label, tracks) -- real playlists; these own the cards
+    tabs = []  # (sub, label, artists or None) -- every Browse tab, config order
     seen = set()
     for entry in config:
-        pid = playlist_id(entry["id"])
-        name, tracks = fetch_playlist(pid, token)
-        label = (entry.get("label") or name).strip()
-        sub = slug(label, 24) or ("playlist%d" % (len(playlists) + 1))
-        while sub in seen:  # two playlists could slug alike
+        if entry.get("artists"):
+            label = entry["label"].strip()
+            artists = [a.strip().lower() for a in entry["artists"]]
+            tracks = None
+        else:
+            pid = playlist_id(entry["id"])
+            name, tracks = fetch_playlist(pid, token)
+            label = (entry.get("label") or name).strip()
+            artists = None
+        sub = slug(label, 24) or ("playlist%d" % (len(tabs) + 1))
+        while sub in seen:  # two tabs could slug alike
             sub += "-2"
         seen.add(sub)
+        tabs.append((sub, label, artists))
+        if tracks is None:
+            print("%s: artist tab (%s)" % (label, ", ".join(artists)))
+            continue
         print("%s: %d tracks" % (label, len(tracks)))
         if not tracks:
             sys.exit(label + " came back empty -- refusing to wipe the section")
@@ -245,7 +269,7 @@ def main():
         if marker not in page:
             sys.exit("marker " + marker + " missing from media.html")
 
-    page = splice(page, TABS_START, TABS_END, render_tabs(playlists), " " * 14)
+    page = splice(page, TABS_START, TABS_END, render_tabs(tabs), " " * 14)
     page = splice(page, CARDS_START, CARDS_END, render_cards(playlists) + "\n", " " * 12)
 
     with open(PAGE, "w", encoding="utf-8") as f:

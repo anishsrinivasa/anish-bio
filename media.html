@@ -741,6 +741,7 @@
             <div class="exp-subcat-list" data-parent="music">
               <!-- SPOTIFY:SUBTABS:START -->
               <a class="exp-subcat-link" href="#" data-sub="j-pop">J-Pop</a>
+              <a class="exp-subcat-link" href="#" data-sub="the-goats" data-artists="playboi carti|slayr">The goats</a>
               <a class="exp-subcat-link" href="#" data-sub="everything-else">Everything Else</a>
               <!-- SPOTIFY:SUBTABS:END -->
             </div>
@@ -4486,6 +4487,23 @@
     showPage(0);
   }
 
+  // Artist tabs ("The goats") show every music card crediting one of their
+  // artists, across playlists, once each. Cards synced before data-artists
+  // existed fall back to their first artist (data-role).
+  function filterArtists(list) {
+    const wanted = list.split('|');
+    const seen = new Set();
+    document.querySelectorAll('.exp-card').forEach(function(card) {
+      const artists = (card.dataset.artists || card.dataset.role || '').toLowerCase().split('|');
+      const key = card.dataset.org + '|' + card.dataset.role;
+      const hit = card.dataset.cat === 'music' && !seen.has(key) &&
+                  artists.some(function(a) { return wanted.includes(a); });
+      if (hit) seen.add(key);
+      card.classList.toggle('is-filtered-out', !hit);
+    });
+    showPage(0);
+  }
+
   // Header reflects the active top-level category
   const HEADERS = { music: 'Listen History', ramen: 'Eat History' };
   function setHeader(cat) {
@@ -4516,7 +4534,8 @@
       e.preventDefault();
       clearActive();
       link.classList.add('is-active');
-      filterCards('sub', link.dataset.sub);
+      if (link.dataset.artists) filterArtists(link.dataset.artists);
+      else filterCards('sub', link.dataset.sub);
       const parent = link.closest('.exp-subcat-list');
       if (parent) setHeader(parent.dataset.parent);
     });
