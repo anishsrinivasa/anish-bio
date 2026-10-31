@@ -583,6 +583,24 @@
       border-top: 1px solid rgba(0,0,0,0.15);
     }
 
+    /* Pager — Prev / Next sit under 'Page X of Y'; hidden when it's 1 of 1 */
+    .page-btns { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+    .page-btns[hidden] { display: none; }
+    .page-btn {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      color: #000;
+      padding: 2px 10px;
+      border: 1px solid #003c74;
+      border-radius: 3px;
+      background: linear-gradient(#ffffff, #ece9d8);
+    }
+    .page-btn:hover { border-color: #e59700; background: linear-gradient(#ffffff, #fdf1d3); }
+
+    /* Invisible filler that keeps a short last page as tall as a full one */
+    .proj-spacer { visibility: hidden; }
+
     /* Top group: My Projects rows stacked with uniform 15px gap */
     .proj-rows-top { display: flex; flex-direction: column; gap: 15px; }
 
@@ -947,11 +965,35 @@
             <div class="slot-title">My Projects</div>
             <div class="proj-grid-body">
 
-              <!-- Item 1 (top): My Projects — 2 rows of 4 -->
+              <!-- Item 1 (top): My Projects — most recently worked on first,
+                   8 per page (2 rows of 4); overflow goes to the next page -->
               <div class="proj-rows-top">
-
-                <!-- Row 1 — Projects 1–4 -->
-                <div class="proj-row">
+                <div class="proj-row" data-per-page="8" data-pager="pager-projects">
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/anish-bio" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/bio.png" alt="Anish's Bio"></a>
+                    <span class="s-key">Anish's Bio</span>
+                    <span class="s-val">This website lol</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/ironman.png" alt="Project Ironman"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
+                    <span class="s-key">Project Ironman</span>
+                    <span class="s-val">Firmware RL Envs</span>
+                  </div>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/grok-studio" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/grokstudio.png" alt="Grok Studio"></a>
+                    <span class="s-key">Grok Studio</span>
+                    <span class="s-val">Agentic Roblox Studio</span>
+                  </div>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/relief.png" alt="Relief"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
+                    <span class="s-key">Relief</span>
+                    <span class="s-val">Phone Case Venture</span>
+                  </div>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/windigo216/weightroom" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/weightroomlogo.png" alt="Weightroom"></a>
+                    <span class="s-key">Weightroom</span>
+                    <span class="s-val">Open-Model Marketplace</span>
+                  </div>
                   <div class="proj-card live">
                     <a class="slot-img" href="https://github.com/anishsrinivasa/AI-Safety-Workshop-Interpretability" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/xlab.jpeg" alt="XLab Workshop"></a>
                     <span class="s-key">XLab Workshop</span>
@@ -973,34 +1015,15 @@
                     <span class="s-val">CalHacks 12.0 Project</span>
                   </div>
                 </div>
-
-                <!-- Row 2 — Projects 5–8 -->
-                <div class="proj-row">
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/anishsrinivasa/anish-bio" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/bio.png" alt="Anish's Bio"></a>
-                    <span class="s-key">Anish's Bio</span>
-                    <span class="s-val">This website lol</span>
-                  </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/windigo216/weightroom" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/weightroomlogo.png" alt="Weightroom"></a>
-                    <span class="s-key">Weightroom</span>
-                    <span class="s-val">Open-Model Marketplace</span>
-                  </div>
-                  <div class="proj-card">
-                    <div class="slot-img"><img src="assets/ironman.png" alt="Project Ironman"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
-                    <span class="s-key">Project Ironman</span>
-                    <span class="s-val">Firmware RL Envs</span>
-                  </div>
-                  <div class="proj-card">
-                    <div class="slot-img"><img src="assets/relief.png" alt="Relief"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
-                    <span class="s-key">Relief</span>
-                    <span class="s-val">Phone Case Venture</span>
-                  </div>
-                </div>
-
               </div><!-- /.proj-rows-top -->
 
-              <div class="proj-pagination" style="margin-top:0">Page 1 of 1</div>
+              <div class="proj-pagination" id="pager-projects" style="margin-top:0">
+                <span class="page-label">Page 1 of 1</span>
+                <div class="page-btns" hidden>
+                  <button type="button" class="page-btn" data-step="-1">&laquo; Prev</button>
+                  <button type="button" class="page-btn" data-step="1">Next &raquo;</button>
+                </div>
+              </div>
 
               <!-- Bottom group: divider + In Progress row snug together -->
               <div class="proj-bottom" style="margin-top:10px">
@@ -1010,31 +1033,44 @@
                   <span class="proj-sep-label">In Progress</span>
                 </div>
 
-                <!-- In Progress — 4 cards -->
-                <div class="proj-row">
+                <!-- In Progress — SPAR pinned first, then most recently worked on;
+                     4 per page (1 row); overflow goes to the next page.
+                     SPAR has no repo of its own, so it's locked but keeps its sparai.org link -->
+                <div class="proj-row" data-per-page="4" data-pager="pager-progress">
                   <div class="proj-card live">
-                    <a class="slot-img" href="https://sparai.org/projects/f26/recI17glBpMTAGiae/" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/sparthumbnail.png" alt="SPAR"></a>
+                    <a class="slot-img" href="https://sparai.org/projects/f26/recI17glBpMTAGiae/" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/sparthumbnail.png" alt="SPAR"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></a>
                     <span class="s-key">SPAR</span>
                     <span class="s-val">AI Safety Research</span>
-                  </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/windigo216/weightroom" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/weightroomlogo.png" alt="Weightroom"></a>
-                    <span class="s-key">Weightroom</span>
-                    <span class="s-val">Open-Model Marketplace</span>
                   </div>
                   <div class="proj-card">
                     <div class="slot-img"><img src="assets/ironman.png" alt="Project Ironman"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Project Ironman</span>
                     <span class="s-val">Firmware RL Envs</span>
                   </div>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/anishsrinivasa/grok-studio" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/grokstudio.png" alt="Grok Studio"></a>
+                    <span class="s-key">Grok Studio</span>
+                    <span class="s-val">Agentic Roblox Studio</span>
+                  </div>
                   <div class="proj-card">
                     <div class="slot-img"><img src="assets/relief.png" alt="Relief"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Relief</span>
                     <span class="s-val">Phone Case Venture</span>
                   </div>
+                  <div class="proj-card live">
+                    <a class="slot-img" href="https://github.com/windigo216/weightroom" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/weightroomlogo.png" alt="Weightroom"></a>
+                    <span class="s-key">Weightroom</span>
+                    <span class="s-val">Open-Model Marketplace</span>
+                  </div>
                 </div>
 
-                <div class="proj-pagination">Page 1 of 1</div>
+                <div class="proj-pagination" id="pager-progress">
+                  <span class="page-label">Page 1 of 1</span>
+                  <div class="page-btns" hidden>
+                    <button type="button" class="page-btn" data-step="-1">&laquo; Prev</button>
+                    <button type="button" class="page-btn" data-step="1">Next &raquo;</button>
+                  </div>
+                </div>
 
               </div><!-- /.proj-bottom -->
 
@@ -1179,6 +1215,7 @@
     function closeAll() { locks.forEach(function(l) { l.classList.remove('is-open'); }); }
     locks.forEach(function(lock) {
       function toggle(e) {
+        e.preventDefault();   // a lock inside a linked thumbnail (SPAR) mustn't follow the link
         e.stopPropagation();
         const open = lock.classList.contains('is-open');
         closeAll();
@@ -1191,6 +1228,41 @@
     });
     document.addEventListener('click', closeAll);
   })();
+
+  // ══ PROJECT PAGES — My Projects 8 per page, In Progress 4 ══
+  // Invisible spacer cards pad a short last page so the layout doesn't jump.
+  document.querySelectorAll('.proj-row[data-per-page]').forEach(function(grid) {
+    const size = Number(grid.dataset.perPage);
+    const pager = document.getElementById(grid.dataset.pager);
+    const label = pager.querySelector('.page-label');
+    const btns = pager.querySelector('.page-btns');
+    const cards = Array.from(grid.querySelectorAll('.proj-card'));
+    const pages = Math.max(1, Math.ceil(cards.length / size));
+    const spacers = [];
+    for (let i = 1; i < size && pages > 1; i++) {
+      const s = document.createElement('div');
+      s.className = 'proj-card proj-spacer';
+      s.setAttribute('aria-hidden', 'true');
+      s.innerHTML = '<div class="slot-img"></div><span class="s-key">&nbsp;</span><span class="s-val">&nbsp;</span>';
+      grid.appendChild(s);
+      spacers.push(s);
+    }
+    let page = 0;
+    function show(n) {
+      page = Math.min(Math.max(n, 0), pages - 1);
+      cards.forEach(function(c, i) { c.style.display = Math.floor(i / size) === page ? '' : 'none'; });
+      const empty = size - Math.min(size, cards.length - page * size);
+      spacers.forEach(function(s, i) { s.style.display = i < empty ? '' : 'none'; });
+      label.textContent = 'Page ' + (page + 1) + ' of ' + pages;
+      btns.hidden = pages === 1;
+      btns.querySelector('[data-step="-1"]').hidden = page === 0;
+      btns.querySelector('[data-step="1"]').hidden = page === pages - 1;
+    }
+    btns.querySelectorAll('.page-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() { show(page + Number(btn.dataset.step)); });
+    });
+    show(0);
+  });
 </script>
 </body>
 </html>
