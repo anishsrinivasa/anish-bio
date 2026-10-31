@@ -48,6 +48,13 @@
     "image": "assets/media/the-angel-next-door-spoils-me-rotten.jpg",
     "source": "site"
   },
+  "anohana": {
+    "title": "Anohana: The Flower We Saw That Day",
+    "image": "assets/media/anohana-the-flower-we-saw-that-day.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx9989-hImMg6kCMm6I.jpg",
+    "anilist_id": 9989,
+    "source": "anilist"
+  },
   "apothecary diaries": {
     "title": "The Apothecary Diaries",
     "image": "assets/media/the-apothecary-diaries.jpg",
@@ -98,6 +105,13 @@
     "image": "assets/media/rascal-does-not-dream-of-bunny-girl-senpai.jpg",
     "source": "site"
   },
+  "can a boy girl friendship": {
+    "title": "Can a Boy-Girl Friendship Survive?",
+    "image": "assets/media/can-a-boy-girl-friendship-survive.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx153554-hHYe9aV6Gvlv.jpg",
+    "anilist_id": 153554,
+    "source": "anilist"
+  },
   "chitose is in the ramune": {
     "title": "Chitose Is in the Ramune Bottle",
     "image": "assets/media/chitose-is-in-the-ramune-bottle.jpg",
@@ -112,6 +126,13 @@
     "title": "Chainsaw Man",
     "image": "assets/media/chainsaw-man.jpg",
     "source": "site"
+  },
+  "cyberpunk": {
+    "title": "Cyberpunk: Edgerunners",
+    "image": "assets/media/cyberpunk-edgerunners.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx120377-ayZPoxiWt4Li.jpg",
+    "anilist_id": 120377,
+    "source": "anilist"
   },
   "cyberpunk edge runners": {
     "title": "Cyberpunk: Edgerunners",
@@ -177,6 +198,13 @@
     "image": "assets/media/fruits-basket.jpg",
     "source": "site"
   },
+  "full metal alchemist": {
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "image": "assets/media/fullmetal-alchemist-brotherhood.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx5114-nSWCgQlmOMtj.jpg",
+    "anilist_id": 5114,
+    "source": "anilist"
+  },
   "gachiakuta": {
     "title": "Gachiakuta",
     "image": "assets/media/gachiakuta.jpg",
@@ -203,6 +231,13 @@
     "title": "HAIKYU!!",
     "image": "assets/media/haikyu.jpg",
     "source": "site"
+  },
+  "higehiro": {
+    "title": "Higehiro: After Being Rejected, I Shaved and Took in a High School Runaway",
+    "image": "assets/media/higehiro-after-being-rejected-i-shaved-and-took-in.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx114232-2rm50ZD1cQgP.jpg",
+    "anilist_id": 114232,
+    "source": "anilist"
   },
   "horimiya": {
     "title": "Horimiya",
@@ -259,6 +294,13 @@
     "image": "assets/media/konosuba-god-s-blessing-on-this-wonderful-world.jpg",
     "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21202-mPOr80AEjUcZ.png",
     "anilist_id": 21202,
+    "source": "anilist"
+  },
+  "love unseen": {
+    "title": "Love Unseen Beneath the Clear Night Sky",
+    "image": "assets/media/love-unseen-beneath-the-clear-night-sky.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx202269-7KNj8s2fSsJJ.jpg",
+    "anilist_id": 202269,
     "source": "anilist"
   },
   "magi": {
@@ -349,6 +391,13 @@
     "image": "assets/media/pseudo-harem.jpg",
     "source": "site"
   },
+  "quintessential": {
+    "title": "The Quintessential Quintuplets",
+    "image": "assets/media/the-quintessential-quintuplets.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx103572-cchriAdH95cQ.png",
+    "anilist_id": 103572,
+    "source": "anilist"
+  },
   "re:zero": {
     "title": "Re:ZERO -Starting Life in Another World-",
     "image": "assets/media/re-zero-starting-life-in-another-world.jpg",
@@ -358,6 +407,13 @@
     "title": "Romantic Killer",
     "image": "assets/media/romantic-killer.jpg",
     "source": "site"
+  },
+  "sakamoto": {
+    "title": "Haven't You Heard? I'm Sakamoto",
+    "image": "assets/media/haven-t-you-heard-i-m-sakamoto.jpg",
+    "remote": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21595-vQ658r2Roe1g.jpg",
+    "anilist_id": 21595,
+    "source": "anilist"
   },
   "sakamoto days": {
     "title": "SAKAMOTO DAYS",
