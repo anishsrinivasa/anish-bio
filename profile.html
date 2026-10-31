@@ -659,6 +659,42 @@
     }
     .slot-view:hover { color: #001a88; text-decoration: underline; }
 
+    /* Stealth lock — private projects: card isn't clickable, lock sits
+       bottom-right, 'STEALTH' shows on hover (desktop) or click/tap (JS) */
+    .proj-card .stealth-lock {
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #000;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 12'%3E%3Cpath d='M2.5 5.5V3.5a2.5 2.5 0 0 1 5 0v2' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3Crect x='1' y='5.5' width='8' height='6' rx='1' fill='%23000'/%3E%3Crect x='4.4' y='7.3' width='1.2' height='2.2' fill='%23fff'/%3E%3C/svg%3E") center / 9px 11px no-repeat;
+      z-index: 2;
+    }
+    .proj-card .stealth-label {
+      position: absolute;
+      right: 14px;      /* shares the lock's left border */
+      bottom: -1px;
+      height: 16px;
+      padding: 0 4px;
+      border: 1px solid #000;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif !important;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      line-height: 14px;
+      white-space: nowrap;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .proj-card .stealth-lock.is-open .stealth-label,
+    .proj-card .stealth-lock:focus-visible .stealth-label { visibility: visible; }
+    @media (hover: hover) {
+      .proj-card .stealth-lock:hover .stealth-label { visibility: visible; }
+    }
+
     /* Right column — 35%, stretches via align-items:stretch default */
     .profile-right {
       flex: 35;
@@ -950,13 +986,13 @@
                     <span class="s-key">Weightroom</span>
                     <span class="s-val">Open-Model Marketplace</span>
                   </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/windigo216/project-ironman" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/ironman.png" alt="Project Ironman"></a>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/ironman.png" alt="Project Ironman"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Project Ironman</span>
                     <span class="s-val">Firmware RL Envs</span>
                   </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/anishsrinivasa/phone-case-venture" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/relief.png" alt="Relief"></a>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/relief.png" alt="Relief"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Relief</span>
                     <span class="s-val">Phone Case Venture</span>
                   </div>
@@ -977,24 +1013,24 @@
                 <!-- In Progress — 4 cards -->
                 <div class="proj-row">
                   <div class="proj-card live">
+                    <a class="slot-img" href="https://sparai.org/projects/f26/recI17glBpMTAGiae/" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/sparthumbnail.png" alt="SPAR"></a>
+                    <span class="s-key">SPAR</span>
+                    <span class="s-val">AI Safety Research</span>
+                  </div>
+                  <div class="proj-card live">
                     <a class="slot-img" href="https://github.com/windigo216/weightroom" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/weightroomlogo.png" alt="Weightroom"></a>
                     <span class="s-key">Weightroom</span>
                     <span class="s-val">Open-Model Marketplace</span>
                   </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/windigo216/project-ironman" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/ironman.png" alt="Project Ironman"></a>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/ironman.png" alt="Project Ironman"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Project Ironman</span>
                     <span class="s-val">Firmware RL Envs</span>
                   </div>
-                  <div class="proj-card live">
-                    <a class="slot-img" href="https://github.com/anishsrinivasa/phone-case-venture" target="_blank"><span class="slot-view">[ view ]</span><img src="assets/relief.png" alt="Relief"></a>
+                  <div class="proj-card">
+                    <div class="slot-img"><img src="assets/relief.png" alt="Relief"><span class="stealth-lock" role="button" tabindex="0" aria-label="Stealth project"><span class="stealth-label">STEALTH</span></span></div>
                     <span class="s-key">Relief</span>
                     <span class="s-val">Phone Case Venture</span>
-                  </div>
-                  <div class="proj-card">
-                    <div class="slot-img"><a class="slot-view" href="#">[ view ]</a><span>[IMG]</span></div>
-                    <span class="s-key">Project 12</span>
-                    <span class="s-val">Short description here</span>
                   </div>
                 </div>
 
@@ -1135,6 +1171,25 @@
       document.addEventListener('click', function() { if (startMenu) startMenu.style.display = 'none'; });
       startMenu.addEventListener('click', function(e) { e.stopPropagation(); });
     }
+  })();
+
+  // ══ STEALTH LOCKS — click/tap toggles the label (hover is CSS-only) ══
+  (function() {
+    const locks = document.querySelectorAll('.stealth-lock');
+    function closeAll() { locks.forEach(function(l) { l.classList.remove('is-open'); }); }
+    locks.forEach(function(lock) {
+      function toggle(e) {
+        e.stopPropagation();
+        const open = lock.classList.contains('is-open');
+        closeAll();
+        if (!open) lock.classList.add('is-open');
+      }
+      lock.addEventListener('click', toggle);
+      lock.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(e); }
+      });
+    });
+    document.addEventListener('click', closeAll);
   })();
 </script>
 </body>
